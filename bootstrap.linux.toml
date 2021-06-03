@@ -1,0 +1,2 @@
+name = "Citra"
+target_url = "https://raw.githubusercontent.com/tgsm/citra-installer/master/config.linux.v1.toml"

@@ -1,0 +1,56 @@
+[package]
+name = "liftinstall"
+version = "0.1.0"
+authors = ["James <jselby@jselby.net>"]
+repository = "https://github.com/j-selby/liftinstall.git"
+documentation = "https://liftinstall.jselby.net"
+description = "An adaptable installer for your application."
+build = "build.rs"
+
+[dependencies]
+web-view = {git = "https://github.com/Boscop/web-view.git", rev = "555f422d09cbb94e82a728d47e9e07ca91963f6e"}
+
+hyper = "0.11.27"
+futures = "*"
+mime_guess = "1.8.3"
+url = "*"
+
+reqwest = "0.9.0"
+number_prefix = "0.2.7"
+
+serde = "1.0.27"
+serde_derive = "1.0.27"
+serde_json = "1.0.9"
+
+toml = "0.4"
+
+semver = {version = "0.9.0", features = ["serde"]}
+regex = "0.2"
+
+dirs = "1.0"
+zip = "0.4.2"
+xz-decom = {git = "https://github.com/j-selby/xz-decom.git", rev = "9ebf3d00d9ff909c39eec1d2cf7e6e068ce214e5"}
+tar = "0.4"
+flate2 = { version = "1.0", features = ["rust_backend"], default-features = false }
+
+log = "0.4"
+fern = "0.5"
+chrono = "0.4.5"
+
+clap = "2.32.0"
+
+[build-dependencies]
+walkdir = "2"
+serde = "1.0.27"
+serde_derive = "1.0.27"
+toml = "0.4"
+
+[target.'cfg(windows)'.dependencies]
+# NFD is needed on Windows, as web-view doesn't work correctly here
+nfd = "0.0.4"
+
+winapi = { version = "0.3", features = ["psapi", "winbase", "winioctl", "winnt"] }
+
+[target.'cfg(windows)'.build-dependencies]
+winres = "0.1"
+cc = "1.0"
