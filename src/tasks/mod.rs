@@ -9,6 +9,7 @@ use installer::InstallerFramework;
 use sources::types::File;
 use sources::types::Version;
 
+pub mod check_authorization;
 pub mod download_pkg;
 pub mod ensure_only_instance;
 pub mod install;
@@ -29,6 +30,8 @@ pub enum TaskParamType {
     None,
     /// Metadata about a file
     File(Version, File),
+    /// Authentication token for a package
+    Authentication(Version, File, Option<String>),
     /// Downloaded contents of a file
     FileContents(Version, File, Vec<u8>),
     /// List of shortcuts that have been generated
@@ -49,12 +52,12 @@ pub enum TaskOrdering {
 /// A dependency of a task with various properties.
 pub struct TaskDependency {
     ordering: TaskOrdering,
-    task: Box<Task>,
+    task: Box<dyn Task>,
 }
 
 impl TaskDependency {
     /// Builds a new dependency from the specified task.
-    pub fn build(ordering: TaskOrdering, task: Box<Task>) -> TaskDependency {
+    pub fn build(ordering: TaskOrdering, task: Box<dyn Task>) -> TaskDependency {
         TaskDependency { ordering, task }
     }
 }
@@ -62,6 +65,7 @@ impl TaskDependency {
 /// A message from a task.
 pub enum TaskMessage<'a> {
     DisplayMessage(&'a str, f64),
+    AuthorizationRequired(&'a str),
     PackageInstalled,
 }
 
@@ -74,7 +78,7 @@ pub trait Task {
         &mut self,
         input: Vec<TaskParamType>,
         context: &mut InstallerFramework,
-        messenger: &Fn(&TaskMessage),
+        messenger: &dyn Fn(&TaskMessage),
     ) -> Result<TaskParamType, String>;
 
     /// Returns a vector containing all dependencies that need to be executed
@@ -87,7 +91,7 @@ pub trait Task {
 
 /// The dependency tree allows for smart iteration on a Task struct.
 pub struct DependencyTree {
-    task: Box<Task>,
+    task: Box<dyn Task>,
     dependencies: Vec<(TaskOrdering, DependencyTree)>,
 }
 
@@ -120,7 +124,7 @@ impl DependencyTree {
     pub fn execute(
         &mut self,
         context: &mut InstallerFramework,
-        messenger: &Fn(&TaskMessage),
+        messenger: &dyn Fn(&TaskMessage),
     ) -> Result<TaskParamType, String> {
         let total_tasks = (self.dependencies.len() + 1) as f64;
 
@@ -133,8 +137,8 @@ impl DependencyTree {
                 continue;
             }
 
-            let result = i.execute(context, &|msg: &TaskMessage| match msg {
-                &TaskMessage::DisplayMessage(msg, progress) => {
+            let result = i.execute(context, &|msg: &TaskMessage| match *msg {
+                TaskMessage::DisplayMessage(msg, progress) => {
                     messenger(&TaskMessage::DisplayMessage(
                         msg,
                         progress / total_tasks + (1.0 / total_tasks) * f64::from(count),
@@ -159,8 +163,8 @@ impl DependencyTree {
 
         let task_result = self
             .task
-            .execute(inputs, context, &|msg: &TaskMessage| match msg {
-                &TaskMessage::DisplayMessage(msg, progress) => {
+            .execute(inputs, context, &|msg: &TaskMessage| match *msg {
+                TaskMessage::DisplayMessage(msg, progress) => {
                     messenger(&TaskMessage::DisplayMessage(
                         msg,
                         progress / total_tasks + (1.0 / total_tasks) * f64::from(count),
@@ -179,8 +183,8 @@ impl DependencyTree {
                 continue;
             }
 
-            let result = i.execute(context, &|msg: &TaskMessage| match msg {
-                &TaskMessage::DisplayMessage(msg, progress) => {
+            let result = i.execute(context, &|msg: &TaskMessage| match *msg {
+                TaskMessage::DisplayMessage(msg, progress) => {
                     messenger(&TaskMessage::DisplayMessage(
                         msg,
                         progress / total_tasks + (1.0 / total_tasks) * f64::from(count),
@@ -206,7 +210,7 @@ impl DependencyTree {
     }
 
     /// Builds a new pipeline from the specified task, iterating on dependencies.
-    pub fn build(task: Box<Task>) -> DependencyTree {
+    pub fn build(task: Box<dyn Task>) -> DependencyTree {
         let dependencies = task
             .dependencies()
             .into_iter()

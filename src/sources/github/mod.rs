@@ -41,17 +41,19 @@ impl ReleaseSource for GithubReleases {
             .get(&format!(
                 "https://api.github.com/repos/{}/releases",
                 config.repo
-            )).header(USER_AGENT, "liftinstall (j-selby)")
+            ))
+            .header(USER_AGENT, "liftinstall (j-selby)")
             .send()
             .map_err(|x| format!("Error while sending HTTP request: {:?}", x))?;
 
         match response.status() {
             StatusCode::OK => {}
             StatusCode::FORBIDDEN => {
-                return Err(format!(
+                return Err(
                     "GitHub is rate limiting you. Try moving to a internet connection \
                      that isn't shared, and/or disabling VPNs."
-                ));
+                        .to_string(),
+                );
             }
             _ => {
                 return Err(format!("Bad status code: {:?}.", response.status()));
@@ -87,20 +89,25 @@ impl ReleaseSource for GithubReleases {
                 let string = match asset["name"].as_str() {
                     Some(v) => v,
                     None => {
-                        return Err("JSON payload missing information about release name".to_string())
+                        return Err(
+                            "JSON payload missing information about release name".to_string()
+                        );
                     }
                 };
 
                 let url = match asset["browser_download_url"].as_str() {
                     Some(v) => v,
                     None => {
-                        return Err("JSON payload missing information about release URL".to_string())
+                        return Err(
+                            "JSON payload missing information about release URL".to_string()
+                        );
                     }
                 };
 
                 files.push(File {
                     name: string.to_string(),
                     url: url.to_string(),
+                    requires_authorization: false,
                 });
             }
 

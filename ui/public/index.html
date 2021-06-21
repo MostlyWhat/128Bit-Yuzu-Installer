@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=11">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <script src="/api/attrs" type="text/javascript"></script>
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title id="window-title">... Installer</title>
+  </head>
+  <body>
+    <div class="fullscreen" id="ie-blackout" style="display: none">
+        <div class="title">Your computer is out of date.</div>
+        <div class="subtitle">
+            Make sure that your computer is up to date, and that you have Internet Explorer 11 installed.
+        </div>
+        <div class="subtitle">
+            Please note we do not support pirated or unsupported versions of Windows.
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        if (!document.__proto__) {
+            document.getElementById("ie-blackout").style.display = "block";
+        }
+    </script>
+
+    <noscript>
+      <strong>You need JavaScript enabled in your Windows Internet Options to install this application.</strong>
+    </noscript>
+
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>

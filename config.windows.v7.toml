@@ -1,0 +1,31 @@
+installing_message = "Reminder: yuzu is an <b>experimental</b> emulator. Stuff will break!"
+hide_advanced = true
+new_tool = "https://github.com/yuzu-emu/liftinstall/releases/download/1.6/yuzu_install.exe"
+
+[[packages]]
+name = "yuzu Nightly"
+description = "The nightly build of yuzu contains already reviewed and tested features."
+    [packages.source]
+    name = "github"
+    match = "^yuzu-windows-msvc-[0-9]*-[0-9a-f]*.zip$"
+        [packages.source.config]
+        repo = "yuzu-emu/yuzu-nightly"
+    [[packages.shortcuts]]
+    name = "yuzu Nightly"
+    relative_path = "nightly/yuzu.exe"
+    description = "Launch yuzu (Nightly version)"
+
+[[packages]]
+name = "yuzu Canary"
+description = "The canary build of yuzu has additional features that are still waiting on review."
+default = true
+    [packages.source]
+    name = "github"
+    match = "^yuzu-windows-msvc-[0-9]*-[0-9a-f]*.zip$"
+        [packages.source.config]
+        repo = "yuzu-emu/yuzu-canary"
+    [[packages.shortcuts]]
+    name = "yuzu Canary"
+    relative_path = "canary/yuzu.exe"
+    description = "Launch yuzu (Canary version)"
+

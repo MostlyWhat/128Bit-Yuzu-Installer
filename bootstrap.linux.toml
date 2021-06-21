@@ -1,2 +1,2 @@
-name = "Citra"
-target_url = "https://raw.githubusercontent.com/tgsm/citra-installer/master/config.linux.v1.toml"
+name = "yuzu"
+target_url = "https://raw.githubusercontent.com/yuzu-emu/liftinstall/master/config.linux.v2.toml"

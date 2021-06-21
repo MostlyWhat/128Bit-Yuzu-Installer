@@ -1,11 +1,27 @@
-os: linux
-dist: trusty
-sudo: required
-services:
-  - docker
+matrix:
+  include:
+    - os: linux
+      language: cpp
+      sudo: required
+      dist: trusty
+      services: docker
+      install: docker pull rust:1
+      cache:
+        directories:
+          - $HOME/.cargo
+          - $TRAVIS_BUILD_DIR/ui/node_modules
+      script: docker run -v $HOME/.cargo:/root/.cargo -v $(pwd):/liftinstall rust:1 /bin/bash -ex /liftinstall/.travis/build.sh
 
-install:
- - docker pull ubuntu:18.04
+    - os: osx
+      language: rust
+      cache: cargo
+      osx_image: xcode10
+      script: brew install yarn && cargo build
 
-script:
- - docker run -v $(pwd):/liftinstall ubuntu:18.04 /bin/bash -ex /liftinstall/.travis/build.sh
+    - os: windows
+      language: rust
+      cache: cargo
+      script: 
+        - choco install nodejs yarn
+        - export PATH="$PROGRAMFILES/nodejs/:$PROGRAMFILES (x86)/Yarn/bin/:$PATH"
+        - cargo build
