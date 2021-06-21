@@ -1,2 +1,2 @@
 name = "yuzu_x128"
-target_url = "https://raw.githubusercontent.com/mostlywhat/yuzu-ea/master/config.windows.v3.toml"
+target_url = "https://raw.githubusercontent.com/MostlyWhat/128Bit-Yuzu-Installer/main/config.windows.v1.toml"
