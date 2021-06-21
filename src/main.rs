@@ -45,6 +45,14 @@ extern crate clap;
 #[cfg(windows)]
 extern crate winapi;
 
+<<<<<<< Updated upstream
+=======
+#[cfg(not(windows))]
+extern crate slug;
+#[cfg(not(windows))]
+extern crate sysinfo;
+
+>>>>>>> Stashed changes
 mod archives;
 mod assets;
 mod config;
@@ -88,7 +96,7 @@ use log::Level;
 
 use config::BaseAttributes;
 
-static RAW_CONFIG: &'static str = include_str!(concat!(env!("OUT_DIR"), "/bootstrap.toml"));
+const RAW_CONFIG: &str = include_str!(concat!(env!("OUT_DIR"), "/bootstrap.toml"));
 
 #[derive(Deserialize, Debug)]
 enum CallbackType {

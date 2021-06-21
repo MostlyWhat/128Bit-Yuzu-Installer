@@ -10,12 +10,23 @@
 #include "shlguid.h"
 
 extern "C" int saveShortcut(
+<<<<<<< Updated upstream
     const char *shortcutPath,
     const char *description,
     const char *path,
     const char *args,
     const char *workingDir) {
     char* errStr = NULL;
+=======
+    const wchar_t *shortcutPath,
+    const wchar_t *description,
+    const wchar_t *path,
+    const wchar_t *args,
+    const wchar_t *workingDir,
+    const wchar_t *exePath)
+{
+    char *errStr = NULL;
+>>>>>>> Stashed changes
     HRESULT h;
     IShellLink* shellLink = NULL;
     IPersistFile* persistFile = NULL;
@@ -60,7 +71,14 @@ extern "C" int saveShortcut(
         shellLink->SetDescription(description);
     if (path!=NULL)
         shellLink->SetPath(path);
+<<<<<<< Updated upstream
     if (args!=NULL)
+=======
+    // default to using the first icon in the exe (usually correct)
+    if (exePath != NULL)
+        shellLink->SetIconLocation(exePath, 0);
+    if (args != NULL)
+>>>>>>> Stashed changes
         shellLink->SetArguments(args);
     if (workingDir!=NULL)
         shellLink->SetWorkingDirectory(workingDir);

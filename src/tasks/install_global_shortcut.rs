@@ -1,17 +1,17 @@
 //! Generates the global shortcut for this application.
 
-use installer::InstallerFramework;
+use crate::installer::InstallerFramework;
 
-use tasks::Task;
-use tasks::TaskDependency;
-use tasks::TaskMessage;
-use tasks::TaskParamType;
+use crate::tasks::Task;
+use crate::tasks::TaskDependency;
+use crate::tasks::TaskMessage;
+use crate::tasks::TaskParamType;
 
-use logging::LoggingErrors;
+use crate::logging::LoggingErrors;
 
-use native::create_shortcut;
-use tasks::save_database::SaveDatabaseTask;
-use tasks::TaskOrdering;
+use crate::native::create_shortcut;
+use crate::tasks::save_database::SaveDatabaseTask;
+use crate::tasks::TaskOrdering;
 
 pub struct InstallGlobalShortcutsTask {}
 
@@ -58,6 +58,7 @@ impl Task for InstallGlobalShortcutsTask {
             // TODO: Send by list
             "",
             &starting_dir,
+            "",
         )?;
 
         if !shortcut_file.is_empty() {

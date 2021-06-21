@@ -53,6 +53,8 @@ fn handle_binary(config: &BaseAttributes) {
 
     cc::Build::new()
         .cpp(true)
+        .define("_WIN32_WINNT", Some("0x0600"))
+        .define("WINVER", Some("0x0600"))
         .file("src/native/interop.cpp")
         .compile("interop");
 }
@@ -92,6 +94,7 @@ fn main() {
     // Copy for the main build
     copy(&target_config, output_dir.join("bootstrap.toml")).expect("Unable to copy config file");
 
+<<<<<<< Updated upstream
     // Copy files from static/ to build dir
     for entry in WalkDir::new("static") {
         let entry = entry.expect("Unable to read output directory");
@@ -168,4 +171,36 @@ fn main() {
             }
         }
     }
+=======
+    let yarn_binary =
+        which::which("yarn").expect("Failed to find yarn - please go ahead and install it!");
+
+    // Build and deploy frontend files
+    Command::new(&yarn_binary)
+        .arg("--version")
+        .spawn()
+        .expect("Yarn could not be launched");
+    Command::new(&yarn_binary)
+        .arg("--cwd")
+        .arg(ui_dir.to_str().expect("Unable to covert path"))
+        .spawn()
+        .unwrap()
+        .wait()
+        .expect("Unable to install Node.JS dependencies using Yarn");
+    let return_code = Command::new(&yarn_binary)
+        .args(&[
+            "--cwd",
+            ui_dir.to_str().expect("Unable to covert path"),
+            "run",
+            "build",
+            "--dest",
+            output_dir
+                .join("static")
+                .to_str()
+                .expect("Unable to convert path"),
+        ])
+        .status()
+        .expect("Unable to build frontend assets using Webpack");
+    assert!(return_code.success());
+>>>>>>> Stashed changes
 }

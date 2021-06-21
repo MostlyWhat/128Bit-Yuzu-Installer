@@ -1,16 +1,16 @@
 //! Verifies properties about the installation directory.
 
-use installer::InstallerFramework;
+use crate::installer::InstallerFramework;
 
-use tasks::Task;
-use tasks::TaskDependency;
-use tasks::TaskMessage;
-use tasks::TaskParamType;
+use crate::tasks::Task;
+use crate::tasks::TaskDependency;
+use crate::tasks::TaskMessage;
+use crate::tasks::TaskParamType;
 
 use std::fs::create_dir_all;
 use std::fs::read_dir;
 
-use logging::LoggingErrors;
+use crate::logging::LoggingErrors;
 
 pub struct VerifyInstallDirTask {
     pub clean_install: bool,

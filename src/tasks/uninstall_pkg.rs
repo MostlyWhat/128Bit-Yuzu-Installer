@@ -1,21 +1,21 @@
 //! Uninstalls a specific package.
 
-use installer::InstallerFramework;
+use crate::installer::InstallerFramework;
 
-use tasks::save_database::SaveDatabaseTask;
-use tasks::Task;
-use tasks::TaskDependency;
-use tasks::TaskMessage;
-use tasks::TaskOrdering;
-use tasks::TaskParamType;
+use crate::tasks::save_database::SaveDatabaseTask;
+use crate::tasks::Task;
+use crate::tasks::TaskDependency;
+use crate::tasks::TaskMessage;
+use crate::tasks::TaskOrdering;
+use crate::tasks::TaskParamType;
 
-use installer::LocalInstallation;
+use crate::installer::LocalInstallation;
 
 use std::fs::remove_dir;
 use std::fs::remove_file;
 
-use logging::LoggingErrors;
-use tasks::uninstall_shortcuts::UninstallShortcutsTask;
+use crate::logging::LoggingErrors;
+use crate::tasks::uninstall_shortcuts::UninstallShortcutsTask;
 
 pub struct UninstallPackageTask {
     pub name: String,

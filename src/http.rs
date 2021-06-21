@@ -7,6 +7,10 @@ use reqwest::header::CONTENT_LENGTH;
 use std::io::Read;
 use std::time::Duration;
 
+<<<<<<< Updated upstream
+=======
+use reqwest::r#async::Client as AsyncClient;
+>>>>>>> Stashed changes
 use reqwest::Client;
 
 /// Asserts that a URL is valid HTTPS, else returns an error.

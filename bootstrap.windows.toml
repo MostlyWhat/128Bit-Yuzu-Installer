@@ -1,2 +1,7 @@
+<<<<<<< Updated upstream
 name = "yuzu_x128"
 target_url = "https://raw.githubusercontent.com/MostlyWhat/128Bit-Yuzu-Installer/main/config.windows.v1.toml"
+=======
+name = "yuzu"
+target_url = "https://raw.githubusercontent.com/j-selby/test-installer/master/config.windows.v3.toml"
+>>>>>>> Stashed changes

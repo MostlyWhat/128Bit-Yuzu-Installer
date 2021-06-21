@@ -1,18 +1,18 @@
 //! Uninstalls a specific package.
 
-use installer::InstallerFramework;
+use crate::installer::InstallerFramework;
 
-use tasks::Task;
-use tasks::TaskDependency;
-use tasks::TaskMessage;
-use tasks::TaskParamType;
+use crate::tasks::Task;
+use crate::tasks::TaskDependency;
+use crate::tasks::TaskMessage;
+use crate::tasks::TaskParamType;
 
-use installer::LocalInstallation;
+use crate::installer::LocalInstallation;
 
 use std::fs::remove_dir;
 use std::fs::remove_file;
 
-use logging::LoggingErrors;
+use crate::logging::LoggingErrors;
 
 pub struct UninstallShortcutsTask {
     pub name: String,

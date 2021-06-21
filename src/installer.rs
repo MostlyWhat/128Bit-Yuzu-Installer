@@ -21,26 +21,32 @@ use std::io::Cursor;
 use std::process::exit;
 use std::process::Command;
 
-use config::BaseAttributes;
-use config::Config;
+use crate::config::BaseAttributes;
+use crate::config::Config;
 
-use sources::types::Version;
+use crate::sources::types::Version;
 
-use tasks::install::InstallTask;
-use tasks::uninstall::UninstallTask;
-use tasks::uninstall_global_shortcut::UninstallGlobalShortcutsTask;
-use tasks::DependencyTree;
-use tasks::TaskMessage;
+use crate::tasks::install::InstallTask;
+use crate::tasks::uninstall::UninstallTask;
+use crate::tasks::uninstall_global_shortcut::UninstallGlobalShortcutsTask;
+use crate::tasks::DependencyTree;
+use crate::tasks::TaskMessage;
 
-use logging::LoggingErrors;
+use crate::logging::LoggingErrors;
 
 use dirs::home_dir;
 
 use std::fs::remove_file;
 
-use http;
+use crate::http;
 
+<<<<<<< Updated upstream
 use number_prefix::{decimal_prefix, Prefixed, Standalone};
+=======
+use number_prefix::NumberPrefix::{self, Prefixed, Standalone};
+
+use crate::native;
+>>>>>>> Stashed changes
 
 /// A message thrown during the installation of packages.
 #[derive(Serialize)]
@@ -112,7 +118,11 @@ macro_rules! declare_messenger_callback {
                     error!("Failed to submit queue message: {:?}", v);
                 }
             }
+<<<<<<< Updated upstream
             &TaskMessage::PackageInstalled => {
+=======
+            TaskMessage::PackageInstalled => {
+>>>>>>> Stashed changes
                 if let Err(v) = $target.send(InstallMessage::PackageInstalled) {
                     error!("Failed to submit queue message: {:?}", v);
                 }

@@ -4,10 +4,10 @@
 use std::fmt;
 use std::fmt::Display;
 
-use installer::InstallerFramework;
+use crate::installer::InstallerFramework;
 
-use sources::types::File;
-use sources::types::Version;
+use crate::sources::types::File;
+use crate::sources::types::Version;
 
 pub mod download_pkg;
 pub mod ensure_only_instance;

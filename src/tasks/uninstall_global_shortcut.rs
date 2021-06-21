@@ -1,15 +1,15 @@
 //! Uninstalls a specific package.
 
-use installer::InstallerFramework;
+use crate::installer::InstallerFramework;
 
-use tasks::Task;
-use tasks::TaskDependency;
-use tasks::TaskMessage;
-use tasks::TaskParamType;
+use crate::tasks::Task;
+use crate::tasks::TaskDependency;
+use crate::tasks::TaskMessage;
+use crate::tasks::TaskParamType;
 
+use crate::tasks::save_database::SaveDatabaseTask;
+use crate::tasks::TaskOrdering;
 use std::fs::remove_file;
-use tasks::save_database::SaveDatabaseTask;
-use tasks::TaskOrdering;
 
 pub struct UninstallGlobalShortcutsTask {}
 

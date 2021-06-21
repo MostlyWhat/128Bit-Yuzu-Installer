@@ -1,11 +1,11 @@
 //! Saves the main database into the installation directory.
 
-use installer::InstallerFramework;
+use crate::installer::InstallerFramework;
 
-use tasks::Task;
-use tasks::TaskDependency;
-use tasks::TaskMessage;
-use tasks::TaskParamType;
+use crate::tasks::Task;
+use crate::tasks::TaskDependency;
+use crate::tasks::TaskMessage;
+use crate::tasks::TaskParamType;
 
 pub struct SaveDatabaseTask {}
 

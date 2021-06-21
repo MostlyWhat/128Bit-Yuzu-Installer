@@ -15,9 +15,13 @@ mod natives {
 
     const PROCESS_LEN: usize = 10192;
 
+<<<<<<< Updated upstream
     use std::ffi::CString;
 
     use logging::LoggingErrors;
+=======
+    use crate::logging::LoggingErrors;
+>>>>>>> Stashed changes
 
     use std::env;
     use std::process::Command;
@@ -34,11 +38,20 @@ mod natives {
 
     extern "C" {
         pub fn saveShortcut(
+<<<<<<< Updated upstream
             shortcutPath: *const ::std::os::raw::c_char,
             description: *const ::std::os::raw::c_char,
             path: *const ::std::os::raw::c_char,
             args: *const ::std::os::raw::c_char,
             workingDir: *const ::std::os::raw::c_char,
+=======
+            shortcutPath: *const winapi::ctypes::wchar_t,
+            description: *const winapi::ctypes::wchar_t,
+            path: *const winapi::ctypes::wchar_t,
+            args: *const winapi::ctypes::wchar_t,
+            workingDir: *const winapi::ctypes::wchar_t,
+            exePath: *const winapi::ctypes::wchar_t,
+>>>>>>> Stashed changes
         ) -> ::std::os::raw::c_int;
     }
 
@@ -50,6 +63,7 @@ mod natives {
         target: &str,
         args: &str,
         working_dir: &str,
+        exe_path: &str,
     ) -> Result<String, String> {
         let source_file = format!(
             "{}\\Microsoft\\Windows\\Start Menu\\Programs\\{}.lnk",
@@ -67,7 +81,13 @@ mod natives {
             CString::new(target).log_expect("Error while converting to C-style string");
         let native_args = CString::new(args).log_expect("Error while converting to C-style string");
         let native_working_dir =
+<<<<<<< Updated upstream
             CString::new(working_dir).log_expect("Error while converting to C-style string");
+=======
+            U16CString::from_str(working_dir).log_expect("Error while converting to wchar_t");
+        let native_exe_path =
+            U16CString::from_str(exe_path).log_expect("Error while converting to wchar_t");
+>>>>>>> Stashed changes
 
         let shortcutResult = unsafe {
             saveShortcut(
@@ -76,6 +96,7 @@ mod natives {
                 native_target.as_ptr(),
                 native_args.as_ptr(),
                 native_working_dir.as_ptr(),
+                native_exe_path.as_ptr(),
             )
         };
 
@@ -207,7 +228,7 @@ mod natives {
 
     use std::env;
 
-    use logging::LoggingErrors;
+    use crate::logging::LoggingErrors;
 
     pub fn create_shortcut(
         name: &str,
@@ -215,10 +236,60 @@ mod natives {
         target: &str,
         args: &str,
         working_dir: &str,
+        _exe_path: &str,
     ) -> Result<String, String> {
+<<<<<<< Updated upstream
         // TODO: no-op
         warn!("create_shortcut is stubbed!");
 
+=======
+        // FIXME: no icon will be shown since no icon is provided
+        let data_local_dir = dirs::data_local_dir();
+        match data_local_dir {
+            Some(x) => {
+                let mut path = x;
+                path.push("applications");
+                match create_dir_all(path.to_path_buf()) {
+                    Ok(_) => (),
+                    Err(e) => {
+                        return Err(format!(
+                            "Local data directory does not exist and cannot be created: {}",
+                            e
+                        ));
+                    }
+                };
+                path.push(format!("{}.desktop", slugify(name))); // file name
+                let desktop_file = format!(
+                    "[Desktop Entry]\nName={}\nExec=\"{}\" {}\nComment={}\nPath={}\n",
+                    name, target, args, description, working_dir
+                );
+                let desktop_f = File::create(path);
+                let mut desktop_f = match desktop_f {
+                    Ok(file) => file,
+                    Err(e) => return Err(format!("Unable to create desktop file: {}", e)),
+                };
+                let desktop_f = desktop_f.write_all(desktop_file.as_bytes());
+                match desktop_f {
+                    Ok(_) => Ok("".to_string()),
+                    Err(e) => Err(format!("Unable to write desktop file: {}", e)),
+                }
+            }
+            // return error when failed to acquire local data directory
+            None => Err("Unable to determine local data directory".to_string()),
+        }
+    }
+
+    #[cfg(target_os = "macos")]
+    pub fn create_shortcut(
+        name: &str,
+        description: &str,
+        target: &str,
+        args: &str,
+        working_dir: &str,
+        _exe_path: &str,
+    ) -> Result<String, String> {
+        warn!("STUB! Creating shortcut is not implemented on macOS");
+>>>>>>> Stashed changes
         Ok("".to_string())
     }
 
@@ -242,8 +313,28 @@ mod natives {
 
     /// Returns a list of running processes
     pub fn get_process_names() -> Vec<super::Process> {
+<<<<<<< Updated upstream
         // TODO: no-op
         vec![]
+=======
+        // a platform-independent implementation using sysinfo crate
+        let mut processes: Vec<super::Process> = Vec::new();
+        let mut system = sysinfo::System::new();
+        system.refresh_all();
+        for (pid, procs) in system.get_processes() {
+            processes.push(super::Process {
+                pid: *pid as usize,
+                name: procs.name().to_string(),
+            });
+        }
+        processes // return running processes
+    }
+
+    /// Returns if dark mode is active on this system.
+    pub fn is_dark_mode_active() -> bool {
+        // No-op
+        false
+>>>>>>> Stashed changes
     }
 }
 

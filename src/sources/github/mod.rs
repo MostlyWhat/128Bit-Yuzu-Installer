@@ -7,9 +7,9 @@ use reqwest::StatusCode;
 
 use serde_json;
 
-use sources::types::*;
+use crate::sources::types::*;
 
-use http::build_client;
+use crate::http::build_client;
 
 pub struct GithubReleases {}
 

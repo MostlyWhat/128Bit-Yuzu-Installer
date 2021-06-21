@@ -1,14 +1,14 @@
 //! Uninstalls a set of packages.
 
-use installer::InstallerFramework;
+use crate::installer::InstallerFramework;
 
-use tasks::Task;
-use tasks::TaskParamType;
+use crate::tasks::Task;
+use crate::tasks::TaskParamType;
 
-use tasks::uninstall_pkg::UninstallPackageTask;
-use tasks::TaskDependency;
-use tasks::TaskMessage;
-use tasks::TaskOrdering;
+use crate::tasks::uninstall_pkg::UninstallPackageTask;
+use crate::tasks::TaskDependency;
+use crate::tasks::TaskMessage;
+use crate::tasks::TaskOrdering;
 
 pub struct UninstallTask {
     pub items: Vec<String>,
