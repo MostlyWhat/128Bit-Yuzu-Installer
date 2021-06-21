@@ -2,17 +2,12 @@
 
 use installer::InstallerFramework;
 
-use tasks::Task;
-use tasks::TaskDependency;
-use tasks::TaskMessage;
-use tasks::TaskOrdering;
-use tasks::TaskParamType;
-
-use tasks::resolver::ResolvePackageTask;
+use tasks::check_authorization::CheckAuthorizationTask;
+use tasks::{Task, TaskDependency, TaskMessage, TaskOrdering, TaskParamType};
 
 use http::stream_file;
 
-use number_prefix::{decimal_prefix, Prefixed, Standalone};
+use number_prefix::{NumberPrefix, Prefixed, Standalone};
 
 use logging::LoggingErrors;
 
@@ -25,15 +20,22 @@ impl Task for DownloadPackageTask {
         &mut self,
         mut input: Vec<TaskParamType>,
         context: &mut InstallerFramework,
-        messenger: &Fn(&TaskMessage),
+        messenger: &dyn Fn(&TaskMessage),
     ) -> Result<TaskParamType, String> {
         assert_eq!(input.len(), 1);
 
         let file = input.pop().log_expect("Should have input from resolver!");
-        let (version, file) = match file {
-            TaskParamType::File(v, f) => (v, f),
+        let (version, file, auth) = match file {
+            TaskParamType::Authentication(v, f, auth) => (v, f, auth),
             _ => return Err("Unexpected param type to download package".to_string()),
         };
+
+        // TODO: move this back below checking for latest version after testing is done
+        if file.requires_authorization && auth.is_none() {
+            info!("Authorization required to update this package!");
+            messenger(&TaskMessage::AuthorizationRequired("AuthorizationRequired"));
+            return Ok(TaskParamType::Break);
+        }
 
         // Check to see if this is the newest file available already
         for element in &context.database.packages {
@@ -54,7 +56,7 @@ impl Task for DownloadPackageTask {
         let mut downloaded = 0;
         let mut data_storage: Vec<u8> = Vec::new();
 
-        stream_file(&file.url, |data, size| {
+        stream_file(&file.url, auth, |data, size| {
             {
                 data_storage.extend_from_slice(&data);
             }
@@ -68,11 +70,11 @@ impl Task for DownloadPackageTask {
             };
 
             // Pretty print data volumes
-            let pretty_current = match decimal_prefix(downloaded as f64) {
+            let pretty_current = match NumberPrefix::decimal(downloaded as f64) {
                 Standalone(bytes) => format!("{} bytes", bytes),
                 Prefixed(prefix, n) => format!("{:.0} {}B", n, prefix),
             };
-            let pretty_total = match decimal_prefix(size as f64) {
+            let pretty_total = match NumberPrefix::decimal(size as f64) {
                 Standalone(bytes) => format!("{} bytes", bytes),
                 Prefixed(prefix, n) => format!("{:.0} {}B", n, prefix),
             };
@@ -92,7 +94,7 @@ impl Task for DownloadPackageTask {
     fn dependencies(&self) -> Vec<TaskDependency> {
         vec![TaskDependency::build(
             TaskOrdering::Pre,
-            Box::new(ResolvePackageTask {
+            Box::new(CheckAuthorizationTask {
                 name: self.name.clone(),
             }),
         )]

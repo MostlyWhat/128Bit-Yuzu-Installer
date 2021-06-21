@@ -1,0 +1,17 @@
+installing_message = "Reminder: yuzu is an <b>experimental</b> emulator. Stuff will break!"
+hide_advanced = true
+new_tool = "https://github.com/yuzu-emu/liftinstall/releases/download/1.7/yuzu_install.exe"
+
+[[packages]]
+name = "yuzu"
+description = "Includes frequent updates to yuzu with all the latest reviewed and tested features."
+default = true
+    [packages.source]
+    name = "github"
+    match = "^yuzu-windows-msvc-[0-9]*-[0-9a-f]*.tar.xz$"
+        [packages.source.config]
+        repo = "yuzu-emu/yuzu-mainline"
+    [[packages.shortcuts]]
+    name = "yuzu"
+    relative_path = "yuzu-windows-msvc/yuzu.exe"
+    description = "Launch yuzu"

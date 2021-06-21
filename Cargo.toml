@@ -8,49 +8,70 @@ description = "An adaptable installer for your application."
 build = "build.rs"
 
 [dependencies]
-web-view = {git = "https://github.com/Boscop/web-view.git", rev = "555f422d09cbb94e82a728d47e9e07ca91963f6e"}
+web-view = {git = "https://github.com/j-selby/web-view.git", rev = "752106e4637356cbdb39a0bf1113ea3ae8a14243"}
 
 hyper = "0.11.27"
-futures = "*"
-mime_guess = "1.8.3"
-url = "*"
+futures = "0.1.25"
+mime_guess = "1.8.6"
+url = "1.7.2"
 
-reqwest = "0.9.0"
-number_prefix = "0.2.7"
+reqwest = "0.9.21"
+number_prefix = "0.3.0"
 
-serde = "1.0.27"
-serde_derive = "1.0.27"
-serde_json = "1.0.9"
+serde = "1.0.89"
+serde_derive = "1.0.89"
+serde_json = "1.0.39"
 
-toml = "0.4"
+toml = "0.5.0"
 
 semver = {version = "0.9.0", features = ["serde"]}
-regex = "0.2"
+regex = "1.1.5"
 
-dirs = "1.0"
-zip = "0.4.2"
-xz-decom = {git = "https://github.com/j-selby/xz-decom.git", rev = "9ebf3d00d9ff909c39eec1d2cf7e6e068ce214e5"}
+dirs = "1.0.5"
+zip = "0.5.1"
+xz2 = "0.1.6"
 tar = "0.4"
-flate2 = { version = "1.0", features = ["rust_backend"], default-features = false }
 
 log = "0.4"
 fern = "0.5"
-chrono = "0.4.5"
+chrono = "0.4.6"
 
 clap = "2.32.0"
 
+# used to open a link to the users default browser
+webbrowser = "0.5.2"
+# used in JWT based package authentication
+jsonwebtoken = "6"
+# used to decode the public key for verifying JWT tokens
+base64 = "0.10.1"
+
 [build-dependencies]
-walkdir = "2"
-serde = "1.0.27"
-serde_derive = "1.0.27"
-toml = "0.4"
+walkdir = "2.2.7"
+serde = "1.0.89"
+serde_derive = "1.0.89"
+toml = "0.5.0"
+which = "2.0.1"
 
 [target.'cfg(windows)'.dependencies]
-# NFD is needed on Windows, as web-view doesn't work correctly here
-nfd = "0.0.4"
-
 winapi = { version = "0.3", features = ["psapi", "winbase", "winioctl", "winnt"] }
+widestring = "0.4.0"
+
+[target.'cfg(not(windows))'.dependencies]
+sysinfo = "0.8.2"
+slug = "0.1.4"
 
 [target.'cfg(windows)'.build-dependencies]
 winres = "0.1"
 cc = "1.0"
+
+[profile.release]
+#panic = "abort"
+lto = true
+opt-level = "z"
+codegen-units = 1
+incremental = false
+
+#[profile.release.overrides."*"] # +
+#opt-level = "z"
+#codegen-units = 1
+#incremental = false

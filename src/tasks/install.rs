@@ -26,7 +26,7 @@ impl Task for InstallTask {
         &mut self,
         _: Vec<TaskParamType>,
         _: &mut InstallerFramework,
-        messenger: &Fn(&TaskMessage),
+        messenger: &dyn Fn(&TaskMessage),
     ) -> Result<TaskParamType, String> {
         messenger(&TaskMessage::DisplayMessage("Wrapping up...", 0.0));
         Ok(TaskParamType::None)
@@ -47,13 +47,6 @@ impl Task for InstallTask {
             }),
         ));
 
-        for item in &self.items {
-            elements.push(TaskDependency::build(
-                TaskOrdering::Pre,
-                Box::new(InstallPackageTask { name: item.clone() }),
-            ));
-        }
-
         for item in &self.uninstall_items {
             elements.push(TaskDependency::build(
                 TaskOrdering::Pre,
@@ -61,6 +54,13 @@ impl Task for InstallTask {
                     name: item.clone(),
                     optional: false,
                 }),
+            ));
+        }
+
+        for item in &self.items {
+            elements.push(TaskDependency::build(
+                TaskOrdering::Pre,
+                Box::new(InstallPackageTask { name: item.clone() }),
             ));
         }
 

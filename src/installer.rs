@@ -18,8 +18,8 @@ use std::sync::mpsc::Sender;
 use std::io::copy;
 use std::io::Cursor;
 
-use std::process::exit;
 use std::process::Command;
+use std::process::{exit, Stdio};
 
 use config::BaseAttributes;
 use config::Config;
@@ -40,7 +40,9 @@ use std::fs::remove_file;
 
 use http;
 
-use number_prefix::{decimal_prefix, Prefixed, Standalone};
+use number_prefix::{NumberPrefix, Prefixed, Standalone};
+
+use native;
 
 /// A message thrown during the installation of packages.
 #[derive(Serialize)]
@@ -48,7 +50,16 @@ pub enum InstallMessage {
     Status(String, f64),
     PackageInstalled,
     Error(String),
+    AuthorizationRequired(String),
     EOF,
+}
+
+#[derive(Serialize, Deserialize, Default, Clone)]
+pub struct Credentials {
+    #[serde(default)]
+    pub username: String,
+    #[serde(default)]
+    pub token: String,
 }
 
 /// Metadata about the current installation itself.
@@ -56,6 +67,8 @@ pub enum InstallMessage {
 pub struct InstallationDatabase {
     pub packages: Vec<LocalInstallation>,
     pub shortcuts: Vec<String>,
+    #[serde(default)]
+    pub credentials: Credentials,
 }
 
 impl InstallationDatabase {
@@ -64,6 +77,10 @@ impl InstallationDatabase {
         InstallationDatabase {
             packages: Vec::new(),
             shortcuts: Vec::new(),
+            credentials: Credentials {
+                username: String::new(),
+                token: String::new(),
+            },
         }
     }
 }
@@ -105,14 +122,20 @@ pub struct LocalInstallation {
 
 macro_rules! declare_messenger_callback {
     ($target:expr) => {
-        &|msg: &TaskMessage| match msg {
-            &TaskMessage::DisplayMessage(msg, progress) => {
+        &|msg: &TaskMessage| match *msg {
+            TaskMessage::DisplayMessage(msg, progress) => {
                 if let Err(v) = $target.send(InstallMessage::Status(msg.to_string(), progress as _))
                 {
                     error!("Failed to submit queue message: {:?}", v);
                 }
             }
-            &TaskMessage::PackageInstalled => {
+            TaskMessage::AuthorizationRequired(msg) => {
+                if let Err(v) = $target.send(InstallMessage::AuthorizationRequired(msg.to_string()))
+                {
+                    error!("Failed to submit queue message: {:?}", v);
+                }
+            }
+            TaskMessage::PackageInstalled => {
                 if let Err(v) = $target.send(InstallMessage::PackageInstalled) {
                     error!("Failed to submit queue message: {:?}", v);
                 }
@@ -250,7 +273,7 @@ impl InstallerFramework {
         let mut downloaded = 0;
         let mut data_storage: Vec<u8> = Vec::new();
 
-        http::stream_file(tool, |data, size| {
+        http::stream_file(tool, None, |data, size| {
             {
                 data_storage.extend_from_slice(&data);
             }
@@ -264,11 +287,11 @@ impl InstallerFramework {
             };
 
             // Pretty print data volumes
-            let pretty_current = match decimal_prefix(downloaded as f64) {
+            let pretty_current = match NumberPrefix::decimal(downloaded as f64) {
                 Standalone(bytes) => format!("{} bytes", bytes),
                 Prefixed(prefix, n) => format!("{:.0} {}B", n, prefix),
             };
-            let pretty_total = match decimal_prefix(size as f64) {
+            let pretty_total = match NumberPrefix::decimal(size as f64) {
                 Standalone(bytes) => format!("{} bytes", bytes),
                 Prefixed(prefix, n) => format!("{:.0} {}B", n, prefix),
             };
@@ -328,7 +351,8 @@ impl InstallerFramework {
                 x.to_str()
                     .log_expect("Unable to convert argument to String")
                     .to_string()
-            }).collect();
+            })
+            .collect();
 
         {
             let new_app_file = match File::create(&args_file) {
@@ -391,6 +415,29 @@ impl InstallerFramework {
             is_launcher: self.is_launcher,
             launcher_path: self.launcher_path.clone(),
         }
+    }
+
+    /// Shuts down the installer instance.
+    pub fn shutdown(&mut self) -> Result<(), String> {
+        info!("Shutting down installer framework...");
+
+        if let Some(ref v) = self.launcher_path.take() {
+            info!("Launching {:?}", v);
+
+            Command::new(v)
+                .stdout(Stdio::null())
+                .stderr(Stdio::null())
+                .spawn()
+                .map_err(|x| format!("Unable to start application: {:?}", x))?;
+        }
+
+        if self.burn_after_exit {
+            info!("Requesting that self be deleted after exit.");
+            native::burn_on_exit(&self.base_attributes.name);
+            self.burn_after_exit = false;
+        }
+
+        Ok(())
     }
 
     /// Creates a new instance of the Installer Framework with a specified Config.

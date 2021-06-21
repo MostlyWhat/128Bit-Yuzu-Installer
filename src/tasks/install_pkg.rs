@@ -34,7 +34,7 @@ impl Task for InstallPackageTask {
         &mut self,
         mut input: Vec<TaskParamType>,
         context: &mut InstallerFramework,
-        messenger: &Fn(&TaskMessage),
+        messenger: &dyn Fn(&TaskMessage),
     ) -> Result<TaskParamType, String> {
         messenger(&TaskMessage::DisplayMessage(
             &format!("Installing package {:?}...", self.name),

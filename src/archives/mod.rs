@@ -10,15 +10,13 @@ use std::io::Read;
 use std::iter::Iterator;
 use std::path::PathBuf;
 
-use xz_decom;
-
-use flate2::read::GzDecoder as gz_decom;
+use xz2::read::XzDecoder;
 
 pub trait Archive<'a> {
     /// func: iterator value, max size, file name, file contents
     fn for_each(
         &mut self,
-        func: &mut FnMut(usize, Option<usize>, PathBuf, &mut Read) -> Result<(), String>,
+        func: &mut dyn FnMut(usize, Option<usize>, PathBuf, &mut dyn Read) -> Result<(), String>,
     ) -> Result<(), String>;
 }
 
@@ -29,7 +27,7 @@ struct ZipArchive<'a> {
 impl<'a> Archive<'a> for ZipArchive<'a> {
     fn for_each(
         &mut self,
-        func: &mut FnMut(usize, Option<usize>, PathBuf, &mut Read) -> Result<(), String>,
+        func: &mut dyn FnMut(usize, Option<usize>, PathBuf, &mut dyn Read) -> Result<(), String>,
     ) -> Result<(), String> {
         let max = self.archive.len();
 
@@ -51,13 +49,13 @@ impl<'a> Archive<'a> for ZipArchive<'a> {
 }
 
 struct TarArchive<'a> {
-    archive: UpstreamTarArchive<Box<Read + 'a>>,
+    archive: UpstreamTarArchive<Box<dyn Read + 'a>>,
 }
 
 impl<'a> Archive<'a> for TarArchive<'a> {
     fn for_each(
         &mut self,
-        func: &mut FnMut(usize, Option<usize>, PathBuf, &mut Read) -> Result<(), String>,
+        func: &mut dyn FnMut(usize, Option<usize>, PathBuf, &mut dyn Read) -> Result<(), String>,
     ) -> Result<(), String> {
         let entries = self
             .archive
@@ -85,7 +83,7 @@ impl<'a> Archive<'a> for TarArchive<'a> {
 }
 
 /// Reads the named archive with an archive implementation.
-pub fn read_archive<'a>(name: &str, data: &'a [u8]) -> Result<Box<Archive<'a> + 'a>, String> {
+pub fn read_archive<'a>(name: &str, data: &'a [u8]) -> Result<Box<dyn Archive<'a> + 'a>, String> {
     if name.ends_with(".zip") {
         // Decompress a .zip file
         let archive = UpstreamZipArchive::new(Cursor::new(data))
@@ -94,19 +92,13 @@ pub fn read_archive<'a>(name: &str, data: &'a [u8]) -> Result<Box<Archive<'a> + 
         Ok(Box::new(ZipArchive { archive }))
     } else if name.ends_with(".tar.xz") {
         // Decompress a .tar.xz file
-        let decompressed_data = xz_decom::decompress(data)
-            .map_err(|x| format!("Failed to build decompressor: {:?}", x))?;
+        let mut decompresser = XzDecoder::new(data);
+        let mut decompressed_data = Vec::new();
+        decompresser
+            .read_to_end(&mut decompressed_data)
+            .map_err(|x| format!("Failed to decompress data: {:?}", x))?;
 
-        let decompressed_contents: Box<Read> = Box::new(Cursor::new(decompressed_data));
-
-        let tar = UpstreamTarArchive::new(decompressed_contents);
-
-        Ok(Box::new(TarArchive { archive: tar }))
-    } else if name.ends_with(".tar.gz") {
-        // Decompress a .tar.gz file
-        let decompressed_data = gz_decom::new(data);
-
-        let decompressed_contents: Box<Read> = Box::new(decompressed_data);
+        let decompressed_contents: Box<dyn Read> = Box::new(Cursor::new(decompressed_data));
 
         let tar = UpstreamTarArchive::new(decompressed_contents);
 

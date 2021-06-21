@@ -14,7 +14,7 @@ impl Task for SaveDatabaseTask {
         &mut self,
         input: Vec<TaskParamType>,
         context: &mut InstallerFramework,
-        messenger: &Fn(&TaskMessage),
+        messenger: &dyn Fn(&TaskMessage),
     ) -> Result<TaskParamType, String> {
         assert_eq!(input.len(), 0);
         messenger(&TaskMessage::DisplayMessage(

@@ -7,14 +7,16 @@ use reqwest::header::CONTENT_LENGTH;
 use std::io::Read;
 use std::time::Duration;
 
+use reqwest::async::Client as AsyncClient;
 use reqwest::Client;
+use reqwest::StatusCode;
 
 /// Asserts that a URL is valid HTTPS, else returns an error.
 pub fn assert_ssl(url: &str) -> Result<(), String> {
     if url.starts_with("https://") {
         Ok(())
     } else {
-        Err(format!("Specified URL was not https"))
+        Err("Specified URL was not https".to_string())
     }
 }
 
@@ -26,31 +28,48 @@ pub fn build_client() -> Result<Client, String> {
         .map_err(|x| format!("Unable to build client: {:?}", x))
 }
 
-/// Downloads a text file from the specified URL.
-pub fn download_text(url: &str) -> Result<String, String> {
-    assert_ssl(url)?;
-
-    let mut client = build_client()?
-        .get(url)
-        .send()
-        .map_err(|x| format!("Failed to GET resource: {:?}", x))?;
-
-    client
-        .text()
-        .map_err(|v| format!("Failed to get text from resource: {:?}", v))
+/// Builds a customised async HTTP client.
+pub fn build_async_client() -> Result<AsyncClient, String> {
+    AsyncClient::builder()
+        .timeout(Duration::from_secs(8))
+        .build()
+        .map_err(|x| format!("Unable to build client: {:?}", x))
 }
 
 /// Streams a file from a HTTP server.
-pub fn stream_file<F>(url: &str, mut callback: F) -> Result<(), String>
+pub fn stream_file<F>(
+    url: &str,
+    authorization: Option<String>,
+    mut callback: F,
+) -> Result<(), String>
 where
     F: FnMut(Vec<u8>, u64) -> (),
 {
     assert_ssl(url)?;
 
-    let mut client = build_client()?
-        .get(url)
+    let mut client = build_client()?.get(url);
+
+    if let Some(auth) = authorization {
+        client = client.header("Authorization", format!("Bearer {}", auth));
+    }
+
+    let mut client = client
         .send()
         .map_err(|x| format!("Failed to GET resource: {:?}", x))?;
+
+    match client.status() {
+        StatusCode::OK => {}
+        StatusCode::TOO_MANY_REQUESTS => {
+            return Err(
+                "Your token has exceeded the number of daily allowable IP addresses. \
+                 Please wait 24 hours and try again."
+                    .to_string(),
+            );
+        }
+        x => {
+            return Err(format!("Bad status code: {:?}.", x));
+        }
+    }
 
     let size = match client.headers().get(CONTENT_LENGTH) {
         Some(ref v) => v

@@ -36,6 +36,34 @@ pub struct PackageDescription {
     pub source: PackageSource,
     #[serde(default)]
     pub shortcuts: Vec<PackageShortcut>,
+    #[serde(default)]
+    pub requires_authorization: Option<bool>,
+    #[serde(default)]
+    pub is_new: Option<bool>,
+    #[serde(default)]
+    pub need_authentication_description: Option<String>,
+    #[serde(default)]
+    pub need_link_description: Option<String>,
+    #[serde(default)]
+    pub need_subscription_description: Option<String>,
+    #[serde(default)]
+    pub need_reward_tier_description: Option<String>,
+}
+
+/// Configuration for validating the JWT token
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct JWTValidation {
+    pub iss: Option<String>,
+    // This can technically be a Vec as well, but thats a pain to support atm
+    pub aud: Option<String>,
+}
+
+/// The configuration for this release.
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct AuthenticationConfig {
+    pub pub_key_base64: String,
+    pub auth_url: String,
+    pub validation: Option<JWTValidation>,
 }
 
 /// Describes the application itself.
@@ -66,6 +94,8 @@ pub struct Config {
     pub packages: Vec<PackageDescription>,
     #[serde(default)]
     pub hide_advanced: bool,
+    #[serde(default)]
+    pub authentication: Option<AuthenticationConfig>,
 }
 
 impl Config {

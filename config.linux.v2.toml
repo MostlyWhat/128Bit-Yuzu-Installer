@@ -1,0 +1,52 @@
+installing_message = "Reminder: yuzu is an <b>experimental</b> emulator. Stuff will break!"
+hide_advanced = true
+
+[authentication]
+# Base64 encoded version of the public key for validating the JWT token. Must be in DER format
+pub_key_base64 = "MIIBCgKCAQEAs5K6s49JVV9LBMzDrkORsoPSYsv1sCXDtxjp4pn8p0uPSvJAsbNNmdIgCjfSULzbHLM28MblnI4zYP8ZgKtkjdg+Ic5WQbS5iBAkf18zMafpOrotTArLsgZSmUfNYt0SOiN17D+sq/Ov/CKXRM9CttKkEbanBTVqkx7sxsHVbkI6tDvkboSaNeVPHzHlfAbvGrUo5cbAFCB/KnRsoxr+g7jLKTxU1w4xb/pIs91h80AXV/yZPXL6ItPM3/0noIRXjmoeYWf2sFQaFALNB2Kef0p6/hoHYUQP04ZSIL3Q+v13z5X2YJIlI4eLg+iD25QYm9V8oP3+Xro4vd47a0/maQIDAQAB"
+# URL to authenticate against. This must return a JWT token with their permissions and a custom claim patreonInfo with the following structure
+# "patreonInfo": { "linked": false, "activeSubscription": false }
+# If successful, the frontend will use this JWT token as a Bearer Authentication when requesting the binaries to download
+auth_url = "https://api.yuzu-emu.org/jwt/installer/"
+    [authentication.validation]
+    iss = "citra-core"
+    aud = "installer"
+
+[[packages]]
+name = "yuzu"
+description = "Includes frequent updates to yuzu with all the latest reviewed and tested features."
+default = true
+    [packages.source]
+    name = "github"
+    match = "^yuzu-linux-[0-9]*-[0-9a-f]*.tar.xz$"
+        [packages.source.config]
+        repo = "yuzu-emu/yuzu-mainline"
+    [[packages.shortcuts]]
+    name = "yuzu"
+    relative_path = "yuzu-windows-msvc/yuzu.exe"
+    description = "Launch yuzu"
+
+[[packages]]
+name = "yuzu Early Access"
+description = "Bonus preview release for project supporters. Thanks for your support!"
+# Displayed when the package has no authentication for the user
+need_authentication_description = "Click here to sign in with your yuzu account for Early Access"
+# Displayed when the package has an authentication, but the user has not linked their account
+need_link_description = "You are signed in, but you need to link your Patreon account! Click here for more details"
+# Displayed when the package has an authentication, but the user has not linked their account
+need_subscription_description = "You are signed in, but you need to link your Patreon account! Click here for more details"
+# Displayed when the package has an authentication, but the user has not linked their account
+need_reward_tier_description = "You are signed in, but are not backing an eligible reward tier! Click here for more details"
+requires_authorization = true
+# puts a "new" ribbon the package select
+is_new = true
+    [packages.source]
+    name = "patreon"
+    match = "^yuzu-linux-[0-9]*-[0-9a-f]*.tar.xz$"
+        [packages.source.config]
+        repo = "earlyaccess"
+    [[packages.shortcuts]]
+    name = "yuzu Early Access"
+    relative_path = "yuzu-linux-earlyaccess/yuzu.exe"
+    description = "Launch yuzu Early Access"
+

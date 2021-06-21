@@ -22,7 +22,7 @@ impl Task for InstallShortcutsTask {
         &mut self,
         _: Vec<TaskParamType>,
         context: &mut InstallerFramework,
-        messenger: &Fn(&TaskMessage),
+        messenger: &dyn Fn(&TaskMessage),
     ) -> Result<TaskParamType, String> {
         messenger(&TaskMessage::DisplayMessage(
             &format!("Generating shortcuts for package {:?}...", self.name),
