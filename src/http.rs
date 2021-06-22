@@ -56,7 +56,7 @@ where
         None => 0,
     };
 
-    let mut buf = [0 as u8; 8192];
+    let mut buf = [0 as u8; 16384];
     loop {
         let len = client
             .read(&mut buf)
