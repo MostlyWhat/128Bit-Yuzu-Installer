@@ -62,6 +62,13 @@ fn main() {
 
     let os = OS.to_lowercase();
 
+    #[cfg(windows)]
+    {
+        if std::fs::metadata("MicrosoftEdgeWebview2Setup.exe").is_err() {
+            panic!("Please download MicrosoftEdgeWebview2Setup.exe from https://go.microsoft.com/fwlink/p/?LinkId=2124703 and put the file at the workspace root!");
+        }
+    }
+
     // Find target config
     let target_config = PathBuf::from(format!("bootstrap.{}.toml", os));
 

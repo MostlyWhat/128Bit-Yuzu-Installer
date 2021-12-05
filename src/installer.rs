@@ -153,11 +153,13 @@ impl InstallerFramework {
     /// items: Array of named packages to be installed/kept
     /// messages: Channel used to send progress messages
     /// fresh_install: If the install directory must be empty
+    /// force_install: If the install directory should be erased first
     pub fn install(
         &mut self,
         items: Vec<String>,
         messages: &Sender<InstallMessage>,
         fresh_install: bool,
+        force_install: bool,
     ) -> Result<(), String> {
         info!(
             "Framework: Installing {:?} to {:?}",
@@ -186,6 +188,7 @@ impl InstallerFramework {
             items,
             uninstall_items,
             fresh_install,
+            force_install
         });
 
         let mut tree = DependencyTree::build(task);

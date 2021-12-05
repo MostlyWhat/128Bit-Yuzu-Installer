@@ -41,7 +41,7 @@ impl<'a> Archive<'a> for ZipArchive<'a> {
                 continue;
             }
 
-            func(i, Some(max), archive.sanitized_name(), &mut archive)?;
+            func(i, Some(max), archive.mangled_name(), &mut archive)?;
         }
 
         Ok(())

@@ -1,12 +1,12 @@
 <template>
   <div class="column" v-bind:class="{ 'has-padding': !$root.$data.metadata.is_launcher }">
-    <b-message title="An error occurred" type="is-danger" :closable="false">
+    <b-message :title="$t('error.title')" type="is-danger" :closable="false">
       <div id="error_msg" v-html="msg"></div>
     </b-message>
     <div class="field is-grouped is-right-floating" v-bind:class="{ 'is-bottom-floating': !$root.$data.metadata.is_launcher, 'is-top-floating': $root.$data.metadata.is_launcher }">
       <p class="control">
-        <a class="button is-primary is-medium" v-if="remaining && !$root.$data.metadata.is_launcher" v-on:click="go_back">Back</a>
-        <a class="button is-primary is-medium" v-if="$root.$data.metadata.is_launcher" v-on:click="exit">Exit</a>
+        <b-button class="is-primary is-medium" v-if="remaining && !$root.$data.metadata.is_launcher" v-on:click="go_back">{{ $t('back') }}</b-button>
+        <b-button class="is-primary is-medium" v-if="$root.$data.metadata.is_launcher" v-on:click="exit">{{ $t('exit') }}</b-button>
       </p>
     </div>
   </div>

@@ -3,35 +3,38 @@ import App from './App.vue'
 import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import VueI18n from 'vue-i18n'
 import { stream_ajax as streamAjax } from './helpers'
 import Buefy from 'buefy'
+import messages from './locales/messages.json'
 import 'buefy/dist/buefy.css'
+import '@mdi/font/css/materialdesignicons.min.css'
 
 Vue.config.productionTip = false
 Vue.use(Buefy)
+Vue.use(VueI18n)
 Vue.use(VueAxios, axios)
+
+export const i18n = new VueI18n({
+  locale: 'en', // set locale
+  fallbackLocale: 'en',
+  messages // set locale messages
+})
 
 // Borrowed from http://tobyho.com/2012/07/27/taking-over-console-log/
 function intercept (method) {
   console[method] = function () {
-    var message = Array.prototype.slice.apply(arguments).join(' ')
-    window.external.invoke(
-      JSON.stringify({
-        Log: {
-          kind: method,
-          msg: message
-        }
-      })
+    const message = Array.prototype.slice.apply(arguments).join(' ')
+    window.rpc.notify(
+      'Log', method, message
     )
   }
 }
 
 // See if we have access to the JSON interface
-var hasExternalInterface = false
+let hasExternalInterface = false
 try {
-  window.external.invoke(JSON.stringify({
-    Test: {}
-  }))
+  window.rpc.notify('Test')
   hasExternalInterface = true
 } catch (e) {
   console.warn('Running without JSON interface - unexpected behaviour may occur!')
@@ -40,18 +43,13 @@ try {
 // Overwrite loggers with the logging backend
 if (hasExternalInterface) {
   window.onerror = function (msg, url, line) {
-    window.external.invoke(
-      JSON.stringify({
-        Log: {
-          kind: 'error',
-          msg: msg + ' @ ' + url + ':' + line
-        }
-      })
+    window.rpc.notify(
+      'Log', 'error', msg + ' @ ' + url + ':' + line
     )
   }
 
-  var methods = ['log', 'warn', 'error']
-  for (var i = 0; i < methods.length; i++) {
+  const methods = ['log', 'warn', 'error']
+  for (let i = 0; i < methods.length; i++) {
     intercept(methods[i])
   }
 }
@@ -76,18 +74,13 @@ window.addEventListener('keydown', disableShortcuts)
 
 axios.get('/api/attrs').then(function (resp) {
   document.getElementById('window-title').innerText =
-    resp.data.name + ' Installer'
+    i18n.t('app.window_title', { name: resp.data.name })
 }).catch(function (err) {
   console.error(err)
 })
 
-function selectFileCallback (name) {
-  app.install_location = name
-}
-
-window.selectFileCallback = selectFileCallback
-
-var app = new Vue({
+const app = new Vue({
+  i18n: i18n,
   router: router,
   data: {
     attrs: {},
@@ -114,14 +107,20 @@ var app = new Vue({
   methods: {
     exit: function () {
       axios.get('/api/exit').catch(function (msg) {
-        var searchLocation = app.metadata.install_path.length > 0 ? app.metadata.install_path
-          : 'the location where this installer is'
+        const searchLocation = (app.metadata.install_path && app.metadata.install_path.length > 0)
+          ? app.metadata.install_path
+          : i18n.t('error.location_unknown')
 
-        app.$router.replace({ name: 'showerr',
-          params: { msg: msg +
-                '\n\nPlease upload the log file (in ' + searchLocation + ') to ' +
-                'the ' + app.attrs.name + ' team'
-          } })
+        app.$router.replace({
+          name: 'showerr',
+          params: {
+            msg: i18n.t('error.exit_error', {
+              name: app.attrs.name,
+              path: searchLocation,
+              msg: msg
+            })
+          }
+        })
       })
     },
     stream_ajax: streamAjax

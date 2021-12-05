@@ -23,16 +23,22 @@ pub fn handle(service: &WebService, req: Request) -> Future {
 
     Box::new(req.body().concat2().map(move |b| {
         let results = form_urlencoded::parse(b.as_ref())
-            .into_owned()
-            .collect::<HashMap<String, String>>();
-
+        .into_owned()
+        .collect::<HashMap<String, String>>();
+        
         let mut to_install = Vec::new();
         let mut path: Option<String> = None;
+        let mut force_install = false;
 
         // Transform results into just an array of stuff to install
         for (key, value) in &results {
             if key == "path" {
                 path = Some(value.to_owned());
+                continue;
+            }
+
+            if key == "mode" && value == "force" {
+                force_install = true;
                 continue;
             }
 
@@ -55,7 +61,7 @@ pub fn handle(service: &WebService, req: Request) -> Future {
                 framework.set_install_dir(&path);
             }
 
-            if let Err(v) = framework.install(to_install, &sender, new_install) {
+            if let Err(v) = framework.install(to_install, &sender, new_install, force_install) {
                 error!("Install error occurred: {:?}", v);
                 if let Err(v) = sender.send(InstallMessage::Error(v)) {
                     error!("Failed to send install error: {:?}", v);

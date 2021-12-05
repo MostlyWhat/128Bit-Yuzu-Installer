@@ -2,70 +2,80 @@
 //!
 //! Provides a web-view UI.
 
-use web_view::Content;
-
-use crate::logging::LoggingErrors;
+use anyhow::Result;
+use wry::{
+    application::{
+        dpi::LogicalSize,
+        event::{Event, StartCause, WindowEvent},
+        event_loop::{ControlFlow, EventLoop},
+        window::WindowBuilder,
+    },
+    webview::{RpcResponse, WebViewBuilder},
+};
 
 use log::Level;
 
-#[derive(Deserialize, Debug)]
-enum CallbackType {
-    SelectInstallDir { callback_name: String },
-    Log { msg: String, kind: String },
-    Test {},
-}
+use crate::logging::LoggingErrors;
 
 /// Starts the main web UI. Will return when UI is closed.
-pub fn start_ui(app_name: &str, http_address: &str, is_launcher: bool) {
-    let size = if is_launcher { (600, 300) } else { (1024, 500) };
-
+pub fn start_ui(app_name: &str, http_address: &str, is_launcher: bool) -> Result<()> {
+    #[cfg(windows)]
+    {
+        crate::native::prepare_install_webview2(app_name).log_expect("Unable to install webview2");
+    }
+    let size = if is_launcher {
+        (600.0, 300.0)
+    } else {
+        (1024.0, 600.0)
+    };
     info!("Spawning web view instance");
 
-    web_view::builder()
-        .title(&format!("{} Installer", app_name))
-        .content(Content::Url(http_address))
-        .size(size.0, size.1)
-        .resizable(false)
-        .debug(false)
-        .user_data(())
-        .invoke_handler(|wv, msg| {
-            let mut cb_result = Ok(());
-            let command: CallbackType =
-                serde_json::from_str(msg).log_expect(&format!("Unable to parse string: {:?}", msg));
-
-            debug!("Incoming payload: {:?}", command);
-
-            match command {
-                CallbackType::SelectInstallDir { callback_name } => {
-                    let result = wv
-                        .dialog()
-                        .choose_directory("Select a install directory...", "");
-
-                    if let Ok(Some(new_path)) = result {
-                        if new_path.to_string_lossy().len() > 0 {
-                            let result = serde_json::to_string(&new_path)
-                                .log_expect("Unable to serialize response");
-                            let command = format!("window.{}({});", callback_name, result);
-                            debug!("Injecting response: {}", command);
-                            cb_result = wv.eval(&command);
+    let event_loop = EventLoop::new();
+    let window = WindowBuilder::new()
+        .with_title(format!("{} Installer", app_name))
+        .with_inner_size(LogicalSize::new(size.0, size.1))
+        .with_resizable(false)
+        .build(&event_loop)?;
+    let _webview = WebViewBuilder::new(window)?
+        .with_url(http_address)?
+        .with_rpc_handler(|_, mut event| {
+            debug!("Incoming payload: {:?}", event);
+            match event.method.as_str() {
+                "Test" => (),
+                "Log" => {
+                    if let Some(msg) = event.params.take() {
+                        if let Ok(msg) = serde_json::from_value::<(String, String)>(msg) {
+                            let kind = match msg.0.as_str() {
+                                "info" | "log" => Level::Info,
+                                "warn" => Level::Warn,
+                                _ => Level::Error,
+                            };
+                            log!(target: "liftinstall::frontend::js", kind, "{}", msg.1);
                         }
                     }
                 }
-                CallbackType::Log { msg, kind } => {
-                    let kind = match kind.as_ref() {
-                        "info" | "log" => Level::Info,
-                        "warn" => Level::Warn,
-                        "error" => Level::Error,
-                        _ => Level::Error,
-                    };
-
-                    log!(target: "liftinstall::frontend::js", kind, "{}", msg);
+                "SelectInstallDir" => {
+                    let result =
+                        tinyfiledialogs::select_folder_dialog("Select a install directory...", "")
+                            .and_then(|v| serde_json::to_value(v).ok());
+                    return Some(RpcResponse::new_result(event.id, result));
                 }
-                CallbackType::Test {} => {}
+                _ => warn!("Unknown RPC method: {}", event.method),
             }
-
-            cb_result
+            None
         })
-        .run()
-        .log_expect("Unable to launch Web UI!");
+        .build()?;
+
+    event_loop.run(move |event, _, control_flow| {
+        *control_flow = ControlFlow::Wait;
+
+        match event {
+            Event::NewEvents(StartCause::Init) => info!("Webview started"),
+            Event::WindowEvent {
+                event: WindowEvent::CloseRequested,
+                ..
+            } => *control_flow = ControlFlow::Exit,
+            _ => (),
+        }
+    });
 }

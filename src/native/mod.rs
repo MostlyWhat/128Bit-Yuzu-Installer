@@ -14,10 +14,15 @@ mod natives {
     #![allow(non_snake_case)]
 
     const PROCESS_LEN: usize = 10192;
+    const WV2_INSTALLER_DATA: &[u8] = include_bytes!("../../MicrosoftEdgeWebview2Setup.exe");
 
     use crate::logging::LoggingErrors;
 
     use std::env;
+    use std::io::Write;
+    use std::os::windows::ffi::OsStrExt;
+    use std::path::Path;
+    use std::process::Command;
 
     use winapi::shared::minwindef::{DWORD, FALSE, MAX_PATH};
 
@@ -26,10 +31,15 @@ mod natives {
     use winapi::um::psapi::{
         EnumProcessModulesEx, GetModuleFileNameExW, K32EnumProcesses, LIST_MODULES_ALL,
     };
+    use winapi::um::shellapi::ShellExecuteW;
     use winapi::um::winnt::{
         HANDLE, PROCESS_QUERY_INFORMATION, PROCESS_TERMINATE, PROCESS_VM_READ,
     };
+    use winapi::um::winuser::SW_SHOWDEFAULT;
 
+    use tempfile::Builder;
+    use tinyfiledialogs::{message_box_yes_no, MessageBoxIcon, YesNo};
+    use webview2::EnvironmentBuilder;
     use widestring::U16CString;
 
     extern "C" {
@@ -52,6 +62,34 @@ mod natives {
         pub fn getSystemFolder(out_path: *mut ::std::os::raw::c_ushort) -> HRESULT;
     }
 
+    pub fn prepare_install_webview2(name: &str) -> Result<(), String> {
+        if EnvironmentBuilder::default()
+            .get_available_browser_version_string()
+            .is_ok()
+        {
+            return Ok(());
+        }
+        if message_box_yes_no(&format!("{} installer", name), &format!("{} installer now requires Webview2 runtime to function properly.\nDo you wish to install it now?", name), MessageBoxIcon::Question, YesNo::Yes) == YesNo::No {
+            std::process::exit(1);
+        }
+        let mut installer_file = Builder::new()
+            .suffix(".exe")
+            .tempfile()
+            .log_expect("Unable to open the webview2 installer file");
+        installer_file
+            .write_all(&WV2_INSTALLER_DATA)
+            .log_expect("Unable to write the webview2 installer file");
+        let path = installer_file.path().to_owned();
+        installer_file.keep().log_unwrap();
+        Command::new(&path)
+            .arg("/install")
+            .spawn()
+            .log_expect("Unable to run the webview2 installer")
+            .wait()
+            .log_unwrap();
+        Ok(())
+    }
+
     // Needed here for Windows interop
     #[allow(unsafe_code)]
     pub fn create_shortcut(
@@ -67,7 +105,6 @@ mod natives {
             env::var("APPDATA").log_expect("APPDATA is bad, apparently"),
             name
         );
-
         info!("Generating shortcut @ {:?}", source_file);
 
         let native_target_dir = U16CString::from_str(source_file.clone())
@@ -100,6 +137,25 @@ mod natives {
                 "Windows gave bad result while creating shortcut: {:?}",
                 shortcutResult
             )),
+        }
+    }
+
+    // Needed to call unsafe function `ShellExecuteW` from `winapi` crate
+    #[allow(unsafe_code)]
+    pub fn open_in_shell(path: &Path) {
+        let native_verb = U16CString::from_str("open").unwrap();
+        // https://doc.rust-lang.org/std/os/windows/ffi/trait.OsStrExt.html#tymethod.encode_wide
+        let mut native_path: Vec<u16> = path.as_os_str().encode_wide().collect();
+        native_path.push(0); // NULL terminator
+        unsafe {
+            ShellExecuteW(
+                std::ptr::null_mut(),
+                native_verb.as_ptr(),
+                native_path.as_ptr(),
+                std::ptr::null_mut(),
+                std::ptr::null_mut(),
+                SW_SHOWDEFAULT,
+            );
         }
     }
 
@@ -266,6 +322,8 @@ mod natives {
     use slug::slugify;
     use std::fs::{create_dir_all, File};
     use std::io::Write;
+    use std::path::Path;
+    use std::process::Command;
 
     #[cfg(target_os = "linux")]
     pub fn create_shortcut(
@@ -323,6 +381,19 @@ mod natives {
     ) -> Result<String, String> {
         warn!("STUB! Creating shortcut is not implemented on macOS");
         Ok("".to_string())
+    }
+
+    pub fn open_in_shell(path: &Path) {
+        let shell: &str;
+        if cfg!(target_os = "linux") {
+            shell = "xdg-open";
+        } else if cfg!(target_os = "macos") {
+            shell = "open";
+        } else {
+            warn!("Unsupported platform");
+            return;
+        }
+        Command::new(shell).arg(path).spawn().ok();
     }
 
     /// Cleans up the installer

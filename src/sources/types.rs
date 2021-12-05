@@ -24,7 +24,7 @@ impl Version {
         match *self {
             Version::Semver(ref version) => version.to_owned(),
             Version::Integer(ref version) => {
-                SemverVersion::from((version.to_owned(), 0 as u64, 0 as u64))
+                SemverVersion::new(version.to_owned(), 0u64, 0u64)
             }
         }
     }

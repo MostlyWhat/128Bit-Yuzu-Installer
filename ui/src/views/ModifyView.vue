@@ -1,35 +1,34 @@
 <template>
     <div class="column has-padding">
-            <h4 class="subtitle">Choose an option:</h4>
+            <h4 class="subtitle">{{ $t('modify.title') }}</h4>
 
-            <a class="button is-dark is-medium" v-on:click="update">
-                Update
-            </a>
+            <b-button icon-left="update" type="is-dark-green" size="is-medium" @click="update">
+                {{ $t('modify.update') }}
+            </b-button>
             <br />
             <br />
 
-            <a class="button is-dark is-medium" v-on:click="modify_packages">
-                Modify
-            </a>
+            <b-button icon-left="pencil" type="is-info" size="is-medium" @click="modify_packages">
+                {{ $t('modify.modify') }}
+            </b-button>
             <br />
             <br />
 
-            <a class="button is-dark is-medium" v-on:click="prepare_uninstall">
-                Uninstall
-            </a>
+            <b-button icon-left="wrench" type="is-info" size="is-medium" @click="repair_packages">
+                {{ $t('modify.repair') }}
+            </b-button>
+            <br />
+            <br />
 
-            <div class="modal is-active" v-if="show_uninstall">
-                <div class="modal-background"></div>
-                <div class="modal-card">
-                    <header class="modal-card-head">
-                        <p class="modal-card-title">Are you sure you want to uninstall {{ $root.$data.attrs.name }}?</p>
-                    </header>
-                    <footer class="modal-card-foot">
-                        <button class="button is-danger" v-on:click="uninstall">Yes</button>
-                        <button class="button" v-on:click="cancel_uninstall">No</button>
-                    </footer>
-                </div>
-            </div>
+            <b-button icon-left="delete" type="is-danger" size="is-medium" @click="prepare_uninstall">
+                {{ $t('modify.uninstall') }}
+            </b-button>
+            <br />
+            <br />
+
+            <b-button icon-left="file-find" type="is-link" size="is-medium" @click="view_files">
+                {{ $t('modify.view_local_files') }}
+            </b-button>
     </div>
 </template>
 
@@ -37,9 +36,7 @@
 export default {
   name: 'ModifyView',
   data: function () {
-    return {
-      show_uninstall: false
-    }
+    return {}
   },
   methods: {
     update: function () {
@@ -48,15 +45,42 @@ export default {
     modify_packages: function () {
       this.$router.push('/packages')
     },
-    prepare_uninstall: function () {
-      this.show_uninstall = true
+    repair_packages: function () {
+      this.$router.push({ name: 'packages', params: { repair: true } })
     },
-    cancel_uninstall: function () {
-      this.show_uninstall = false
+    prepare_uninstall: function () {
+      this.$buefy.dialog.confirm({
+        title: this.$t('modify.uninstall'),
+        message: this.$t('modify.prompt', { name: this.$root.$data.attrs.name }),
+        cancelText: this.$t('cancel'),
+        confirmText: this.$t('modify.prompt_confirm', { name: this.$root.$data.attrs.name }),
+        type: 'is-danger',
+        hasIcon: true,
+        onConfirm: this.uninstall
+      })
     },
     uninstall: function () {
       this.$router.push('/install/uninstall')
+    },
+    view_files: function () {
+      this.$http.get('/api/view-local-folder')
     }
   }
 }
 </script>
+
+<style>
+span {
+  cursor: unset !important;
+}
+.button.is-dark-green {
+  background-color: #00B245;
+  border-color: transparent;
+  color: #fff;
+}
+.button.is-dark-green:hover, .button.is-dark-green.is-hovered, .button.is-dark-green:focus {
+  background-color: #00a53f;
+  border-color: transparent;
+  color: #fff;
+}
+</style>

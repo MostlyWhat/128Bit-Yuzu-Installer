@@ -2,28 +2,28 @@
     <div class="column has-padding">
             <div v-if="was_update">
                 <div v-if="has_installed">
-                    <h4 class="subtitle">{{ $root.$data.attrs.name }} has been updated.</h4>
+                    <h4 class="subtitle">{{ $t('complete.updated', {'name': $root.$data.attrs.name}) }}</h4>
 
-                    <p>You can find your installed applications in your start menu.</p>
+                    <p>{{ $t('complete.where_to_find') }}</p>
                 </div>
                 <div v-else>
-                    <h4 class="subtitle">{{ $root.$data.attrs.name }} is already up to date!</h4>
+                    <h4 class="subtitle">{{ $t('complete.up_to_date', {'name': $root.$data.attrs.name}) }}</h4>
 
-                    <p>You can find your installed applications in your start menu.</p>
+                    <p>{{ $t('complete.where_to_find') }}</p>
                 </div>
             </div>
             <div v-else-if="was_install">
-                <h4 class="subtitle">Thanks for installing {{ $root.$data.attrs.name }}!</h4>
+                <h4 class="subtitle">{{ $t('complete.thanks', {'name': $root.$data.attrs.name}) }}</h4>
 
-                <p>You can find your installed applications in your start menu.</p>
+                <p>{{ $t('complete.where_to_find') }}</p>
             </div>
             <div v-else>
-                <h4 class="subtitle">{{ $root.$data.attrs.name }} has been uninstalled.</h4>
+                <h4 class="subtitle">{{ $t('complete.uninstalled', {'name': $root.$data.attrs.name}) }}</h4>
             </div>
 
             <div class="field is-grouped is-right-floating is-bottom-floating">
                 <p class="control">
-                    <a class="button is-dark is-medium" v-on:click="exit">Exit</a>
+                    <b-button class="is-dark is-medium" v-on:click="exit">{{ $t('exit') }}</b-button>
                 </p>
             </div>
     </div>

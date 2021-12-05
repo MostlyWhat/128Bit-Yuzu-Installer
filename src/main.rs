@@ -7,7 +7,7 @@
 #![deny(unsafe_code)]
 #![deny(missing_docs)]
 
-extern crate web_view;
+extern crate wry;
 
 extern crate futures;
 extern crate hyper;

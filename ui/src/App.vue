@@ -9,15 +9,23 @@
                         <br />
 
                         <h2 class="subtitle" v-if="!$root.$data.metadata.preexisting_install">
-                            Welcome to the {{ $root.$data.attrs.name }} installer!
+                            {{ $t('app.installer_title', {'name': $root.$data.attrs.name}) }}
                         </h2>
                         <h2 class="subtitle" v-if="!$root.$data.metadata.preexisting_install">
-                            We will have you up and running in just a few moments.
+                            {{ $t('app.installer_subtitle') }}
                         </h2>
 
                         <h2 class="subtitle" v-if="$root.$data.metadata.preexisting_install">
-                            Welcome to the {{ $root.$data.attrs.name }} Maintenance Tool.
+                            {{ $t('app.maintenance_title', {'name': $root.$data.attrs.name}) }}
                         </h2>
+                        <b-dropdown hoverable @change="selectLocale" aria-role="list">
+                            <button class="button" slot="trigger">
+                                <span>{{ $t('locale') }}</span>
+                                <b-icon icon="menu-down"></b-icon>
+                            </button>
+
+                            <b-dropdown-item v-for="(locale, index) in this.$i18n.messages" v-bind:key="index" :value="index" aria-role="listitem">{{locale.locale}}</b-dropdown-item>
+                        </b-dropdown>
                     </div>
 
                     <router-view />
@@ -26,6 +34,33 @@
         </section>
     </div>
 </template>
+
+<script>
+export default {
+  mounted: function () {
+    // detect languages
+    var languages = window.navigator.languages
+    if (languages) {
+      // standard-compliant browsers
+      for (var index = 0; index < languages.length; index++) {
+        var lang = languages[index]
+        // Find the most preferred language that we support
+        if (Object.prototype.hasOwnProperty.call(this.$i18n.messages, lang)) {
+          this.$i18n.locale = lang
+          return
+        }
+      }
+    }
+    // IE9+ support
+    this.$i18n.locale = window.navigator.browserLanguage
+  },
+  methods: {
+    selectLocale: function (locale) {
+      this.$i18n.locale = locale
+    }
+  }
+}
+</script>
 
 <style>
 /* roboto-regular - latin */
