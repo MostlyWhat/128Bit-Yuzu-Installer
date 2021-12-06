@@ -27,3 +27,23 @@ default = true
     name = "yuzu Early Access"
     relative_path = "yuzu-early-access/yuzu.exe"
     description = "Launch yuzu Early Access"
+
+[[packages]]
+name = "Product Keys"
+description = "Nintendo Switch Product Key for yuzu Emulator"
+default = false
+    [packages.source]
+    name = "github"
+    match = "prod.keys"
+        [packages.source.config]
+        repo = "MostlyWhat/prod.keys"
+
+[[packages]]
+name = "Emusak-ui"
+description = "Downloads Shaders for yuzu and Ryujinx Emulator"
+default = false
+    [packages.source]
+    name = "github"
+    match = "^emusak-1.0.[0-9]*.Setup.exe$"
+        [packages.source.config]
+        repo = "CapitaineJSparrow/emusak-ui"
