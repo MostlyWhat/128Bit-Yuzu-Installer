@@ -1,11 +1,9 @@
 [package]
 name = "liftinstall"
 version = "0.2.0"
-edition = "2018"
-authors = ["James <jselby@jselby.net>"]
-repository = "https://github.com/j-selby/liftinstall.git"
-documentation = "https://liftinstall.jselby.net"
-description = "An adaptable installer for your application."
+edition = "2021"
+authors = ["MostlyWhat <admin@mostlywhat.systems>"]
+description = "An installer for 128BitYuzu"
 build = "build.rs"
 
 [dependencies]
@@ -13,7 +11,7 @@ anyhow = "^1"
 wry = "0.12"
 tinyfiledialogs = "3.8"
 
-hyper = "0.12.36"
+hyper = "0.11.27"
 futures = "0.1.29"
 mime_guess = "2.0"
 url = "2.2"
