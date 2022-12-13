@@ -7,3 +7,5 @@
 *.log
 
 *.exe
+
+!MicrosoftEdgeWebview2Setup.exe

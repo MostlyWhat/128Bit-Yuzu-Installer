@@ -1,3 +1,3 @@
-# fake configuration for CI purpose only
+# Unsupported for MacOS
 name = "yuzu"
 target_url = "https://raw.githubusercontent.com/j-selby/test-installer/master/config.linux.v2.toml"
