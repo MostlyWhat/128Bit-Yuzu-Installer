@@ -1,0 +1,63 @@
+---
+import { Icon } from "astro-icon";
+import ContentSection from "~/components/content-section.astro";
+import type { FeatureItem } from "~/types";
+
+const features: Array<FeatureItem> = [
+  {
+    title: "Safe and Secure",
+    description:
+      "We don't track you, we don't sell your data, and we don't use any third-party services. 128Bit-Yuzu Installer is 100% transparent and open-source.",
+    icon: "mdi:handshake",
+  },
+  {
+    title: "Lightning Fast",
+    description:
+      "128Bit-Yuzu Installer is lightweight and fast. Don't worry about downloading and updating yuzu, you'll be playing in no time.",
+    icon: "mdi:feather",
+  },
+  {
+    title: "Automatic Updates",
+    description:
+      "128Bit-Yuzu Installer will automatically update itself when a new version is released. You'll always be up to date.",
+    icon: "mdi:directions-fork",
+  },
+  {
+    title: "Support",
+    description:
+      "We're here to help. We have a dedicated community to help you out. If you need to contact us directly, we're here for you.",
+    icon: "mdi:lifebuoy",
+  },
+  {
+    title: "Easily Manage",
+    description:
+      "Easily Manage your installation of Yuzu and Troubleshoot any issues you may have. Whether you have to reinstall or repair, 128Bit-Yuzu Installer has you covered.",
+    icon: "mdi:file-multiple",
+  },
+  {
+    title: "Community",
+    description:
+      "128Bit-Yuzu Installer is an open source project powered by contributors and you. Join the community and help us make the app better.",
+    icon: "mdi:account-group",
+  },
+];
+---
+
+<ContentSection title="Features" id="features">
+  <Fragment slot="lead">
+    128Bit-Yuzu Installer has many features to help you get the most out of your Yuzu experience.
+  </Fragment>
+  <ul class="grid max-w-6xl grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    {
+      features.map(({ title, description, icon }) => (
+        <li class="flex flex-col items-center gap-4 border border-default bg-offset p-6">
+          <div class="h-16 w-16 rounded-full border-2 border-current p-3">
+            <Icon name={icon} />
+          </div>
+          <p class="text-center font-extrabold text-xl">{title}</p>
+          <p class="text-center text-offset text-sm">{description}</p>
+        </li>
+      ))
+    }
+  </ul>
+</ContentSection>

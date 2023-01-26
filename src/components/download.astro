@@ -1,0 +1,64 @@
+---
+import { Icon } from "astro-icon";
+import ContentSection from "~/components/content-section.astro";
+---
+
+<ContentSection title="Download" id="download">
+  <Fragment slot="lead">
+    Download 128Bit-yuzu Installer's latest release from the link below.
+  </Fragment>
+  <div class="grid px-6">
+    <p class="text-center font-bold text-xl">Latest Release Information</p>
+    <p class="p-4 text-center">
+      Version: <span class="font-bold" id="release">Loading...</span>
+    </p>
+    <textarea class="bg-black text-center text-white" id="changelog" rows="6">
+      Loading...</textarea
+    >
+  </div>
+  <label class="px-12"
+    ><input type="checkbox" id="verified" name="I agree" /> I have read and agree
+    to the disclaimer.</label
+  >
+  <a
+    id="download-button"
+    class="flex cursor-not-allowed items-center justify-center border-2 border-current px-6 py-4 opacity-50"
+  >
+    <Icon pack="mdi" name="telescope" class="h-8" />
+    <span>Download Latest Release</span>
+  </a>
+</ContentSection>
+
+<script>
+  const downloadButton = document.getElementById("download-button");
+  const checkbox = document.getElementById("verified");
+  checkbox.addEventListener("change", (event) => {
+    if (event.target.checked) {
+      downloadButton.classList.remove("opacity-50");
+      downloadButton.classList.remove("cursor-not-allowed");
+      downloadButton.classList.add("hover:bg-gray-200");
+      downloadButton.classList.add("hover:text-gray-900");
+      downloadButton.classList.add("hover:shadow-lg");
+      downloadButton.setAttribute(
+        "href",
+        "https://github.com/MostlyWhat/128Bit-Yuzu-Installer/releases"
+      );
+    } else {
+      downloadButton.classList.add("opacity-50");
+      downloadButton.classList.add("cursor-not-allowed");
+      downloadButton.classList.remove("hover:bg-gray-200");
+      downloadButton.classList.remove("hover:text-gray-900");
+      downloadButton.classList.remove("hover:shadow-lg");
+      downloadButton.removeAttribute("href");
+    }
+  });
+  //Grab and display the name of the latest release from github repo mostlywhat/128bit-yuzu-installer and display it in id="release"
+  fetch(
+    "https://api.github.com/repos/MostlyWhat/128Bit-Yuzu-Installer/releases/latest"
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      document.getElementById("release").innerHTML = data.name;
+      document.getElementById("changelog").innerHTML = data.body;
+    });
+</script>

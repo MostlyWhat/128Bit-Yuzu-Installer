@@ -1,0 +1,76 @@
+---
+import "@fontsource/inter/variable.css";
+import Footer from "~/components/footer.astro";
+import Intro from "~/components/intro-disclaimer.astro";
+import Splash from "~/components/splash-disclaimer.astro";
+import Discord from "~/components/discord.astro";
+import Download from "~/components/download.astro";
+import "~/styles/index.css";
+
+const { generator, site } = Astro;
+const image = new URL("social.jpg", site);
+const description =
+  "Welcome to the 128Bit-Yuzu Installer. This is a simple installer for the 128Bit-Yuzu emulator. This is the download page for the 128Bit-Yuzu Installer.";
+---
+
+<!DOCTYPE html>
+<html lang="en" class="h-full motion-safe:scroll-smooth" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="generator" content={generator} />
+
+    <title>Download - 128Bit-Yuzu Installer</title>
+    <meta name="description" content={description} />
+
+    <!-- social media -->
+    <meta property="og:title" content="Astro" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="og:url" content={site} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- initialize theme -->
+    <script is:inline>
+      const themeSaved = localStorage.getItem("theme");
+
+      if (themeSaved) {
+        document.documentElement.dataset.theme = themeSaved;
+      } else {
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+        document.documentElement.dataset.theme = prefersDark ? "dark" : "light";
+      }
+
+      window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", (event) => {
+          if (!localStorage.getItem("theme")) {
+            document.documentElement.dataset.theme = event.matches
+              ? "dark"
+              : "light";
+          }
+        });
+    </script>
+  </head>
+  <body
+    class="h-full overflow-x-hidden bg-default text-default text-base selection:bg-secondary selection:text-white"
+  >
+    <Splash />
+    <div class="space-y-24 px-8 py-32">
+      <div class="border p-4 text-center font-bold text-2xl">
+        <span class="text-primary">Warning</span>: Please read the disclaimer
+        below before using the <span class="text-primary"
+          >128Bit-Yuzu Installer.</span
+        >
+      </div>
+      <Intro />
+      <Download />
+      <Discord />
+    </div>
+    <Footer />
+  </body>
+</html>

@@ -1,0 +1,26 @@
+---
+import { Icon } from "astro-icon";
+import ContentSection from "~/components/content-section.astro";
+---
+
+<ContentSection title="Discord" id="discord">
+  <Fragment slot="lead">
+    Support for the Installer is Available on Discord in MostlyWhat System's Server and for yuzu in 128BitBay's Server.
+  </Fragment>
+  <div class="grid grid-cols-1 gap-2 sm:grid-rows-2">
+    <a
+      href="https://discord.gg/THmTE3Y9ag"
+      class="flex items-center justify-center gap-3 border-2 border-current px-6 py-4"
+    >
+      <Icon pack="mdi" name="telescope" class="h-8" />
+      <span>Join MostlyWhat System's Discord Server</span>
+    </a>
+    <a
+      href="https://discord.gg/87bsZWwF3X"
+      class="flex items-center justify-center gap-3 border-2 border-current px-6 py-4"
+    >
+      <Icon pack="mdi" name="telescope" class="h-8" />
+      <span>Join 128BitBay's Discord Server</span>
+    </a>
+  </div>
+</ContentSection>

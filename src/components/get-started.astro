@@ -1,0 +1,20 @@
+---
+import { Icon } from "astro-icon";
+import ContentSection from "~/components/content-section.astro";
+---
+
+<ContentSection title="Get Started" id="get-started">
+  <Fragment slot="lead">
+    Install 128Bit-Yuzu Installer and join MostlyWhat System's Discord to get
+    started.
+  </Fragment>
+  <div class="grid grid-cols-1 gap-2 sm:grid-rows-1">
+    <a
+      href="/download"
+      class="flex items-center justify-center gap-3 border-2 border-current px-6 py-4"
+    >
+      <Icon pack="mdi" name="telescope" class="h-8" />
+      <span>Download 128Bit-Yuzu Installer</span>
+    </a>
+  </div>
+</ContentSection>

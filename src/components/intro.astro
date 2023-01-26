@@ -1,0 +1,29 @@
+---
+import { Icon } from "astro-icon";
+import ContentSection from "~/components/content-section.astro";
+---
+
+<ContentSection title="Focus More on Playing" id="intro">
+  <!-- <Icon slot="eyebrow" name="logomark" class="h-32" /> -->
+  <Fragment slot="lead">
+    128Bit-Yuzu Installer is a <span class="text-primary">fast</span> and
+    <span class="text-primary">easy</span> way to install Yuzu Emulator on your
+    Windows PC.
+  </Fragment>
+  <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
+    <a
+      href="/#discord"
+      class="flex items-center justify-center gap-3 border-2 border-current px-6 py-4"
+    >
+      <Icon pack="mdi" name="telescope" class="h-8" />
+      <span>Join Discord Servers</span>
+    </a>
+    <a
+      href="/#get-started"
+      class="flex items-center justify-center gap-3 border-2 border-current px-6 py-4"
+    >
+      <Icon pack="mdi" name="rocket" class="h-8" />
+      <span>Install Now</span>
+    </a>
+  </div>
+</ContentSection>
