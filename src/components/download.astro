@@ -32,6 +32,20 @@ import ContentSection from "~/components/content-section.astro";
 <script>
   const downloadButton = document.getElementById("download-button");
   const checkbox = document.getElementById("verified");
+  let download_link = "";
+
+  //Grab and display the name of the latest release from github repo mostlywhat/128bit-yuzu-installer and display it in id="release"
+  fetch(
+    "https://api.github.com/repos/MostlyWhat/128Bit-Yuzu-Installer/releases/latest"
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      document.getElementById("release").innerHTML = data.name;
+      document.getElementById("changelog").innerHTML = data.body;
+      download_link = data.assets[0].browser_download_url;
+    });
+
+  //Add event listener to checkbox to enable/disable download button
   checkbox.addEventListener("change", (event) => {
     if (event.target.checked) {
       downloadButton.classList.remove("opacity-50");
@@ -39,10 +53,7 @@ import ContentSection from "~/components/content-section.astro";
       downloadButton.classList.add("hover:bg-gray-200");
       downloadButton.classList.add("hover:text-gray-900");
       downloadButton.classList.add("hover:shadow-lg");
-      downloadButton.setAttribute(
-        "href",
-        "https://github.com/MostlyWhat/128Bit-Yuzu-Installer/releases"
-      );
+      downloadButton.setAttribute("href", download_link);
     } else {
       downloadButton.classList.add("opacity-50");
       downloadButton.classList.add("cursor-not-allowed");
@@ -52,13 +63,4 @@ import ContentSection from "~/components/content-section.astro";
       downloadButton.removeAttribute("href");
     }
   });
-  //Grab and display the name of the latest release from github repo mostlywhat/128bit-yuzu-installer and display it in id="release"
-  fetch(
-    "https://api.github.com/repos/MostlyWhat/128Bit-Yuzu-Installer/releases/latest"
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      document.getElementById("release").innerHTML = data.name;
-      document.getElementById("changelog").innerHTML = data.body;
-    });
 </script>
