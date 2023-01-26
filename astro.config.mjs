@@ -4,7 +4,8 @@ import { defineConfig } from "astro/config";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://astro-moon-landing.netlify.app/",
+  site: 'https://mostlywhat.github.io',
+  base: '/128Bit-Yuzu-Installer',
   integrations: [
     tailwind(),
     image({
