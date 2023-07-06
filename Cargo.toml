@@ -1,11 +1,10 @@
 [package]
 name = "liftinstall"
-version = "0.2.0"
+version = "0.2.1"
 edition = "2018"
-authors = ["James <jselby@jselby.net>"]
-repository = "https://github.com/j-selby/liftinstall.git"
-documentation = "https://liftinstall.jselby.net"
-description = "An adaptable installer for your application."
+authors = ["James <jselby@jselby.net>", "MostlyWhat <admin@mostlywhat.systems"]
+repository = "https://github.com/mostlywhat/128bityuzu-installer.git"
+description = "yuzu installer made for 128BitBay"
 build = "build.rs"
 
 [dependencies]
