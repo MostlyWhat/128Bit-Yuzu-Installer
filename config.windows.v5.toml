@@ -20,15 +20,15 @@ requires_authorization = true
 # puts a "new" ribbon the package select
 is_new = true
     [packages.extended_description]
-    no_action_description = "Thank you for your support!"
+    no_action_description = "Status: Active"
     # Displayed when the package has no authentication for the user
-    need_authentication_description = "Need to Sign In"
+    need_authentication_description = "Status: Not Signed In"
     # Displayed when the package has an authentication, but the user has not linked their account
-    need_link_description = "Signed In - Link Patreon"
+    need_link_description = "Status: Must Link Patreon"
     # Displayed when the package has an authentication, but the user has not linked their account
-    need_subscription_description = "Signed In - No Active Subscription"
+    need_subscription_description = "Status: No Active Subscription"
     # Displayed when the package has an authentication, but the user has not linked their account
-    need_reward_tier_description = "Signed In - No Reward Tier"
+    need_reward_tier_description = "Status: Not Reward Tier"
 
     [packages.source]
     name = "patreon"
