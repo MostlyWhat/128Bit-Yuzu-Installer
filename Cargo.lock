@@ -1661,49 +1661,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "201de327520df007757c1f0adce6e827fe8562fbc28bfd9c15571c66ca1f5f79"
 
 [[package]]
-name = "liftinstall"
-version = "0.2.0"
-dependencies = [
- "anyhow",
- "base64 0.13.1",
- "cc",
- "chrono",
- "clap",
- "dirs",
- "fern",
- "futures",
- "hyper 0.11.27",
- "image",
- "jsonwebtoken",
- "log 0.4.17",
- "mime_guess",
- "number_prefix",
- "regex",
- "reqwest",
- "semver 1.0.16",
- "serde",
- "serde_derive",
- "serde_json",
- "slug",
- "sysinfo",
- "tar",
- "tempfile",
- "tinyfiledialogs",
- "toml",
- "url 2.3.1",
- "walkdir",
- "webbrowser",
- "webview2",
- "which",
- "widestring 1.0.2",
- "winapi 0.3.9",
- "winres",
- "wry",
- "xz2",
- "zip",
-]
-
-[[package]]
 name = "link-cplusplus"
 version = "1.0.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1879,6 +1836,49 @@ dependencies = [
  "net2",
  "winapi 0.2.8",
  "ws2_32-sys",
+]
+
+[[package]]
+name = "mostlywhat-yuzu-installer"
+version = "0.2.1"
+dependencies = [
+ "anyhow",
+ "base64 0.13.1",
+ "cc",
+ "chrono",
+ "clap",
+ "dirs",
+ "fern",
+ "futures",
+ "hyper 0.11.27",
+ "image",
+ "jsonwebtoken",
+ "log 0.4.17",
+ "mime_guess",
+ "number_prefix",
+ "regex",
+ "reqwest",
+ "semver 1.0.16",
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "slug",
+ "sysinfo",
+ "tar",
+ "tempfile",
+ "tinyfiledialogs",
+ "toml",
+ "url 2.3.1",
+ "walkdir",
+ "webbrowser",
+ "webview2",
+ "which",
+ "widestring 1.0.2",
+ "winapi 0.3.9",
+ "winres",
+ "wry",
+ "xz2",
+ "zip",
 ]
 
 [[package]]

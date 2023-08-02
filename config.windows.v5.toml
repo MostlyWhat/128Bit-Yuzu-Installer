@@ -1,5 +1,5 @@
 installing_message = "Built by <b>MostlyWhat</b>, Built for <b>128BitBay</b>. Version <b>Charlie</b>"
-hide_advanced = false
+hide_advanced = true
 
 [authentication]
 # Base64 encoded version of the public key for validating the JWT token. Must be in DER format
@@ -59,6 +59,7 @@ default = false
 [[packages]]
 name = "yuzu Early Access (128BitBay)"
 description = "Preview release with the newest features for Free by 128BitBay! (Unsupported Currently)"
+icon = "thicc_logo_installer__ea_shadow.png"
 default = false
     [packages.source]
     name = "github"
@@ -73,6 +74,7 @@ default = false
 [[packages]]
 name = "yuzu Early Access (PineappleEA)"
 description = "Alternative preview release source by PineappleEA!"
+icon = "thicc_logo_installer__ea_shadow.png"
 default = true
     [packages.source]
     name = "github"

@@ -123,6 +123,20 @@ pre {
     height: 100%;
 }
 
+.tile.is-ancestor {
+  display: flex;
+  flex-wrap: wrap;
+  overflow-x: auto;
+  max-width: calc(100% + 1rem);
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+}
+
+.tile.is-parent {
+  flex: 0 0 calc(50% - 1rem);
+  margin: 0.5rem;
+}
+
 .has-padding {
     padding: 2rem;
     position: relative;
