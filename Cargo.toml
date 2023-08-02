@@ -1,6 +1,6 @@
 [package]
 name = "mostlywhat-yuzu-installer"
-version = "0.3.0"
+version = "0.2.1"
 edition = "2018"
 authors = ["James <jselby@jselby.net>", "MostlyWhat <admin@mostlywhat.systems"]
 repository = "https://github.com/mostlywhat/128bityuzu-installer.git"
