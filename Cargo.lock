@@ -1661,49 +1661,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "201de327520df007757c1f0adce6e827fe8562fbc28bfd9c15571c66ca1f5f79"
 
 [[package]]
-name = "liftinstall"
-version = "0.2.0"
-dependencies = [
- "anyhow",
- "base64 0.13.1",
- "cc",
- "chrono",
- "clap",
- "dirs",
- "fern",
- "futures",
- "hyper 0.11.27",
- "image",
- "jsonwebtoken",
- "log 0.4.17",
- "mime_guess",
- "number_prefix",
- "regex",
- "reqwest",
- "semver 1.0.16",
- "serde",
- "serde_derive",
- "serde_json",
- "slug",
- "sysinfo",
- "tar",
- "tempfile",
- "tinyfiledialogs",
- "toml",
- "url 2.3.1",
- "walkdir",
- "webbrowser",
- "webview2",
- "which",
- "widestring 1.0.2",
- "winapi 0.3.9",
- "winres",
- "wry",
- "xz2",
- "zip",
-]
-
-[[package]]
 name = "link-cplusplus"
 version = "1.0.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1879,6 +1836,49 @@ dependencies = [
  "net2",
  "winapi 0.2.8",
  "ws2_32-sys",
+]
+
+[[package]]
+name = "mostlywhat-yuzu-installer"
+version = "0.2.1"
+dependencies = [
+ "anyhow",
+ "base64 0.13.1",
+ "cc",
+ "chrono",
+ "clap",
+ "dirs",
+ "fern",
+ "futures",
+ "hyper 0.11.27",
+ "image",
+ "jsonwebtoken",
+ "log 0.4.17",
+ "mime_guess",
+ "number_prefix",
+ "regex",
+ "reqwest",
+ "semver 1.0.16",
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "slug",
+ "sysinfo",
+ "tar",
+ "tempfile",
+ "tinyfiledialogs",
+ "toml",
+ "url 2.3.1",
+ "walkdir",
+ "webbrowser",
+ "webview2",
+ "which",
+ "widestring 1.0.2",
+ "winapi 0.3.9",
+ "winres",
+ "wry",
+ "xz2",
+ "zip",
 ]
 
 [[package]]
@@ -2091,9 +2091,9 @@ checksum = "624a8340c38c1b80fd549087862da4ba43e08858af025b236e509b6649fc13d5"
 
 [[package]]
 name = "openssl"
-version = "0.10.45"
+version = "0.10.55"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b102428fd03bc5edf97f62620f7298614c45cedf287c271e7ed450bbaf83f2e1"
+checksum = "345df152bc43501c5eb9e4654ff05f794effb78d4efe3d53abc158baddc0703d"
 dependencies = [
  "bitflags",
  "cfg-if 1.0.0",
@@ -2123,11 +2123,10 @@ checksum = "ff011a302c396a5197692431fc1948019154afc178baf7d8e37367442a4601cf"
 
 [[package]]
 name = "openssl-sys"
-version = "0.9.80"
+version = "0.9.90"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "23bbbf7854cd45b83958ebe919f0e8e516793727652e27fda10a8384cfc790b7"
+checksum = "374533b0e45f3a7ced10fcaeccca020e66656bc03dac384f852e4e5a7a8104a6"
 dependencies = [
- "autocfg 1.1.0",
  "cc",
  "libc",
  "pkg-config",
