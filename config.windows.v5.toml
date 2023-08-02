@@ -13,8 +13,8 @@ auth_url = "https://api.yuzu-emu.org/jwt/installer/"
     aud = "installer"
 
 [[packages]]
-name = "yuzu Early Access"
-description = "Preview release with the newest features for the supporters."
+name = "yuzu"
+description = "Early Access (Paid)"
 icon = "thicc_logo_installer__ea_shadow.png"
 requires_authorization = true
 # puts a "new" ribbon the package select
@@ -43,7 +43,7 @@ is_new = true
 
 [[packages]]
 name = "yuzu"
-description = "Includes frequent updates to yuzu with all the latest reviewed and tested features."
+description = "Mainline (Free)"
 icon = "thicc_logo_installer_shadow.png"
 default = false
     [packages.source]
@@ -57,8 +57,8 @@ default = false
     description = "Launch yuzu"
 
 [[packages]]
-name = "yuzu Early Access (128BitBay)"
-description = "Preview release with the newest features for Free by 128BitBay! (Unsupported Currently)"
+name = "128BitBay"
+description = "Early Access (Free)"
 icon = "thicc_logo_installer__ea_shadow.png"
 default = false
     [packages.source]
@@ -67,13 +67,13 @@ default = false
         [packages.source.config]
         repo = "Kryptuq/Yuzu-Early-Access-files"
     [[packages.shortcuts]]
-    name = "yuzu Early Access"
+    name = "yuzu Early Access (128BitBay)"
     relative_path = "yuzu-early-access/yuzu.exe"
     description = "Launch yuzu Early Access"
 
 [[packages]]
-name = "yuzu Early Access (PineappleEA)"
-description = "Alternative preview release source by PineappleEA!"
+name = "PineappleEA"
+description = "Early Access (Free)"
 icon = "thicc_logo_installer__ea_shadow.png"
 default = true
     [packages.source]
