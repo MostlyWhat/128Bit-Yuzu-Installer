@@ -28,7 +28,7 @@ pub fn start_ui(app_name: &str, http_address: &str, is_launcher: bool) -> Result
     let size = if is_launcher {
         (600.0, 300.0)
     } else {
-        (1024.0, 600.0)
+        (1000.0, 700.0)
     };
     info!("Spawning web view instance");
 

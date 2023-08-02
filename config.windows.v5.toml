@@ -13,8 +13,8 @@ auth_url = "https://api.yuzu-emu.org/jwt/installer/"
     aud = "installer"
 
 [[packages]]
-name = "yuzu"
-description = "Early Access (Paid)"
+name = "yuzu Team"
+description = "Early Access (Paid)\nLatest, Fast Updates"
 icon = "thicc_logo_installer__ea_shadow.png"
 requires_authorization = true
 # puts a "new" ribbon the package select
@@ -22,13 +22,13 @@ is_new = true
     [packages.extended_description]
     no_action_description = "Thank you for your support!"
     # Displayed when the package has no authentication for the user
-    need_authentication_description = "Click here to sign in with your yuzu account for Early Access"
+    need_authentication_description = "Need to Sign In"
     # Displayed when the package has an authentication, but the user has not linked their account
-    need_link_description = "You are signed in, but you need to link your Patreon account! Click here for more details"
+    need_link_description = "Signed In - Link Patreon"
     # Displayed when the package has an authentication, but the user has not linked their account
-    need_subscription_description = "You are signed in, but you need to link your Patreon account! Click here for more details"
+    need_subscription_description = "Signed In - No Active Subscription"
     # Displayed when the package has an authentication, but the user has not linked their account
-    need_reward_tier_description = "You are signed in, but are not backing an eligible reward tier! Click here for more details"
+    need_reward_tier_description = "Signed In - No Reward Tier"
 
     [packages.source]
     name = "patreon"
@@ -42,8 +42,8 @@ is_new = true
 
 
 [[packages]]
-name = "yuzu"
-description = "Mainline (Free)"
+name = "yuzu Team"
+description = "Mainline (Free)\nStable, Slow Updates"
 icon = "thicc_logo_installer_shadow.png"
 default = false
     [packages.source]
@@ -58,7 +58,7 @@ default = false
 
 [[packages]]
 name = "128BitBay"
-description = "Early Access (Free)"
+description = "Early Access (Free)\nInactive, No Updates"
 icon = "thicc_logo_installer__ea_shadow.png"
 default = false
     [packages.source]
@@ -73,7 +73,7 @@ default = false
 
 [[packages]]
 name = "PineappleEA"
-description = "Early Access (Free)"
+description = "Early Access (Free)\nActive Updates"
 icon = "thicc_logo_installer__ea_shadow.png"
 default = true
     [packages.source]
