@@ -1,0 +1,78 @@
+{
+  "ca": {
+    "locale": "Català",
+    "error": {
+      "title": "S'ha produït un error",
+      "exit_error": "{msg}\n\nSi us plau, carregui l'arxiu de registre (a {path}) a l'equip de {name}",
+      "location_unknown": "la ubicació on està aquest instal·lador"
+    },
+    "complete": {
+      "thanks": "Gràcies per instal·lar {name}!",
+      "updated": "{name} s'ha actualitzat.",
+      "uninstalled": "{name} s'ha desinstal·lat.",
+      "up_to_date": "{name} ja està actualitzat!",
+      "where_to_find": "Pot trobar les aplicacions instal·lades al seu menú d'inici. ",
+      "migration_where_to_find": "Pot trobar les seves aplicacions instal·lades al seu menú d'inici; si es troba al mig d'alguna cosa, torni-ho a provar.",
+      "migration_finished": "L'hem traslladat a la nova i única versió de {name}."
+    },
+    "modify": {
+      "title": "Esculli una opció:",
+      "update": "Actualitzar",
+      "uninstall": "Desinstal·lar",
+      "prompt": "Està segur de que vol desinstal·lar {name}?",
+      "prompt_repair": "<b>WARNING:</b> All the files under <code>{path}</code> will be <b>deleted</b> as part of the repair process!<br>Do you wish to proceed?",
+      "view_local_files": "Veure arxius locals",
+      "prompt_recover": "Les dades de l'instal·lador per a {name} estan malmeses. <br>Cal una reparació per restaurar la instal·lació.",
+      "prompt_confirm": "Desinstal·lar {name}",
+      "modify": "Modificar",
+      "repair": "Reparar"
+    },
+    "auth": {
+      "paste": "Enganxar",
+      "token": "Token",
+      "verify": "Verificar token",
+      "page_header": "El canal de llançament d'accés anticipat li permet provar les últimes funcions experimentals i correccions abans que es fusionin al yuzu. Aquest canal inclou totes les actualitzacions diàries de yuzu, a més d'aquestes funcions exclusives.\n\nPer ser membre d'accés anticipat, ha de ser subscriptor d'accés anticipat a Patreon.",
+      "page_opened": "Pàgina oberta! Comprovi el seu navegador predeterminat per a la pàgina i segueixi les instruccions que hi ha per enllaçar el seu compte de Patreon.\nQuan hagi acabat, introdueixi el token a continuació.",
+      "login_failed": "Error a l'iniciar sessió!\n\nComprovi que el teu token sigui correcte i torni-ho a provar"
+    },
+    "back": "Enrere",
+    "exit": "Sortir",
+    "yes": "Sí",
+    "no": "No",
+    "continue": "Continuar",
+    "cancel": "Cancel·lar",
+    "app": {
+      "installer_title": "Benvingut a l'instal·lador de {name}!",
+      "maintenance_title": "Benvingut a l'eina de manteniment de {name}.",
+      "window_title": "Instal·lador de {name}",
+      "installer_subtitle": "Estarem llestos en uns instants."
+    },
+    "select_packages": {
+      "title": "Seleccioni quins paquets vol instal·lar:",
+      "installed": "(Instal·lat)",
+      "advanced": "Avançat...",
+      "install": "Instal·lar",
+      "location": "Ubicació d'instal·lació",
+      "select": "Seleccionar",
+      "overwriting": "Sobreescrivint",
+      "options": "Opcions d'instal·lació",
+      "title_repair": "Seleccioni quins paquets vol reparar:",
+      "location_placeholder": "Introdueixi una ruta d'instal·lació aquí",
+      "overwriting_warning": "Directory <code>{path}</code> already exists.<br>Are you sure you want to <b>overwrite</b> the contents inside?",
+      "nothing_picked_warning": "Si us plau, seleccioni almenys un paquet a instal·lar!",
+      "nothing_picked": "Res seleccionat",
+      "option_shortcut": "Crear un accés directe al escriptori"
+    },
+    "install_packages": {
+      "uninstall": "Desinstal·lant...",
+      "install": "Instal·lant...",
+      "check_for_update": "Comprovant actualitzacions...",
+      "self_update": "Descarregant una auto-actualització...",
+      "please_wait": "Si us plau, esperi..."
+    },
+    "download_packages": {
+      "download_config": "Descarregant configuració...",
+      "error_download_config": "S'ha produït un error mentre descarregàvem la configuració: {msg}"
+    }
+  }
+}

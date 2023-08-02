@@ -1,0 +1,78 @@
+{
+  "id": {
+    "locale": "Bahasa Indonesia",
+    "error": {
+      "title": "Terjadi kesalahan",
+      "exit_error": "{msg}\n\nHarap unggah file log (di {path}) kepada tim {name}",
+      "location_unknown": "lokasi dimana penginstal ini berada"
+    },
+    "complete": {
+      "thanks": "Terima kasih telah menginstal {name}!",
+      "updated": "{name} telah diperbaharui.",
+      "uninstalled": "{name} telah di hapus.",
+      "up_to_date": "{name} sudah up-to-date!",
+      "where_to_find": "Anda dapat menemukan aplikasi yang terinstal di start menu anda.",
+      "migration_where_to_find": "Anda dapat menemukan aplikasi yang terinstal di start menu anda - jika anda sedang mengerjakan sesuatu yang lain, coba lagi.",
+      "migration_finished": "Anda telah dipindahkan ke versi tunggal yang baru dari {name}."
+    },
+    "modify": {
+      "title": "Pilih opsi:",
+      "update": "Perbaharui",
+      "uninstall": "Copot Instalasi",
+      "prompt": "Apakah anda yakin untuk menghapus {name}?",
+      "prompt_repair": "<b>WARNING:</b> All the files under <code>{path}</code> will be <b>deleted</b> as part of the repair process!<br>Do you wish to proceed?",
+      "view_local_files": "Lihat file lokal",
+      "prompt_recover": "Data instalatur untuk {name} rusak.<br>Diperlukan perbaikan untuk memulihkan instalasi.",
+      "prompt_confirm": "Hapus {name}",
+      "modify": "Modifikasi",
+      "repair": "Perbaiki"
+    },
+    "auth": {
+      "paste": "Tempel",
+      "token": "Token",
+      "verify": "Verifikasi Token",
+      "page_header": "Saluran rilis Early Access memperbolehkan anda untuk mencoba fitur eksperimental dan perbaikan terbaru sebelum mereka disatukan menjadi yuzu. Saluran ini mencakup semua pembaruan harian yuzu reguler, ditambah fitur-fitur ekslusif ini.\n\nUntuk menjadi anggota Early Access, anda harus menjadi pelanggan Early Access Patreon.",
+      "page_opened": "Halaman dibuka! Periksa peramban anda untuk halamannya, dan ikuti instruksi yang ada untuk menghubungkan akun patreon anda.\nJika anda sudah selesai, masukkan token di bawah.",
+      "login_failed": "Login gagal!\n\nPeriksa kembali token anda dan coba lagi"
+    },
+    "back": "Kembali",
+    "exit": "Keluar",
+    "yes": "Ya",
+    "no": "Tidak",
+    "continue": "Lanjut",
+    "cancel": "Batalkan",
+    "app": {
+      "installer_title": "Selamat datang di instalatur {name}!",
+      "maintenance_title": "Selamat datang di Maintenance Tool {name}.",
+      "window_title": "{name} Instalatur",
+      "installer_subtitle": "Kami akan membuat anda siap dan berjalan hanya dalam beberapa saat."
+    },
+    "select_packages": {
+      "title": "Pilih paket mana yang ingin Anda install:",
+      "installed": "(terinstal)",
+      "advanced": "Lanjutan...",
+      "install": "Instal",
+      "location": "Lokasi Instal",
+      "select": "Pilih",
+      "overwriting": "Menimpa",
+      "options": "Opsi Instal",
+      "title_repair": "Pilih paket mana yang ingin anda perbaiki:",
+      "location_placeholder": "Masukkan lokasi instal di sini",
+      "overwriting_warning": "Directory <code>{path}</code> already exists.<br>Are you sure you want to <b>overwrite</b> the contents inside?",
+      "nothing_picked_warning": "Silakan pilih setidaknya satu paket untuk diinstal!",
+      "nothing_picked": "Tidak ada yang dipilih",
+      "option_shortcut": "Buat Pintasan Desktop"
+    },
+    "install_packages": {
+      "uninstall": "Mencopot Instalan...",
+      "install": "Menginstal...",
+      "check_for_update": "Memeriksa pembaruan...",
+      "self_update": "Mengunduh pembaruan diri...",
+      "please_wait": "Mohon tunggu..."
+    },
+    "download_packages": {
+      "download_config": "Mengunduh konfigurasi...",
+      "error_download_config": "Mendapatkan kesalahan saat mengunduh konfigurasi: {msg}"
+    }
+  }
+}

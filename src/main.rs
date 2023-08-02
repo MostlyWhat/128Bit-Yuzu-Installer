@@ -47,6 +47,10 @@ extern crate slug;
 #[cfg(not(windows))]
 extern crate sysinfo;
 
+extern crate jsonwebtoken as jwt;
+
+extern crate base64;
+
 mod archives;
 mod config;
 mod frontend;
@@ -61,11 +65,14 @@ mod tasks;
 use installer::InstallerFramework;
 
 use logging::LoggingErrors;
+use std::path::PathBuf;
 
 use clap::App;
 use clap::Arg;
 
 use config::BaseAttributes;
+use std::fs;
+use std::process::{exit, Command, Stdio};
 
 const RAW_CONFIG: &str = include_str!(concat!(env!("OUT_DIR"), "/bootstrap.toml"));
 
@@ -108,6 +115,7 @@ fn main() {
         .parent()
         .log_expect("Parent directory of executable could not be found");
 
+    // Handle self-updating if needed
     self_update::perform_swap(&current_exe, matches.value_of("swap"));
     if let Some(new_matches) = self_update::check_args(reinterpret_app, current_path) {
         matches = new_matches;
@@ -115,14 +123,28 @@ fn main() {
     self_update::cleanup(current_path);
 
     // Load in metadata + setup the installer framework
+    let mut fresh_install = false;
     let metadata_file = current_path.join("metadata.json");
     let mut framework = if metadata_file.exists() {
         info!("Using pre-existing metadata file: {:?}", metadata_file);
-        InstallerFramework::new_with_db(config, current_path).log_expect("Unable to parse metadata")
+        InstallerFramework::new_with_db(config.clone(), current_path).unwrap_or_else(|e| {
+            error!("Failed to load metadata: {:?}", e);
+            warn!("Entering recovery mode");
+            InstallerFramework::new_recovery_mode(config, current_path)
+        })
     } else {
         info!("Starting fresh install");
+        fresh_install = true;
         InstallerFramework::new(config)
     };
+
+    // check for existing installs if we are running as a fresh install
+    let installed_path = PathBuf::from(framework.get_default_path().unwrap());
+    if fresh_install && installed_path.join("metadata.json").exists() {
+        info!("Existing install detected! Copying Trying to launch this install instead");
+        // Ignore the return value from this since it should exit the application if its successful
+        let _ = replace_existing_install(&current_exe, &installed_path);
+    }
 
     let is_launcher = if let Some(string) = matches.value_of("launcher") {
         framework.is_launcher = true;
@@ -134,4 +156,51 @@ fn main() {
 
     // Start up the UI
     frontend::launch(&app_name, is_launcher, framework);
+}
+
+fn replace_existing_install(current_exe: &PathBuf, installed_path: &PathBuf) -> Result<(), String> {
+    // Generate installer path
+    let platform_extension = if cfg!(windows) {
+        "maintenancetool.exe"
+    } else {
+        "maintenancetool"
+    };
+
+    let new_tool = if cfg!(windows) {
+        "maintenancetool_new.exe"
+    } else {
+        "maintenancetool_new"
+    };
+
+    if let Err(v) = fs::copy(current_exe, installed_path.join(new_tool)) {
+        return Err(format!("Unable to copy installer binary: {:?}", v));
+    }
+
+    let existing = installed_path
+        .join(platform_extension)
+        .into_os_string()
+        .into_string();
+    let new = installed_path.join(new_tool).into_os_string().into_string();
+    if existing.is_ok() && new.is_ok() {
+        // Remove NTFS alternate stream which tells the operating system that the updater was downloaded from the internet
+        if cfg!(windows) {
+            let _ = fs::remove_file(
+                installed_path.join("maintenancetool_new.exe:Zone.Identifier:$DATA"),
+            );
+        }
+        info!("Launching {:?}", existing);
+        let success = Command::new(new.unwrap())
+            .arg("--swap")
+            .arg(existing.unwrap())
+            .stdout(Stdio::null())
+            .stderr(Stdio::null())
+            .spawn();
+        if success.is_ok() {
+            exit(0);
+        } else {
+            error!("Unable to start existing yuzu maintenance tool. Launching old one instead");
+        }
+    }
+
+    Ok(())
 }

@@ -1,0 +1,78 @@
+{
+  "vi-VN": {
+    "locale": "Tiếng Anh",
+    "error": {
+      "title": "Có lỗi xảy ra",
+      "exit_error": "{msg}\n\nVui lòng tải lên bản báo cáo (in {path}) cho đội {name}",
+      "location_unknown": "nơi trình cài đặt được đặt"
+    },
+    "complete": {
+      "thanks": "Cảm ơn bạn đã cài {name}!",
+      "updated": "{name} đã được cập nhật.",
+      "uninstalled": "{name} đã được gỡ cài đặt.",
+      "up_to_date": "{name} đã ở phiên bản mới nhất!",
+      "where_to_find": "Bạn có thể tìm thấy các ứng dụng đã cài trong menu Start",
+      "migration_where_to_find": "Bạn có thể tìm thấy các ứng dụng đã cài trong menu Start - nếu đang làm dở việc gì thì cứ thử lại.",
+      "migration_finished": "Bạn đã được chuyển tới bản mới của {name}"
+    },
+    "modify": {
+      "title": "Chọn một sự lựa chọn:",
+      "update": "Cập nhật",
+      "uninstall": "Gỡ cài đặt",
+      "prompt": "Bạn có chắc bạn muốn gỡ cài đặt {name}?",
+      "prompt_repair": "<b>WARNING:</b> All the files under <code>{path}</code> will be <b>deleted</b> as part of the repair process!<br>Do you wish to proceed?",
+      "view_local_files": "Xem các tập tin trên máy",
+      "prompt_recover": "Dữ liệu cài đặt cho {name} đã bị lỗi.<br>Bạn cần thực hiện vá lỗi để khôi phục lại bản cài đặt.",
+      "prompt_confirm": "Gỡ cài đặt {name}",
+      "modify": "Chỉnh sửa",
+      "repair": "Sửa chữa"
+    },
+    "auth": {
+      "paste": "Dán",
+      "token": "Token",
+      "verify": "Kiểm tra Token",
+      "page_header": "Kênh Truy Cập Sớm cho phép bạn thử một số chức năng và vá lỗi trong giai đoạn thử nghiệm trước khi nó được đưa vào yuzu chính thức. Kênh này bao gồm tất cả bản cập nhật yuzu hằng ngày bình thường và một số lợi ích đặc biệt trên.\n\nĐể trở thành một thành viên của kênh Truy Cập Sớm thì bạn phải là một người người ủng hộ và đăng ký kênh Truy Cập Sớm trên Patreon.",
+      "page_opened": "Trang đã được mở! Kiểm tra trình duyệt mặc định cho trang này, và làm theo hướng dẫn ở đó để liên kết tài khoản Patreon của bạn.\nKhi bạn hoàn thành, hãy nhập token vào bên dưới.",
+      "login_failed": "Đăng nhập thất bại!\n\nHãy kiểm tra lại token của bạn đã chính xác chưa và thử lại"
+    },
+    "back": "Trở lại",
+    "exit": "Thoát",
+    "yes": "Có",
+    "no": "Không",
+    "continue": "Tiếp tục",
+    "cancel": "Huỷ",
+    "app": {
+      "installer_title": "Chào mừng tới trình cài đặt {name}!",
+      "maintenance_title": "Chào mừng tới trình bảo trì {name}.",
+      "window_title": "Trình cài đặt {name}",
+      "installer_subtitle": "Chúng ta sẽ hoàn thành trong một vài giây lát."
+    },
+    "select_packages": {
+      "title": "Chọn các gói mà bạn muốn cài:",
+      "installed": "(đã cài đặt)",
+      "advanced": "Nâng cao...",
+      "install": "Cài đặt",
+      "location": "Nơi cài đặt",
+      "select": "Lựa chọn",
+      "overwriting": "Đang ghi đè",
+      "options": "Các thiết lập cài đặt",
+      "title_repair": "Chọn các gói mà bạn muốn vá lỗir:",
+      "location_placeholder": "Nhập đường dẫn tới nơi bạn muốn cài vào đây",
+      "overwriting_warning": "Directory <code>{path}</code> already exists.<br>Are you sure you want to <b>overwrite</b> the contents inside?",
+      "nothing_picked_warning": "Vui lòng chọn ít nhất một gói để cài!",
+      "nothing_picked": "Chưa chọn gì",
+      "option_shortcut": "Tạo đường dẫn trên màn hình chính"
+    },
+    "install_packages": {
+      "uninstall": "Đang gỡ cài đặt...",
+      "install": "Đang cài đặt...",
+      "check_for_update": "Đang tìm bản cập nhật...",
+      "self_update": "Đang tải chương trình tự cập nhật...",
+      "please_wait": "Vui lòng đợi..."
+    },
+    "download_packages": {
+      "download_config": "Đang tải cấu hình",
+      "error_download_config": "Có lỗi trong khi tải về cấu hình: {msg}"
+    }
+  }
+}

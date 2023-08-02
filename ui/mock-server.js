@@ -10,17 +10,18 @@ let maintenance = false
 let launcher = false
 let fileExists = false
 let darkMode = false
+let recoveryMode = false
 
 function progressSimulation (res) {
   if (showError) {
-    var resp = JSON.stringify({ Error: 'Simulated error.' }) + '\n'
+    const resp = JSON.stringify({ Error: 'Simulated error.' }) + '\n'
     res.write(resp)
     res.status(200).end()
     return
   }
-  var progress = 0.0
-  var timer = setInterval(() => {
-    var resp = JSON.stringify({ Status: ['Processing...', progress] }) + '\n'
+  let progress = 0.0
+  const timer = setInterval(() => {
+    const resp = JSON.stringify({ Status: ['Processing...', progress] }) + '\n'
     progress += 0.1
     res.write(resp)
     if (progress >= 1) {
@@ -71,7 +72,7 @@ function returnConfig (res) {
 app.get('/api/attrs', (req, res) => {
   console.log('-- Get attrs')
   res.send(
-    { name: 'yuzu', target_url: 'https://raw.githubusercontent.com/j-selby/test-installer/master/config.linux.v2.toml' }
+    { name: 'yuzu', recovery: recoveryMode, target_url: 'https://raw.githubusercontent.com/j-selby/test-installer/master/config.linux.v2.toml' }
   )
 })
 
@@ -100,7 +101,8 @@ app.get('/api/config', (req, res) => {
 })
 
 app.post('/api/start-install', (req, res) => {
-  console.log(`-- Install: ${req}`)
+  console.log('-- Install:')
+  console.log(req.body)
   progressSimulation(res)
 })
 
@@ -117,6 +119,19 @@ app.post('/api/verify-path', (req, res) => {
   console.log('-- Verify Path')
   res.send({
     exists: fileExists
+  })
+})
+
+app.post('/api/check-auth', (req, res) => {
+  console.log('-- Check Authorization')
+  res.send({
+    username: 'test1',
+    token: 'token',
+    jwt_token: {
+      isPatreonAccountLinked: true,
+      isPatreonSubscriptionActive: true,
+      releaseChannels: ['early-access']
+    }
   })
 })
 
@@ -146,6 +161,10 @@ process.argv.forEach((val, index) => {
     case 'error':
       showError = true
       console.log('Simulating errors')
+      break
+    case 'recovery':
+      recoveryMode = true
+      console.log('Simulating recovery mode')
       break
   }
 })

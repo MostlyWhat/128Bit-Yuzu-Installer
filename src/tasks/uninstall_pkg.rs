@@ -44,7 +44,7 @@ impl Task for UninstallPackageTask {
             }
         }
 
-        let mut package = match metadata {
+        let package = match metadata {
             Some(v) => v,
             None => {
                 if self.optional {
@@ -63,8 +63,7 @@ impl Task for UninstallPackageTask {
             0.0,
         ));
 
-        // Reverse, as to delete directories last
-        package.files.reverse();
+        let mut directories = Vec::new();
 
         let max = package.files.len();
         for (i, file) in package.files.iter().enumerate() {
@@ -78,7 +77,9 @@ impl Task for UninstallPackageTask {
             ));
 
             let result = if file.is_dir() {
-                remove_dir(file)
+                // we don't delete directory just yet
+                directories.push(file);
+                Ok(())
             } else {
                 remove_file(file)
             };
@@ -86,6 +87,17 @@ impl Task for UninstallPackageTask {
             if let Err(v) = result {
                 error!("Failed to delete file: {:?}", v);
             }
+        }
+
+        // sort directories by reverse depth order
+        directories.sort_by(|a, b| {
+            let depth_a = a.components().fold(0usize, |acc, _| acc + 1);
+            let depth_b = b.components().fold(0usize, |acc, _| acc + 1);
+            depth_b.cmp(&depth_a)
+        });
+        for i in directories.iter() {
+            info!("Deleting directory: {:?}", i);
+            remove_dir(i).ok();
         }
 
         Ok(TaskParamType::None)

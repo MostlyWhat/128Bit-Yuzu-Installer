@@ -8,7 +8,7 @@ use wry::{
         dpi::LogicalSize,
         event::{Event, StartCause, WindowEvent},
         event_loop::{ControlFlow, EventLoop},
-        window::WindowBuilder,
+        window::{Icon, WindowBuilder},
     },
     webview::{RpcResponse, WebViewBuilder},
 };
@@ -16,6 +16,8 @@ use wry::{
 use log::Level;
 
 use crate::logging::LoggingErrors;
+
+const ICON_DATA: &[u8] = include_bytes!(concat!(env!("OUT_DIR"), "/icon-data.bin"));
 
 /// Starts the main web UI. Will return when UI is closed.
 pub fn start_ui(app_name: &str, http_address: &str, is_launcher: bool) -> Result<()> {
@@ -30,9 +32,12 @@ pub fn start_ui(app_name: &str, http_address: &str, is_launcher: bool) -> Result
     };
     info!("Spawning web view instance");
 
+    let window_icon =
+        Icon::from_rgba(ICON_DATA.to_vec(), 48, 48).log_expect("Unable to construct window icon");
     let event_loop = EventLoop::new();
     let window = WindowBuilder::new()
         .with_title(format!("{} Installer", app_name))
+        .with_window_icon(Some(window_icon))
         .with_inner_size(LogicalSize::new(size.0, size.1))
         .with_resizable(false)
         .build(&event_loop)?;

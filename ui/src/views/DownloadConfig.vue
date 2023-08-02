@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     download_install_status: function () {
-      var that = this
+      const that = this
       this.$http.get('/api/installation-status').then(function (resp) {
         that.$root.metadata = resp.data
 
@@ -25,11 +25,11 @@ export default {
       })
     },
     download_config: function () {
-      var that = this
+      const that = this
       this.$http.get('/api/config').then(function (resp) {
         that.$root.config = resp.data
 
-        that.choose_next_state()
+        that.$root.check_authentication(that.choose_next_state, that.choose_next_state)
       }).catch(function (e) {
         console.error('Got error while downloading config: ' +
                     e)
@@ -46,10 +46,10 @@ export default {
       })
     },
     choose_next_state: function () {
-      var app = this.$root
+      const app = this.$root
       // Update the updater if needed
       if (app.config.new_tool) {
-        this.$router.push('/install/updater')
+        this.$router.push('/install/updater/false')
         return
       }
 
@@ -57,14 +57,14 @@ export default {
         app.install_location = app.metadata.install_path
 
         // Copy over installed packages
-        for (var x = 0; x < app.config.packages.length; x++) {
+        for (let x = 0; x < app.config.packages.length; x++) {
           app.config.packages[x].default = false
           app.config.packages[x].installed = false
         }
 
-        for (var i = 0; i < app.metadata.database.packages.length; i++) {
+        for (let i = 0; i < app.metadata.database.packages.length; i++) {
           // Find this config package
-          for (var x = 0; x < app.config.packages.length; x++) {
+          for (let x = 0; x < app.config.packages.length; x++) {
             if (app.config.packages[x].name === app.metadata.database.packages[i].name) {
               app.config.packages[x].default = true
               app.config.packages[x].installed = true
@@ -72,13 +72,12 @@ export default {
           }
         }
 
-        if (app.metadata.is_launcher) {
-          this.$router.replace('/install/regular')
-        } else {
-          this.$router.replace('/modify')
-        }
+        this.$router.replace({
+          name: 'migrate',
+          params: { next: app.metadata.is_launcher ? '/install/regular/false' : '/modify' }
+        })
       } else {
-        for (var x = 0; x < app.config.packages.length; x++) {
+        for (let x = 0; x < app.config.packages.length; x++) {
           app.config.packages[x].installed = false
         }
 
@@ -90,7 +89,10 @@ export default {
           }
         })
 
-        this.$router.replace('/packages')
+        this.$router.replace({
+          name: 'migrate',
+          params: { next: '/packages' }
+        })
       }
     }
   }

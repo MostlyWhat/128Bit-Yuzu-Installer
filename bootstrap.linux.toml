@@ -1,2 +1,2 @@
 name = "yuzu"
-target_url = "https://raw.githubusercontent.com/j-selby/test-installer/master/config.linux.v2.toml"
+target_url = "https://raw.githubusercontent.com/yuzu-emu/liftinstall/master/config.linux.v3.toml"

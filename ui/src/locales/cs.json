@@ -1,0 +1,78 @@
+{
+  "cs": {
+    "locale": "Česky",
+    "error": {
+      "title": "Objevil se error",
+      "exit_error": "{msg}\n\nProsím nahrajte záznamoví soubor (do {path}) pro {name} tým",
+      "location_unknown": "místo kde se instalátor nachází"
+    },
+    "complete": {
+      "thanks": "Děkujeme za instalování {name}!",
+      "updated": "{name} byl aktualizován.",
+      "uninstalled": "{name} byl odinstalován.",
+      "up_to_date": "{name} už je aktuální!",
+      "where_to_find": "Nainstalované aplikace můžete najít ve vašem start menu.",
+      "migration_where_to_find": "Nainstalované aplikace můžete najít ve vašem start menu - jestli jste byly uprostřed něčeho, prosím zkuste to znovu.",
+      "migration_finished": "Byly jste přesunuti do nové, jediné verze {name}."
+    },
+    "modify": {
+      "title": "Vyberte možnost:",
+      "update": "Aktualizovat",
+      "uninstall": "Odinstalovat",
+      "prompt": "Jste si jistý že chcete odinstalovat {name}?",
+      "prompt_repair": "<b>WARNING:</b> All the files under <code>{path}</code> will be <b>deleted</b> as part of the repair process!<br>Do you wish to proceed?",
+      "view_local_files": "Zobrazit místní soubory",
+      "prompt_recover": "Data instalátoru pro {name} jsou poškozený.<br>Oprava je potřeba pro obnovní instalace.",
+      "prompt_confirm": "Odinstalovat {name}",
+      "modify": "Modifikovat",
+      "repair": "Opravit"
+    },
+    "auth": {
+      "paste": "Vložit",
+      "token": "Token",
+      "verify": "Ověřit Token",
+      "page_header": "Early Access kanál pro zveřejňovaní vám umožní si vyzkoušet nejnovější experimentální funkce and opravy, před tím než spojeny s yuzu. Tento kanál obsahuje všechny pravidelné denní yuzu aktualizace, k tomu ještě tyto exkluzivní funkce.\n\nAby jste se stal Early Access členem, musíte se jako první stát Patreon Early Access odběratelem.",
+      "page_opened": "Stránka otevřena! Zkontrolujte váš výchozí prohlížeč pro stránku s instrukcemi a postupujte podle pokynů pro propojení patreon účtu.\nAž budete hotoví, vložte token níže.",
+      "login_failed": "Přihlášení selhalo!\n\nUjistěte se, že jste zadali token správně a zkuste to znovu."
+    },
+    "back": "Zpět",
+    "exit": "Opustit",
+    "yes": "Ano",
+    "no": "Ne",
+    "continue": "Pokračovat",
+    "cancel": "Zrušit",
+    "app": {
+      "installer_title": "Vítejte v {name} instalátoru!",
+      "maintenance_title": "Vítejte v {name} Nástroji pro Údržbu.",
+      "window_title": "{name} Instalátor",
+      "installer_subtitle": "Za chvilku vás uvedeme zpátky do provozu."
+    },
+    "select_packages": {
+      "title": "Vyberte balíček, který si chcete nainstalovat:",
+      "installed": "(nainstalováno)",
+      "advanced": "Pokročilé...",
+      "install": "Nainstalovat",
+      "location": "Místo Instalace",
+      "select": "Vyberte",
+      "overwriting": "Přepisování",
+      "options": "Možnosti Instalace",
+      "title_repair": "Vyberte balíček, který chcete opravit:",
+      "location_placeholder": "Sem zadejte místo instalace",
+      "overwriting_warning": "Directory <code>{path}</code> already exists.<br>Are you sure you want to <b>overwrite</b> the contents inside?",
+      "nothing_picked_warning": "Prosím vyberte alespoň jeden balíček na instalování!",
+      "nothing_picked": "Nic nevybráno",
+      "option_shortcut": "Vytvořit Zástupce na Plochu"
+    },
+    "install_packages": {
+      "uninstall": "Odinstalovávám...",
+      "install": "Instaluji...",
+      "check_for_update": "Hledám nové aktualizace...",
+      "self_update": "Stahuji samo-aktualizaci...",
+      "please_wait": "Prosím čekejte..."
+    },
+    "download_packages": {
+      "download_config": "Stahuji konfigurace...",
+      "error_download_config": "Error se objevil při stahování konfigurace: {msg}"
+    }
+  }
+}

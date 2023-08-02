@@ -1,0 +1,78 @@
+{
+  "ru-RU": {
+    "locale": "Русский",
+    "error": {
+      "title": "Произошла ошибка",
+      "exit_error": "{msg}\n\nПожалуйста, загрузите файл журнала (в {path}) и отправьте его команде {name}",
+      "location_unknown": "расположение, в котором находится установщик"
+    },
+    "complete": {
+      "thanks": "Спасибо за установку {name}!",
+      "updated": "{name} был обновлён.",
+      "uninstalled": "{name} был удалён.",
+      "up_to_date": "{name} уже обновлён!",
+      "where_to_find": "Установленные приложения можно найти в меню \"Пуск\".",
+      "migration_where_to_find": "Установленные приложения можно найти в меню \"Пуск\" - если вы были заняты чем-то, просто повторите попытку.",
+      "migration_finished": "Вы были переведены на новую, единую версию {name}."
+    },
+    "modify": {
+      "title": "Выберите вариант:",
+      "update": "Обновить",
+      "uninstall": "Удалить",
+      "prompt": "Вы уверены, что хотите удалить {name}?",
+      "prompt_repair": "<b>WARNING:</b> All the files under <code>{path}</code> will be <b>deleted</b> as part of the repair process!<br>Do you wish to proceed?",
+      "view_local_files": "Просмотреть локальные файлы",
+      "prompt_recover": "Файлы установщика {name} повреждены.<br>Для восстановления установки требуется починка.",
+      "prompt_confirm": "Удалить {name}",
+      "modify": "Изменить",
+      "repair": "Исправить"
+    },
+    "auth": {
+      "paste": "Вставить",
+      "token": "Токен",
+      "verify": "Проверить токен",
+      "page_header": "Канал выпуска Early Access позволяет вам опробовать последние экспериментальные функции и исправления, прежде чем они будут внедрены в yuzu. Этот канал включает все обычные ежедневные обновления yuzu, а также эти эксклюзивные возможности.\n\nЧтобы стать участником Early Access, вы должны быть подписчиком Patreon Early Access.",
+      "page_opened": "Страница открыта! Проверьте страницу на вашем браузере по умолчанию, и следуйте инструкциям, чтобы связать свой аккаунт Patreon.\nКогда вы закончите, введите токен ниже.",
+      "login_failed": "Вход не удался!\n\nПроверьте правильность вашего токена и повторите попытку"
+    },
+    "back": "Назад",
+    "exit": "Выход",
+    "yes": "Да",
+    "no": "Нет",
+    "continue": "Продолжить",
+    "cancel": "Отмена",
+    "app": {
+      "installer_title": "Добро пожаловать в установщик {name}!",
+      "maintenance_title": "Добро пожаловать в Инструмент Обслуживания {name}.",
+      "window_title": "Установщик {name}",
+      "installer_subtitle": "Мы сейчас всё для вас подготовим."
+    },
+    "select_packages": {
+      "title": "Выберите пакеты для установки:",
+      "installed": "(установлено)",
+      "advanced": "Дополнительно...",
+      "install": "Установить",
+      "location": "Расположение установки",
+      "select": "Выбрать",
+      "overwriting": "Перезапись",
+      "options": "Параметры установки",
+      "title_repair": "Выберите пакеты для починки:",
+      "location_placeholder": "Введите путь установки здесь",
+      "overwriting_warning": "Directory <code>{path}</code> already exists.<br>Are you sure you want to <b>overwrite</b> the contents inside?",
+      "nothing_picked_warning": "Пожалуйста, выберите хотя-бы один пакет для установки!",
+      "nothing_picked": "Ничего не выбрано",
+      "option_shortcut": "Создать ярлык на Рабочем Столе"
+    },
+    "install_packages": {
+      "uninstall": "Удаление...",
+      "install": "Установка...",
+      "check_for_update": "Проверка обновлений...",
+      "self_update": "Загрузка самообновления...",
+      "please_wait": "Пожалуйста, подождите..."
+    },
+    "download_packages": {
+      "download_config": "Загрузка конфигурации...",
+      "error_download_config": "Произошла ошибка при загрузке конфигурации: {msg}"
+    }
+  }
+}

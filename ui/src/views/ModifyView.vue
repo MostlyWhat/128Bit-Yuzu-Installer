@@ -38,15 +38,38 @@ export default {
   data: function () {
     return {}
   },
+  mounted: function () {
+    if (this.$root.$data.attrs.recovery) {
+      this.recovery()
+    }
+  },
   methods: {
+    recovery: function () {
+      this.$buefy.dialog.alert({
+        title: this.$t('modify.repair'),
+        message: this.$t('modify.prompt_recover', { name: this.$root.$data.attrs.name }),
+        confirmText: this.$t('continue'),
+        type: 'is-danger',
+        hasIcon: true,
+        onConfirm: this.repair_packages
+      })
+    },
     update: function () {
-      this.$router.push('/install/update')
+      this.$router.push('/install/update/false')
     },
     modify_packages: function () {
       this.$router.push('/packages')
     },
     repair_packages: function () {
-      this.$router.push({ name: 'packages', params: { repair: true } })
+      this.$buefy.dialog.confirm({
+        title: this.$t('modify.repair'),
+        message: this.$t('modify.prompt_repair', { path: this.$root.$data.metadata.install_path }),
+        cancelText: this.$t('cancel'),
+        confirmText: this.$t('continue'),
+        type: 'is-danger',
+        hasIcon: true,
+        onConfirm: () => { this.$router.push({ name: 'packages', params: { repair: true } }) }
+      })
     },
     prepare_uninstall: function () {
       this.$buefy.dialog.confirm({
@@ -60,7 +83,7 @@ export default {
       })
     },
     uninstall: function () {
-      this.$router.push('/install/uninstall')
+      this.$router.push('/install/uninstall/false')
     },
     view_files: function () {
       this.$http.get('/api/view-local-folder')

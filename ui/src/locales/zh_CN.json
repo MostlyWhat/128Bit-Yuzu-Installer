@@ -1,0 +1,78 @@
+{
+  "zh-CN": {
+    "locale": "简体中文",
+    "error": {
+      "title": "发生错误",
+      "exit_error": "{msg}\n\n请上传日志文件(位于 {path})至 {name} 开发团队。",
+      "location_unknown": "此安装程序位于"
+    },
+    "complete": {
+      "thanks": "感谢您安装 {name}！",
+      "updated": "{name} 已更新。",
+      "uninstalled": "{name} 已卸载。",
+      "up_to_date": "{name} 已是最新版本！",
+      "where_to_find": "您可以在“开始”菜单中找到已安装的应用程序。",
+      "migration_where_to_find": "稍后您可以在“开始”菜单中找到已安装的应用程序。",
+      "migration_finished": "您已迁移到另一版本的 {name}。"
+    },
+    "modify": {
+      "title": "选择一个选项:",
+      "update": "更新",
+      "uninstall": "卸载",
+      "prompt": "您确定要卸载 {name} 吗？",
+      "prompt_repair": "<b>WARNING:</b> All the files under <code>{path}</code> will be <b>deleted</b> as part of the repair process!<br>Do you wish to proceed?",
+      "view_local_files": "浏览本地文件",
+      "prompt_recover": " {name} 的安装数据已损坏。<br>需要修复才能继续安装。",
+      "prompt_confirm": "卸载 {name}",
+      "modify": "更改",
+      "repair": "修复"
+    },
+    "auth": {
+      "paste": "粘贴",
+      "token": "令牌",
+      "verify": "验证令牌",
+      "page_header": "Early Access 渠道允许您在最新的实验性功能和修复程序合并到主线版 yuzu 之前试用它们。该渠道包括 yuzu 每日更新，以及这些独家功能。\n\n要想成为 Early Access 用户，您需要成为 Early Access 的捐献者(通过 Patreon 平台)。",
+      "page_opened": "相关网页已打开。请检查打开的网页，并按照提示关联您的 patreon 帐户。\n完成后，请在下方输入您的令牌。",
+      "login_failed": "验证失败！\n\n请确保您的令牌无误后再试。"
+    },
+    "back": "上一步",
+    "exit": "退出",
+    "yes": "确定",
+    "no": "取消",
+    "continue": "继续",
+    "cancel": "取消",
+    "app": {
+      "installer_title": "欢迎使用 {name} 安装程序！",
+      "maintenance_title": "欢迎使用 {name} 维护工具。",
+      "window_title": "{name} 安装程序",
+      "installer_subtitle": "只需要几分钟，我们将很快完成安装。"
+    },
+    "select_packages": {
+      "title": "选择要安装的软件包:",
+      "installed": "(已安装)",
+      "advanced": "高级...",
+      "install": "安装",
+      "location": "安装位置",
+      "select": "选择",
+      "overwriting": "正在覆盖",
+      "options": "安装选项",
+      "title_repair": "选择要修复的软件包:",
+      "location_placeholder": "输入安装路径",
+      "overwriting_warning": "Directory <code>{path}</code> already exists.<br>Are you sure you want to <b>overwrite</b> the contents inside?",
+      "nothing_picked_warning": "请至少选择一个软件包进行安装。",
+      "nothing_picked": "未选择任何项目",
+      "option_shortcut": "创建桌面快捷方式"
+    },
+    "install_packages": {
+      "uninstall": "正在卸载...",
+      "install": "安装中...",
+      "check_for_update": "正在检查更新...",
+      "self_update": "正在下载更新...",
+      "please_wait": "请稍等..."
+    },
+    "download_packages": {
+      "download_config": "正在下载配置...",
+      "error_download_config": "下载配置时出错: {msg}"
+    }
+  }
+}

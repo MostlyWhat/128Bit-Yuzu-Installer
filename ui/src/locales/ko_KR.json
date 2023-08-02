@@ -1,0 +1,78 @@
+{
+  "ko-KR": {
+    "locale": "한국어",
+    "error": {
+      "title": "오류가 발생했습니다",
+      "exit_error": "{msg}\n\n{path}에 있는 로그 파일을 {name} 에 업로드하세요",
+      "location_unknown": "설치 프로그램이 있는 위치"
+    },
+    "complete": {
+      "thanks": "{name} 을 설치해 주셔서 감사합니다!",
+      "updated": "{name} 이 업데이트 되었습니다",
+      "uninstalled": "{name} 이 제거 되었습니다",
+      "up_to_date": "{name} 은(는) 이미 최신 버전입니다!",
+      "where_to_find": "시작 메뉴에서 설치한 프로그램을 찾을 수 있습니다",
+      "migration_where_to_find": "시작 메뉴에서 설치된 응용 프로그램을 찾을 수 있습니다. 설치중이었다면 다시 시도하십시오.",
+      "migration_finished": "{name}의 새로운 단일 버전으로 이동되었습니다."
+    },
+    "modify": {
+      "title": "옵션 선택:",
+      "update": "업데이트",
+      "uninstall": "제거",
+      "prompt": "정말 {name} 을 제거하시겠습니까?",
+      "prompt_repair": "<b>WARNING:</b> All the files under <code>{path}</code> will be <b>deleted</b> as part of the repair process!<br>Do you wish to proceed?",
+      "view_local_files": "로컬 파일 보기",
+      "prompt_recover": "{name}의 설치 프로그램 데이터가 손상되었습니다.<br>설치를 복원하려면 복구가 필요합니다.",
+      "prompt_confirm": "{name} 삭제",
+      "modify": "수정",
+      "repair": "복구"
+    },
+    "auth": {
+      "paste": "붙여넣기",
+      "token": "토큰",
+      "verify": "검증 토큰",
+      "page_header": "얼리 엑세스 릴리스 채널을 통해 yuzu에 병합되기 전에 최신 실험 기능 및 수정 사항을 시험해 볼 수 있습니다. 이 채널에는 모든 정기 yuzu 일일 업데이트와 이러한 독점 기능이 포함됩니다.\n\nEarly Access 회원이 되려면 Patreon Early Access 가입자여야 합니다.",
+      "page_opened": "페이지가 열렸습니다! 페이지의 기본 브라우저를 확인하고 해당 페이지의 지침에 따라 Patreon 계정을 연결하세요.\n완료되면 아래 토큰을 입력하십시오.",
+      "login_failed": "로그인 실패!\n\n토큰이 올바른지 다시 확인하고 다시 시도하세요"
+    },
+    "back": "뒤로",
+    "exit": "종료",
+    "yes": "예",
+    "no": "아니요",
+    "continue": "계속",
+    "cancel": "취소",
+    "app": {
+      "installer_title": "{name} 설치 프로그램에 오신 것을 환영합니다!",
+      "maintenance_title": "{name} 관리 도구에 오신 것을 환영합니다!",
+      "window_title": "{name} 설치 프로그램",
+      "installer_subtitle": "몇 분 안에 준비하여 실행할 수 있습니다"
+    },
+    "select_packages": {
+      "title": "설치할 패키지를 선택하세요:",
+      "installed": "(설치됨)",
+      "advanced": "고급...",
+      "install": "설치",
+      "location": "설치 위치",
+      "select": "선택",
+      "overwriting": "덮어쓰기",
+      "options": "설치 옵션",
+      "title_repair": "복구할 패키지 선택:",
+      "location_placeholder": "여기에 설치 경로를 입력하세요",
+      "overwriting_warning": "Directory <code>{path}</code> already exists.<br>Are you sure you want to <b>overwrite</b> the contents inside?",
+      "nothing_picked_warning": "설치할 패키지를 하나 이상 선택하세요!",
+      "nothing_picked": "아무것도 선택되지 않았습니다",
+      "option_shortcut": "바탕화면 바로가기 만들기"
+    },
+    "install_packages": {
+      "uninstall": "제거중...",
+      "install": "설치중...",
+      "check_for_update": "업데이트 확인 중...",
+      "self_update": "수동 업데이트 다운로드중...",
+      "please_wait": "잠시 기다려 주세요..."
+    },
+    "download_packages": {
+      "download_config": "설정 파일 다운로드중...",
+      "error_download_config": "설정 파일 다운로드 중 오류 발생: {msg}"
+    }
+  }
+}
