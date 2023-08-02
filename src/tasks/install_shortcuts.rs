@@ -87,6 +87,14 @@ impl Task for InstallShortcutsTask {
             )?);
         }
 
+        // Update the installed packages shortcuts information in the database
+        let packages = &mut context.database.packages;
+        for pack in packages {
+            if pack.name == self.name {
+                pack.shortcuts.extend(installed_files.clone());
+            }
+        }
+
         Ok(TaskParamType::GeneratedShortcuts(installed_files))
     }
 

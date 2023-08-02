@@ -1,0 +1,78 @@
+{
+  "tr-TR": {
+    "locale": "Türkçe",
+    "error": {
+      "title": "Bir hata oluştu",
+      "exit_error": "{msg}\n\nLütfen ({path}'deki) log dosyasını {name} takımına gönderin",
+      "location_unknown": "bu yükleyicinin bulunduğu konum"
+    },
+    "complete": {
+      "thanks": "Yüklediğiniz için teşekkür ederiz, {name}!",
+      "updated": "{name} güncellendi.",
+      "uninstalled": "{name} kaldırıldı",
+      "up_to_date": "{name} zaten güncel!",
+      "where_to_find": "Yüklü uygulamalarınızı start menüsünde bulabilirsiniz.",
+      "migration_where_to_find": "Yüklü uygulamalarınızı start menüsünde bulabilirsiniz - eğer bir şeyle uğraşıyorduysanız sadece yeniden deneyin.",
+      "migration_finished": "{name}'in en yeni versiyonuna taşındınız."
+    },
+    "modify": {
+      "title": "Birini seçin:",
+      "update": "Güncelle",
+      "uninstall": "Kaldır",
+      "prompt": "{name}'i kaldırmak istediğinizden emin misiniz?",
+      "prompt_repair": "<b>WARNING:</b> All the files under <code>{path}</code> will be <b>deleted</b> as part of the repair process!<br>Do you wish to proceed?",
+      "view_local_files": "Yerel dosyaları görüntüle",
+      "prompt_recover": "{name} yükleyici dosyaları bozuk.<br>Yüklemeyi düzeltmek için onarım gerekli.",
+      "prompt_confirm": "{name}'i kaldır",
+      "modify": "Düzenle",
+      "repair": "Onar"
+    },
+    "auth": {
+      "paste": "Yapıştır",
+      "token": "Token",
+      "verify": "Token'i Doğrula",
+      "page_header": "Erken Erişim Kanalı, en son deneysel özellik ve düzeltmeleri yuzuya eklenmeden denemenizi sağlar. Bu kanal tüm günlük yuzu güncellemelerini ve üstüne bütün özel özellikleri içerir.\n\nBir Erken Erişim üyesi olmak için Patreon Erken Erişim üyesi olmalısınız.",
+      "page_opened": "Sayfa açıldı! Patreon hesabınızı bağlamak için tarayıcınızda açılan sayfadaki adımları takip edin.\nİşiniz bittiğinde tokeninizi aşağıya girin.",
+      "login_failed": "Giriş başarısız oldu!\n\nToken'inizin doğruluğunu kontrol edip yeniden deneyin"
+    },
+    "back": "Geri",
+    "exit": "Çık",
+    "yes": "Evet",
+    "no": "Hayır",
+    "continue": "Devam Et",
+    "cancel": "İptal",
+    "app": {
+      "installer_title": "{name} yükleyicisine hoş geldiniz!",
+      "maintenance_title": "{name} Bakım Aracına Hoş Geldiniz.",
+      "window_title": "{name} Yükleyicisi",
+      "installer_subtitle": "Birazdan hepsi hallolacak."
+    },
+    "select_packages": {
+      "title": "Yüklemek istediğiniz paketleri seçin:",
+      "installed": "(Yüklendi)",
+      "advanced": "Gelişmiş...",
+      "install": "Yükle",
+      "location": "Yükleme Konumu",
+      "select": "Seç",
+      "overwriting": "Üstüne yazma",
+      "options": "Yükleme Seçenekleri",
+      "title_repair": "Onarmak istediğiniz paketleri seçin:",
+      "location_placeholder": "Bir yükleme konumu belirleyin",
+      "overwriting_warning": "Directory <code>{path}</code> already exists.<br>Are you sure you want to <b>overwrite</b> the contents inside?",
+      "nothing_picked_warning": "Lütfen yüklemek için en az bir paket seçin!",
+      "nothing_picked": "Hiçbir şey seçilmedi",
+      "option_shortcut": "Masaüstü Kısayolu Oluştur"
+    },
+    "install_packages": {
+      "uninstall": "Kaldırılıyor...",
+      "install": "Yükleniyor...",
+      "check_for_update": "Güncellemeler kontrol ediliyor...",
+      "self_update": "Güncelleme indiriliyor...",
+      "please_wait": "Lütfen bekleyin..."
+    },
+    "download_packages": {
+      "download_config": "Yapılandırma indiriliyor...",
+      "error_download_config": "Yapılandırma indirilirken bir hata oluştu: {msg}"
+    }
+  }
+}

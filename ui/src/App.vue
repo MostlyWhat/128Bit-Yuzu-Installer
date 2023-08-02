@@ -4,7 +4,7 @@
             <div class="container is-max-height">
                 <div class="columns is-max-height">
                     <div class="column is-one-third has-padding" v-if="!$root.$data.metadata.is_launcher">
-                        <img src="./assets/logo.png" width="60%" alt="Application icon" />
+                        <img src="./assets/light_mode_installer_logo.png" id="applicationIcon" alt="Application icon" />
                         <br />
                         <br />
 
@@ -18,7 +18,7 @@
                         <h2 class="subtitle" v-if="$root.$data.metadata.preexisting_install">
                             {{ $t('app.maintenance_title', {'name': $root.$data.attrs.name}) }}
                         </h2>
-                        <b-dropdown hoverable @change="selectLocale" aria-role="list">
+                        <b-dropdown hoverable @change="selectLocale" aria-role="list" scrollable>
                             <button class="button" slot="trigger">
                                 <span>{{ $t('locale') }}</span>
                                 <b-icon icon="menu-down"></b-icon>
@@ -39,11 +39,11 @@
 export default {
   mounted: function () {
     // detect languages
-    var languages = window.navigator.languages
+    const languages = window.navigator.languages
     if (languages) {
       // standard-compliant browsers
-      for (var index = 0; index < languages.length; index++) {
-        var lang = languages[index]
+      for (let index = 0; index < languages.length; index++) {
+        const lang = languages[index]
         // Find the most preferred language that we support
         if (Object.prototype.hasOwnProperty.call(this.$i18n.messages, lang)) {
           this.$i18n.locale = lang
@@ -87,6 +87,30 @@ body, div, span, h1, h2, h3, h4, h5, h6 {
     cursor: default;
 }
 
+#applicationIcon {
+    width:0px; height: 0px;
+    padding: 50px 60% 0px 0px;
+    background: url("./assets/light_mode_installer_logo.png") left top no-repeat;
+    background-size: contain;
+}
+
+body.has-background-black-ter #applicationIcon {
+    background: url("./assets/dark_mode_installer_logo.png") left top no-repeat;
+    background-size: contain;
+}
+
+.package-icon {
+    width: 3rem;
+    height: 3rem;
+    float: left;
+    padding-right: 10px;
+    padding-top: 10px;
+}
+
+.package-description {
+    overflow: hidden;
+}
+
 pre {
     -webkit-user-select: text;
     -moz-user-select: text;
@@ -106,6 +130,7 @@ pre {
 
 .clickable-box {
     cursor: pointer;
+    position: relative;
 }
 
 .clickable-box label {
@@ -157,8 +182,59 @@ pre {
     background: #fff;
 }
 
+.tile.box.clickable-box {
+    color: #4a4a4a;
+}
+
 /* Dark mode */
 body.has-background-black-ter .subtitle, body.has-background-black-ter .column > div {
     color: hsl(0, 0%, 96%);
+}
+
+.ribbon {
+    position: absolute;
+    right: -5px; top: -5px;
+    z-index: 1;
+    overflow: hidden;
+    width: 75px; height: 75px;
+    text-align: right;
+}
+.ribbon span {
+    font-size: 10px;
+    font-weight: bold;
+    color: #FFF;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 20px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    width: 100px;
+    display: block;
+    background: #79A70A;
+    background: linear-gradient(#FF3C28 0%, #FF3C28 100%);
+    box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
+    position: absolute;
+    top: 19px; right: -21px;
+}
+.ribbon span::before {
+    content: "";
+    position: absolute; left: 0px; top: 100%;
+    z-index: -1;
+    border-left: 3px solid #FF3C28;
+    border-right: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    border-top: 3px solid #FF3C28;
+}
+.ribbon span::after {
+    content: "";
+    position: absolute; right: 0px; top: 100%;
+    z-index: -1;
+    border-left: 3px solid transparent;
+    border-right: 3px solid #FF3C28;
+    border-bottom: 3px solid transparent;
+    border-top: 3px solid #FF3C28;
+}
+a:hover {
+    text-decoration: underline;
 }
 </style>

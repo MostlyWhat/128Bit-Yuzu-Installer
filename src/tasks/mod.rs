@@ -9,13 +9,17 @@ use crate::installer::InstallerFramework;
 use crate::sources::types::File;
 use crate::sources::types::Version;
 
+pub mod check_authorization;
 pub mod download_pkg;
 pub mod ensure_only_instance;
 pub mod install;
+pub mod install_desktop_shortcut;
 pub mod install_dir;
 pub mod install_global_shortcut;
 pub mod install_pkg;
 pub mod install_shortcuts;
+pub mod launch_installed_on_exit;
+pub mod remove_target_dir;
 pub mod resolver;
 pub mod save_database;
 pub mod save_executable;
@@ -23,13 +27,14 @@ pub mod uninstall;
 pub mod uninstall_global_shortcut;
 pub mod uninstall_pkg;
 pub mod uninstall_shortcuts;
-pub mod remove_target_dir;
 
 /// An abstraction over the various parameters that can be passed around.
 pub enum TaskParamType {
     None,
     /// Metadata about a file
     File(Version, File),
+    /// Authentication token for a package
+    Authentication(Version, File, Option<String>),
     /// Downloaded contents of a file
     FileContents(Version, File, Vec<u8>),
     /// List of shortcuts that have been generated
@@ -63,6 +68,7 @@ impl TaskDependency {
 /// A message from a task.
 pub enum TaskMessage<'a> {
     DisplayMessage(&'a str, f64),
+    AuthorizationRequired(&'a str),
     PackageInstalled,
 }
 

@@ -15,7 +15,7 @@
  * @param data POST data. Optional.
  */
 export function stream_ajax (path, callback, successCallback, failCallback, data) {
-  var req = new XMLHttpRequest()
+  const req = new XMLHttpRequest()
 
   console.log('Making streaming HTTP request to ' + path)
 
@@ -28,23 +28,23 @@ export function stream_ajax (path, callback, successCallback, failCallback, data
     }
   })
 
-  var buffer = ''
-  var seenBytes = 0
+  let buffer = ''
+  let seenBytes = 0
 
   req.onreadystatechange = function () {
     if (req.readyState > 2) {
       buffer += req.responseText.substr(seenBytes)
 
-      var pointer
+      let pointer
       while ((pointer = buffer.indexOf('\n')) >= 0) {
-        var line = buffer.substring(0, pointer).trim()
+        const line = buffer.substring(0, pointer).trim()
         buffer = buffer.substring(pointer + 1)
 
         if (line.length === 0) {
           continue
         }
 
-        var contents = JSON.parse(line)
+        const contents = JSON.parse(line)
         callback(contents)
       }
 
@@ -59,9 +59,9 @@ export function stream_ajax (path, callback, successCallback, failCallback, data
   req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
 
   if (data != null) {
-    var form = ''
+    let form = ''
 
-    for (var key in data) {
+    for (const key in data) {
       if (!data[key]) {
         continue
       }

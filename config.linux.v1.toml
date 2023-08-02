@@ -1,0 +1,21 @@
+installing_message = "Reminder: yuzu is an <b>experimental</b> emulator. Stuff will break!"
+hide_advanced = true
+
+[[packages]]
+name = "yuzu Nightly"
+description = "The nightly build of yuzu contains already reviewed and tested features."
+default = true
+    [packages.source]
+    name = "github"
+    match = "^yuzu-linux-[0-9]*-[0-9a-f]*.tar.xz$"
+        [packages.source.config]
+        repo = "yuzu-emu/yuzu-nightly"
+
+[[packages]]
+name = "yuzu Canary"
+description = "The canary build of yuzu has additional features that are still waiting on review."
+    [packages.source]
+    name = "github"
+    match = "^yuzu-linux-[0-9]*-[0-9a-f]*.tar.xz$"
+        [packages.source.config]
+        repo = "yuzu-emu/yuzu-canary"

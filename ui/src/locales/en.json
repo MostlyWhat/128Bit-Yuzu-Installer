@@ -23,9 +23,11 @@
       "location_placeholder":"Enter a install path here",
       "select":"Select",
       "overwriting": "Overwriting",
-      "overwriting_warning": "Directory {path} already exists.<br>Are you sure you want to <b>overwrite</b> the contents inside?",
+      "overwriting_warning": "Directory <code>{path}</code> already exists.<br>Are you sure you want to <b>overwrite</b> the contents inside?",
       "nothing_picked": "Nothing selected",
-      "nothing_picked_warning": "Please select at least one package to install!"
+      "nothing_picked_warning": "Please select at least one package to install!",
+      "options": "Install Options",
+      "option_shortcut": "Create Desktop Shortcut"
     },
     "install_packages":{
       "check_for_update":"Checking for updates...",
@@ -44,7 +46,9 @@
       "up_to_date":"{name} is already up to date!",
       "updated":"{name} has been updated.",
       "uninstalled":"{name} has been uninstalled.",
-      "where_to_find":"You can find your installed applications in your start menu."
+      "where_to_find":"You can find your installed applications in your start menu.",
+      "migration_where_to_find": "You can find your installed applications in your start menu - if you were in the middle of something, just reattempt.",
+      "migration_finished": "You have been moved to the new, single version of {name}."
     },
     "modify":{
       "title":"Choose an option:",
@@ -53,8 +57,18 @@
       "repair": "Repair",
       "uninstall":"Uninstall",
       "view_local_files": "View local files",
+      "prompt_repair": "<b>WARNING:</b> All the files under <code>{path}</code> will be <b>deleted</b> as part of the repair process!<br>Do you wish to continue?",
+      "prompt_recover": "Installer data for {name} is corrupted.<br>A repair is required to restore the installation.",
       "prompt":"Are you sure you want to uninstall {name}?",
       "prompt_confirm":"Uninstall {name}"
+    },
+    "auth":{
+      "paste": "Paste",
+      "token": "Token",
+      "verify": "Verify Token",
+      "page_header": "The Early Access release channel lets you try out the latest experimental features and fixes, before they are merged into yuzu. This channel includes all regular yuzu daily updates, plus these exclusive features.\n\nTo be an Early Access member, you must be a Patreon Early Access Subscriber.",
+      "page_opened": "Page opened! Check your default browser for the page, and follow the instructions there to link your patreon account.\nWhen you are done, enter the token below.",
+      "login_failed": "Login failed!\n\nDouble check that your token is correct and try again"
     },
     "back":"Back",
     "exit":"Exit",

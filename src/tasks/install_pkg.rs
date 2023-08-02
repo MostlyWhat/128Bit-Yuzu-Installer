@@ -22,11 +22,14 @@ use crate::logging::LoggingErrors;
 
 use crate::archives;
 
+use crate::tasks::install_desktop_shortcut::InstallDesktopShortcutTask;
+use std::collections::HashSet;
 use std::fs::OpenOptions;
 use std::path::Path;
 
 pub struct InstallPackageTask {
     pub name: String,
+    pub create_desktop_shortcuts: bool,
 }
 
 impl Task for InstallPackageTask {
@@ -66,20 +69,20 @@ impl Task for InstallPackageTask {
             None => return Err(format!("Package {:?} could not be found.", self.name)),
         };
 
-        // Grab data from the shortcut generator
-        let shortcuts = input.pop().log_expect("Should have input from resolver!");
-        let shortcuts = match shortcuts {
-            TaskParamType::GeneratedShortcuts(files) => files,
-            // If the resolver returned early, we need to unwind
+        // Ignore input from the uninstaller - no useful information passed
+        // If a previous task Breaks, then just early exit
+        match input
+            .pop()
+            .log_expect("Install Package Task should have guaranteed output!")
+        {
             TaskParamType::Break => return Ok(TaskParamType::None),
-            _ => return Err("Unexpected shortcuts param type to install package".to_string()),
+            _ => (),
         };
 
-        // Ignore input from the uninstaller - no useful information passed
-        input.pop();
-
         // Grab data from the resolver
-        let data = input.pop().log_expect("Should have input from resolver!");
+        let data = input
+            .pop()
+            .log_expect("Install Package Task should have input from resolver!");
         let (version, file, data) = match data {
             TaskParamType::FileContents(version, file, data) => (version, file, data),
             _ => return Err("Unexpected file contents param type to install package".to_string()),
@@ -170,7 +173,7 @@ impl Task for InstallPackageTask {
         context.database.packages.push(LocalInstallation {
             name: package.name,
             version,
-            shortcuts,
+            shortcuts: HashSet::new(),
             files: installed_files,
         });
 
@@ -195,9 +198,16 @@ impl Task for InstallPackageTask {
                 }),
             ),
             TaskDependency::build(
-                TaskOrdering::Pre,
+                TaskOrdering::Post,
                 Box::new(InstallShortcutsTask {
                     name: self.name.clone(),
+                }),
+            ),
+            TaskDependency::build(
+                TaskOrdering::Post,
+                Box::new(InstallDesktopShortcutTask {
+                    name: self.name.clone(),
+                    should_run: self.create_desktop_shortcuts,
                 }),
             ),
             TaskDependency::build(TaskOrdering::Post, Box::new(SaveDatabaseTask {})),

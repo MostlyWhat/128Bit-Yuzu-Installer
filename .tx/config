@@ -1,0 +1,8 @@
+[main]
+host = https://www.transifex.com
+
+[o:yuzu-emulator:p:yuzu:r:installer]
+file_filter = ui/translations/<lang>.po
+source_file = ui/translations/en.po
+source_lang = en
+type = PO

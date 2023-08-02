@@ -1,0 +1,78 @@
+{
+  "nb": {
+    "locale": "Bokmål",
+    "error": {
+      "title": "En feil oppsto",
+      "exit_error": "{msg}\n\nVennlist last opp loggfilen (i {path} til {name}-teamet",
+      "location_unknown": "plasseringen til installasjonsprogrammet"
+    },
+    "complete": {
+      "thanks": "Takk for at du installerte {name}!",
+      "updated": "{name} har blitt oppdatert.",
+      "uninstalled": "{name} har blitt avinstallert.",
+      "up_to_date": "{name} er allerede oppdatert!",
+      "where_to_find": "Du kan finne de installerte programmene i startmenyen.",
+      "migration_where_to_find": "Du kan finne de installerte programmene i startmenyen – hvis du var midt oppi noe, bare prøv på nytt.",
+      "migration_finished": "Du har blitt flyttet til den nye, forente versjonen av {name}."
+    },
+    "modify": {
+      "title": "Velg en handling:",
+      "update": "Oppdatering",
+      "uninstall": "Avinstaller",
+      "prompt": "Er du sikker på at du vil avinstallere {navn}?",
+      "prompt_repair": "<b>WARNING:</b> All the files under <code>{path}</code> will be <b>deleted</b> as part of the repair process!<br>Do you wish to proceed?",
+      "view_local_files": "Vis lokale filer",
+      "prompt_recover": "Installasjonsdata for {name} er korrupt.<br>Reparasjon er nødvendig for å gjenopprette installasjonen.",
+      "prompt_confirm": "Avinstaller {name}",
+      "modify": "Modifiser",
+      "repair": "Reparer"
+    },
+    "auth": {
+      "paste": "Lim inn",
+      "token": "Token",
+      "verify": "Verifiser token",
+      "page_header": "Early Access–kanalen lar deg prøve den siste eksperimentelle funksjonaliteten og fiksene, før de kommer inn i yuzu. Denne kanalen inkluderer alle de vanlige daglige yuzu-oppdateringene, i tillegg til denne eksklusive funksjonaliteten.\n\nFor å bli et Early Access–medlem må du være en Patreon Early Access–abonnent.",
+      "page_opened": "Side åpnet! Se etter siden i standardnettleseren din, og følg instruksjonene der for å koble til Patreon-kontoen din.\nNår du er ferdig, skriv inn token-en under.",
+      "login_failed": "Innlogging feilet!\n\nDobbeltsjekk at token-en din er korrekt og prøv på nytt"
+    },
+    "back": "Tilbake",
+    "exit": "Avslutt",
+    "yes": "Ja",
+    "no": "Nei",
+    "continue": "Fortsett",
+    "cancel": "Avbryt",
+    "app": {
+      "installer_title": "Velkommen til installasjonsprogrammet for {navn}!",
+      "maintenance_title": "Velkommen til vedlikeholdsverktøyet for {navn}.",
+      "window_title": "Installasjonsprogram for {navn}",
+      "installer_subtitle": "Vi er klar til å kjøre om noen få øyeblikk."
+    },
+    "select_packages": {
+      "title": "Velg hvilke pakker du ønsker å installere:",
+      "installed": "(installert)",
+      "advanced": "Avansert...",
+      "install": "Installer",
+      "location": "Installasjonsdestinasjon",
+      "select": "Velg",
+      "overwriting": "Overskriver",
+      "options": "Installasjonsinnstillinger",
+      "title_repair": "Velg hvilke pakker du ønsker å reparere:",
+      "location_placeholder": "Skriv inn en installasjonssti her",
+      "overwriting_warning": "Directory <code>{path}</code> already exists.<br>Are you sure you want to <b>overwrite</b> the contents inside?",
+      "nothing_picked_warning": "Vennligst velg minst én pakke å installere!",
+      "nothing_picked": "Ingen ting valgt",
+      "option_shortcut": "Lag skrivebordssnarvei"
+    },
+    "install_packages": {
+      "uninstall": "Avinstallerer...",
+      "install": "Installerer...",
+      "check_for_update": "Ser etter oppdateringer...",
+      "self_update": "Laster ned selvoppdatering...",
+      "please_wait": "Vennligst vent..."
+    },
+    "download_packages": {
+      "download_config": "Laster ned konfigurasjon...",
+      "error_download_config": "Mottok feilmelding under nedlasting av konfigurasjon: {msg}"
+    }
+  }
+}

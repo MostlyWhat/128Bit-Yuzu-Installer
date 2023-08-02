@@ -1,0 +1,78 @@
+{
+  "pl": {
+    "locale": "Polski",
+    "error": {
+      "title": "Wystąpił błąd",
+      "exit_error": "{msg}\n\nPrześlij plik dziennika (w {path}) do zespołu {name}",
+      "location_unknown": "lokalizacja, w której znajduje się ten instalator"
+    },
+    "complete": {
+      "thanks": "Dziękujemy za zainstalowanie {name}!",
+      "updated": "{name} zostało zaktualizowane.",
+      "uninstalled": "{name} zostało odinstalowane.",
+      "up_to_date": "{name} jest już aktualne!",
+      "where_to_find": "Zainstalowane aplikacje można znaleźć w menu Start.",
+      "migration_where_to_find": "Zainstalowane aplikacje możesz znaleźć w menu Start - jeśli byłeś w trakcie czegoś, po prostu spróbuj ponownie.",
+      "migration_finished": "Zostałeś przeniesiony do nowej, pojedynczej wersji {name}."
+    },
+    "modify": {
+      "title": "Wybierz opcję:",
+      "update": "Zaktualizuj",
+      "uninstall": "Odinstaluj",
+      "prompt": "Czy na pewno chcesz odinstalować {name}?",
+      "prompt_repair": "<b>WARNING:</b> All the files under <code>{path}</code> will be <b>deleted</b> as part of the repair process!<br>Do you wish to proceed?",
+      "view_local_files": "Wyświetl lokalne pliki",
+      "prompt_recover": "Dane instalatora dla {name} są uszkodzone. <br>Do przywrócenia instalacji wymagana jest naprawa.",
+      "prompt_confirm": "Odinstaluj {name}",
+      "modify": "Modyfikuj",
+      "repair": "Napraw"
+    },
+    "auth": {
+      "paste": "Wklej",
+      "token": "Token",
+      "verify": "Zweryfikuj Token",
+      "page_header": "Kanał wersji Early Access pozwala wypróbować najnowsze eksperymentalne funkcje i poprawki, zanim zostaną one połączone z yuzu. Ten kanał zawiera wszystkie regularne codzienne aktualizacje yuzu oraz te ekskluzywne funkcje.\n\nAby zostać członkiem Early Access, musisz być subskrybentem Patreon Early Access.",
+      "page_opened": "Strona otwarta! Sprawdź domyślną przeglądarkę dla strony i postępuj zgodnie z instrukcjami, aby połączyć swoje konto patreon.\nGdy skończysz, wprowadź poniższy token.",
+      "login_failed": "Logowanie nie powiodło się!\n\nSprawdź dokładnie, czy Twój Token jest poprawny i spróbuj ponownie."
+    },
+    "back": "Cofnij",
+    "exit": "Wyjście",
+    "yes": "Tak",
+    "no": "Nie",
+    "continue": "Kontynuuj",
+    "cancel": "Anuluj",
+    "app": {
+      "installer_title": "Witaj w instalatorze {name}!",
+      "maintenance_title": "Witaj w narzędziu do konserwacji {name}!",
+      "window_title": "Instalator {name}",
+      "installer_subtitle": "Już za chwilę będziesz mógł pracować."
+    },
+    "select_packages": {
+      "title": "Wybierz które pakiety chcesz zainstalować:",
+      "installed": "(zainstalowano)",
+      "advanced": "Zaawansowane...",
+      "install": "Zainstaluj",
+      "location": "Lokacja instalacji",
+      "select": "Wybierz",
+      "overwriting": "Nadpisywanie",
+      "options": "Opcje instalacji",
+      "title_repair": "Wybierz które pakiety chcesz naprawić:",
+      "location_placeholder": "Wybierz miejsce instalacji",
+      "overwriting_warning": "Directory <code>{path}</code> already exists.<br>Are you sure you want to <b>overwrite</b> the contents inside?",
+      "nothing_picked_warning": "Wybierz co najmniej jeden pakiet do zainstalowania!",
+      "nothing_picked": "Nic nie wybrano",
+      "option_shortcut": "Utwórz skrót na pulpicie"
+    },
+    "install_packages": {
+      "uninstall": "Odinstalowywanie...",
+      "install": "Instalowanie...",
+      "check_for_update": "Sprawdzanie aktualizacji...",
+      "self_update": "Pobieranie samoaktualizacji...",
+      "please_wait": "Proszę czekać..."
+    },
+    "download_packages": {
+      "download_config": "Pobieranie konfiguracji...",
+      "error_download_config": "Wystąpił błąd podczas pobierania konfiguracji: {msg}"
+    }
+  }
+}

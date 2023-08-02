@@ -22,7 +22,6 @@ mod natives {
     use std::io::Write;
     use std::os::windows::ffi::OsStrExt;
     use std::path::Path;
-    use std::process::Command;
 
     use winapi::shared::minwindef::{DWORD, FALSE, MAX_PATH};
 
@@ -37,6 +36,7 @@ mod natives {
     };
     use winapi::um::winuser::SW_SHOWDEFAULT;
 
+    use std::process::Command;
     use tempfile::Builder;
     use tinyfiledialogs::{message_box_yes_no, MessageBoxIcon, YesNo};
     use webview2::EnvironmentBuilder;
@@ -60,6 +60,8 @@ mod natives {
         ) -> ::std::os::raw::c_int;
 
         pub fn getSystemFolder(out_path: *mut ::std::os::raw::c_ushort) -> HRESULT;
+
+        pub fn getDesktopFolder(out_path: *mut ::std::os::raw::c_ushort) -> HRESULT;
     }
 
     pub fn prepare_install_webview2(name: &str) -> Result<(), String> {
@@ -105,6 +107,56 @@ mod natives {
             env::var("APPDATA").log_expect("APPDATA is bad, apparently"),
             name
         );
+        create_shortcut_inner(
+            source_file,
+            name,
+            description,
+            target,
+            args,
+            working_dir,
+            exe_path,
+        )
+    }
+
+    // Needed here for Windows interop
+    #[allow(unsafe_code)]
+    pub fn create_desktop_shortcut(
+        name: &str,
+        description: &str,
+        target: &str,
+        args: &str,
+        working_dir: &str,
+        exe_path: &str,
+    ) -> Result<String, String> {
+        let mut cmd_path = [0u16; MAX_PATH + 1];
+        let _result = unsafe { getDesktopFolder(cmd_path.as_mut_ptr()) };
+        let source_path = format!(
+            "{}\\{}.lnk",
+            String::from_utf16_lossy(&cmd_path[..count_u16(&cmd_path)]).as_str(),
+            name
+        );
+        create_shortcut_inner(
+            source_path,
+            name,
+            description,
+            target,
+            args,
+            working_dir,
+            exe_path,
+        )
+    }
+
+    // Needed here for Windows interop
+    #[allow(unsafe_code)]
+    fn create_shortcut_inner(
+        source_file: String,
+        _name: &str,
+        description: &str,
+        target: &str,
+        args: &str,
+        working_dir: &str,
+        exe_path: &str,
+    ) -> Result<String, String> {
         info!("Generating shortcut @ {:?}", source_file);
 
         let native_target_dir = U16CString::from_str(source_file.clone())
@@ -159,6 +211,18 @@ mod natives {
         }
     }
 
+    #[inline]
+    fn count_u16(u16str: &[u16]) -> usize {
+        let mut pos = 0;
+        for x in u16str.iter() {
+            if *x == 0 {
+                break;
+            }
+            pos += 1;
+        }
+        pos
+    }
+
     /// Cleans up the installer
     pub fn burn_on_exit(app_name: &str) {
         let current_exe = env::current_exe().log_expect("Current executable could not be found");
@@ -172,6 +236,7 @@ mod natives {
             .to_str()
             .log_expect("Unable to convert tool path to string")
             .replace(" ", "\\ ");
+        let tool_wv = format!("{}.WebView2", tool);
 
         let log = path.join(format!("{}_installer.log", app_name));
         let log = log
@@ -179,7 +244,15 @@ mod natives {
             .log_expect("Unable to convert log path to string")
             .replace(" ", "\\ ");
 
-        let target_arguments = format!("/C choice /C Y /N /D Y /T 2 & del {} {}", tool, log);
+        let install_path = path
+            .to_str()
+            .log_expect("Unable to convert path to string")
+            .replace(" ", "\\ ");
+
+        let target_arguments = format!(
+            "/C choice /C Y /N /D Y /T 2 & del {} {} & rmdir /Q /S {} & rmdir {}",
+            tool, log, tool_wv, install_path
+        );
 
         info!("Launching cmd with {:?}", target_arguments);
 
@@ -309,13 +382,13 @@ mod natives {
 
 #[cfg(not(windows))]
 mod natives {
-    use std::fs::remove_file;
+    use std::fs::{remove_dir, remove_file};
 
     use std::env;
 
     use crate::logging::LoggingErrors;
 
-    use sysinfo::{ProcessExt, SystemExt};
+    use sysinfo::{PidExt, ProcessExt, SystemExt};
 
     use dirs;
 
@@ -332,7 +405,7 @@ mod natives {
         target: &str,
         args: &str,
         working_dir: &str,
-        _exe_path: &str,
+        exe_path: &str,
     ) -> Result<String, String> {
         // FIXME: no icon will be shown since no icon is provided
         let data_local_dir = dirs::data_local_dir();
@@ -349,10 +422,10 @@ mod natives {
                         ));
                     }
                 };
-                path.push(format!("{}.desktop", slugify(name))); // file name
+                path.push(format!("yuzu-maintenance-tool_{}.desktop", slugify(name))); // file name
                 let desktop_file = format!(
-                    "[Desktop Entry]\nName={}\nExec=\"{}\" {}\nComment={}\nPath={}\n",
-                    name, target, args, description, working_dir
+                "[Desktop Entry]\nType=Application\nName={}\nExec=\"{}\" {}\nComment={}\nPath={}\nIcon=yuzu\n",
+                name, target, args, description, working_dir
                 );
                 let desktop_f = File::create(path);
                 let mut desktop_f = match desktop_f {
@@ -399,19 +472,22 @@ mod natives {
     /// Cleans up the installer
     pub fn burn_on_exit(app_name: &str) {
         let current_exe = env::current_exe().log_expect("Current executable could not be found");
+        let exe_dir = current_exe
+            .parent()
+            .log_expect("Current executable directory cannot be found");
+
+        if let Err(e) = remove_file(exe_dir.join(format!("{}_installer.log", app_name))) {
+            // No regular logging now.
+            eprintln!("Failed to delete maintenance log: {:?}", e);
+        };
 
         // Thank god for *nix platforms
         if let Err(e) = remove_file(&current_exe) {
             // No regular logging now.
             eprintln!("Failed to delete maintenancetool: {:?}", e);
         };
-
-        let current_dir = env::current_dir().log_expect("Current directory cannot be found");
-
-        if let Err(e) = remove_file(current_dir.join(format!("{}_installer.log", app_name))) {
-            // No regular logging now.
-            eprintln!("Failed to delete installer log: {:?}", e);
-        };
+        // delete the directory if not empty and ignore errors (since we can't handle errors anymore)
+        remove_dir(exe_dir).ok();
     }
 
     /// Returns a list of running processes
@@ -420,9 +496,9 @@ mod natives {
         let mut processes: Vec<super::Process> = Vec::new();
         let mut system = sysinfo::System::new();
         system.refresh_all();
-        for (pid, procs) in system.get_processes() {
+        for (pid, procs) in system.processes() {
             processes.push(super::Process {
-                pid: *pid as usize,
+                pid: pid.as_u32() as usize,
                 name: procs.name().to_string(),
             });
         }

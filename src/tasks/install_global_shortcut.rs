@@ -61,7 +61,7 @@ impl Task for InstallGlobalShortcutsTask {
             "",
         )?;
 
-        if !shortcut_file.is_empty() {
+        if !shortcut_file.is_empty() && !context.database.shortcuts.contains(&shortcut_file) {
             context.database.shortcuts.push(shortcut_file);
         }
 

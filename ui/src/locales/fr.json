@@ -1,0 +1,78 @@
+{
+  "fr": {
+    "locale": "Français",
+    "error": {
+      "title": "Une erreur s'est produite",
+      "exit_error": "{msg}\n\nVeuillez téléverser votre fichier journal (dans {path}) à l'équipe {name}",
+      "location_unknown": "l'emplacement où se trouve ce programme d'installation"
+    },
+    "complete": {
+      "thanks": "Merci d'avoir installé {name}!",
+      "updated": "{name} a été mis à jour.",
+      "uninstalled": "{name} a été désinstallé.",
+      "up_to_date": "{name} est déjà à jour!",
+      "where_to_find": "Vous pouvez trouver vos applications installées dans votre menu démarrer.",
+      "migration_where_to_find": "Vous pouvez trouver vos applications installées dans votre menu démarrer - si vous étiez au milieu de quelque chose, réessayez.",
+      "migration_finished": "Vous avez été déplacé vers la nouvelle version unique de {name}."
+    },
+    "modify": {
+      "title": "Choisissez une option:",
+      "update": "Mettre à jour",
+      "uninstall": "Désinstaller",
+      "prompt": "Êtes-vous certain de vouloir désinstaller {name}?",
+      "prompt_repair": "<b>WARNING:</b> All the files under <code>{path}</code> will be <b>deleted</b> as part of the repair process!<br>Do you wish to proceed?",
+      "view_local_files": "Afficher les fichiers locaux",
+      "prompt_recover": "Les données du programme d'installation pour {name} sont corrompues.<br> Une réparation est requise pour restaurer l'installation.",
+      "prompt_confirm": "Désinstaller {name}",
+      "modify": "Modifier",
+      "repair": "Réparer"
+    },
+    "auth": {
+      "paste": "Coller",
+      "token": "Jeton",
+      "verify": "Vérifier le jeton",
+      "page_header": "Le canal de publication Early Access vous permet d'essayer les dernières fonctionnalités expérimentales et correctifs, avant qu'elles ne soient fusionnées dans yuzu. Cette chaîne comprend toutes les mises à jour quotidiennes régulières de yuzu, ainsi que des fonctionnalités exclusives.\n\nPour être un membre Early Access, vous devez être membre Patreon Early Access.",
+      "page_opened": "Page ouverte! Vérifiez votre navigateur par défaut pour la page et suivez les instructions pour lier votre compte Patreon.\nLorsque vous avez terminé, entrez le jeton ci-dessous.",
+      "login_failed": "Échec de la connexion!\n\nVérifiez que votre jeton est valide et réessayez"
+    },
+    "back": "Retour",
+    "exit": "Quitter",
+    "yes": "Oui",
+    "no": "Non",
+    "continue": "Continuer",
+    "cancel": "Annuler",
+    "app": {
+      "installer_title": "Bienvenue dans le programme d'installation de {name}!",
+      "maintenance_title": "Bienvenue dans l'outil de maintenance de {name}.",
+      "window_title": "Programme d'installation de {name}",
+      "installer_subtitle": "Vous serez prêt dans quelques instants."
+    },
+    "select_packages": {
+      "title": "Sélectionner les paquets que vous désirez installer:",
+      "installed": "(installé)",
+      "advanced": "Avancé...",
+      "install": "Installer",
+      "location": "Emplacement d'installation",
+      "select": "Sélectionner",
+      "overwriting": "Écrasement",
+      "options": "Options d'installation",
+      "title_repair": "Sélectionnez les paquets que vous désirez réparer:",
+      "location_placeholder": "Entrez un chemin d'installation ici",
+      "overwriting_warning": "Directory <code>{path}</code> already exists.<br>Are you sure you want to <b>overwrite</b> the contents inside?",
+      "nothing_picked_warning": "Veuillez sélectionner au moins un paquet à installer!",
+      "nothing_picked": "Aucune sélection",
+      "option_shortcut": "Créer un raccourci sur le bureau"
+    },
+    "install_packages": {
+      "uninstall": "Désinstallation...",
+      "install": "Installation...",
+      "check_for_update": "Vérification des mises à jour...",
+      "self_update": "Téléchargement de la mise à jour automatique...",
+      "please_wait": "Veuillez patienter..."
+    },
+    "download_packages": {
+      "download_config": "Téléchargement de la configuration...",
+      "error_download_config": "Une erreur s'est produite lors du téléchargement de la configuration: {msg}"
+    }
+  }
+}

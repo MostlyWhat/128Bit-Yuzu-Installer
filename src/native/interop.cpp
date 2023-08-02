@@ -99,6 +99,10 @@ extern "C" int saveShortcut(
         goto err;
     }
 
+    // Notify that a new shortcut was created using the shell api
+    SHChangeNotify(SHCNE_CREATE, SHCNF_PATH, shortcutPath, NULL);
+    SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH, shortcutPath, NULL);
+
     persistFile->Release();
     shellLink->Release();
     CoUninitialize();
@@ -157,6 +161,18 @@ extern "C" HRESULT getSystemFolder(wchar_t *out_path)
 {
     PWSTR path = NULL;
     HRESULT result = SHGetKnownFolderPath(FOLDERID_System, 0, NULL, &path);
+    if (result == S_OK)
+    {
+        wcscpy_s(out_path, MAX_PATH + 1, path);
+        CoTaskMemFree(path);
+    }
+    return result;
+}
+
+extern "C" HRESULT getDesktopFolder(wchar_t *out_path)
+{
+    PWSTR path = NULL;
+    HRESULT result = SHGetKnownFolderPath(FOLDERID_Desktop, 0, NULL, &path);
     if (result == S_OK)
     {
         wcscpy_s(out_path, MAX_PATH + 1, path);

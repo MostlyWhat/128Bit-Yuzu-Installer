@@ -1,0 +1,78 @@
+{
+  "zh-TW": {
+    "locale": "繁體中文",
+    "error": {
+      "title": "發生錯誤",
+      "exit_error": "{msg}\n\n請上傳紀錄檔(位於 {path})至 {name} 開發團隊。",
+      "location_unknown": "此安裝程式位於"
+    },
+    "complete": {
+      "thanks": "感謝您安裝 {name}！",
+      "updated": "{name} 已更新。",
+      "uninstalled": "{name} 已解除安裝。",
+      "up_to_date": "{name} 已是最新版本！",
+      "where_to_find": "您可以在「開始」選單中找到已安裝的應用程式。",
+      "migration_where_to_find": "您可以在「開始」選單中找到已安裝的應用程式。",
+      "migration_finished": "您已轉換到另一版本的 {name}。"
+    },
+    "modify": {
+      "title": "選擇一個選項：",
+      "update": "更新",
+      "uninstall": "解除安裝",
+      "prompt": "您確定要解除安裝 {name} 嗎？",
+      "prompt_repair": "<b>WARNING:</b> All the files under <code>{path}</code> will be <b>deleted</b> as part of the repair process!<br>Do you wish to proceed?",
+      "view_local_files": "瀏覽本機檔案",
+      "prompt_recover": " {name} 的安裝資料已損毀。<br>需要修復才能繼續安裝。",
+      "prompt_confirm": "解除安裝 {name}",
+      "modify": "修改",
+      "repair": "修復"
+    },
+    "auth": {
+      "paste": "貼上",
+      "token": "Token",
+      "verify": "驗證 Token",
+      "page_header": "Early Access 通道允許您在最新的實驗性功能和修復檔合併到 yuzu 主要通道之前先行體驗。此通道包含 yuzu 每日更新及以上獨家功能。\n\n欲成為 Early Access 成員，您需要至Patreon 平台贊助 Early Access。",
+      "page_opened": "已開啟網頁。請檢視網頁並依照指示連結您的 patreon 帳號。\n完成後請在下方輸入您的 token。",
+      "login_failed": "驗證失敗！\n\n請確定您的 token 正確後再重試。"
+    },
+    "back": "上一步",
+    "exit": "退出",
+    "yes": "確定",
+    "no": "取消",
+    "continue": "繼續",
+    "cancel": "取消",
+    "app": {
+      "installer_title": "歡迎使用 {name} 安裝程式！",
+      "maintenance_title": "歡迎使用 {name} 維護工具！",
+      "window_title": "{name} 安裝程式",
+      "installer_subtitle": "安裝過程將在幾分鐘內完成。"
+    },
+    "select_packages": {
+      "title": "選擇要安裝的軟體包：",
+      "installed": "(已安裝)",
+      "advanced": "進階...",
+      "install": "安裝",
+      "location": "安裝位置",
+      "select": "選擇",
+      "overwriting": "正在覆寫檔案",
+      "options": "安裝選項",
+      "title_repair": "選擇要修復的軟體包：",
+      "location_placeholder": "輸入安裝路徑",
+      "overwriting_warning": "Directory <code>{path}</code> already exists.<br>Are you sure you want to <b>overwrite</b> the contents inside?",
+      "nothing_picked_warning": "請至少選擇一個軟體包進行安裝。",
+      "nothing_picked": "未選擇任何選項",
+      "option_shortcut": "新增捷徑到桌面"
+    },
+    "install_packages": {
+      "uninstall": "正在解除安裝...",
+      "install": "正在安裝...",
+      "check_for_update": "正在檢查更新...",
+      "self_update": "正在下載更新...",
+      "please_wait": "請稍後..."
+    },
+    "download_packages": {
+      "download_config": "正在下載設定...",
+      "error_download_config": "下載設定時出錯: {msg}"
+    }
+  }
+}

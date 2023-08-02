@@ -1,0 +1,78 @@
+{
+  "es": {
+    "locale": "Español",
+    "error": {
+      "title": "Ha ocurrido un error",
+      "exit_error": "{msg}\n\nPor favor, suba el archivo del registro (en {path}) al equipo de {name}",
+      "location_unknown": "la ubicación donde se encuentra el instalador"
+    },
+    "complete": {
+      "thanks": "¡Gracias por instalar {name}!",
+      "updated": "{name} ha sido actualizado.",
+      "uninstalled": "{name} ha sido desinstalado.",
+      "up_to_date": "¡{name} ya está actualizado!",
+      "where_to_find": "Puedes encontrar las aplicaciones instaladas en el menú de inicio.",
+      "migration_where_to_find": "Puedes encontrar tus aplicaciones instaladas en el menú de inicio - si estabas en mitad de algo, reinténtalo.",
+      "migration_finished": "Se ha actualizado a la nueva y única versión de {name}."
+    },
+    "modify": {
+      "title": "Elige una opción:",
+      "update": "Actualizar",
+      "uninstall": "Desinstalar",
+      "prompt": "¿Estás seguro que deseas desinstalar {name}?",
+      "prompt_repair": "<b>WARNING:</b> All the files under <code>{path}</code> will be <b>deleted</b> as part of the repair process!<br>Do you wish to proceed?",
+      "view_local_files": "Ver archivos locales",
+      "prompt_recover": "Los datos de la instalación de {name} están corruptos.<br>Se necesita una reparación para restaurar la instalación.",
+      "prompt_confirm": "Desinstalar {name}",
+      "modify": "Modificar",
+      "repair": "Reparar"
+    },
+    "auth": {
+      "paste": "Pegar",
+      "token": "Token",
+      "verify": "Verificar Token",
+      "page_header": "El canal de acceso Early Access te permitirá probar las últimas características experimentales y arreglos antes de que lleguen a yuzu. Este canal incluye todas las actualizaciones diarias de yuzu, además de las características exclusivas.\n\nPara unirte al Early Access, debes ser un Suscriptor del Early Access en Patreon.",
+      "page_opened": "¡Página abierta! Comprueba la página en tu explorador por defecto, y sigue las instrucciones para vincular tu cuenta de Patreon.\nCuando termines, introduzca el token abajo.",
+      "login_failed": "¡Acceso fallido!\n\nComprueba que tu token sea el correcto e inténtelo de nuevo"
+    },
+    "back": "Atrás",
+    "exit": "Salir",
+    "yes": "Sí",
+    "no": "No",
+    "continue": "Continuar",
+    "cancel": "Cancelar",
+    "app": {
+      "installer_title": "¡Te damos la bienvenida al instalador de {name}!",
+      "maintenance_title": "Te damos la bienvenida a la Herramienta de Mantenimiento de {name}.",
+      "window_title": "Instalador de {name}",
+      "installer_subtitle": "Tendremos todo listo y funcional en unos minutos."
+    },
+    "select_packages": {
+      "title": "Seleccione los paquetes que desea instalar:",
+      "installed": "(instalado)",
+      "advanced": "Avanzado...",
+      "install": "Instalar",
+      "location": "Ubicación de la instalación",
+      "select": "Elegir",
+      "overwriting": "Sobreescribir",
+      "options": "Opciones de instalación",
+      "title_repair": "Seleccione los paquetes que desea reparar:",
+      "location_placeholder": "Introduce una ruta de instalación aquí",
+      "overwriting_warning": "Directory <code>{path}</code> already exists.<br>Are you sure you want to <b>overwrite</b> the contents inside?",
+      "nothing_picked_warning": "¡Por favor, seleccione al menos un paquete para la instalación!",
+      "nothing_picked": "Nada seleccionado",
+      "option_shortcut": "Crear acceso directo en el escritorio"
+    },
+    "install_packages": {
+      "uninstall": "Desinstalando...",
+      "install": "Instalando...",
+      "check_for_update": "Comprobando actualizaciones...",
+      "self_update": "Descargando actualización automática...",
+      "please_wait": "Por favor, espere..."
+    },
+    "download_packages": {
+      "download_config": "Descargando config...",
+      "error_download_config": "Se ha producido un error durante la descarga del config: {msg}"
+    }
+  }
+}

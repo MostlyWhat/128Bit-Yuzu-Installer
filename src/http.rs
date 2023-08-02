@@ -9,6 +9,7 @@ use std::time::Duration;
 
 use reqwest::r#async::Client as AsyncClient;
 use reqwest::Client;
+use reqwest::StatusCode;
 
 /// Asserts that a URL is valid HTTPS, else returns an error.
 pub fn assert_ssl(url: &str) -> Result<(), String> {
@@ -36,16 +37,39 @@ pub fn build_async_client() -> Result<AsyncClient, String> {
 }
 
 /// Streams a file from a HTTP server.
-pub fn stream_file<F>(url: &str, mut callback: F) -> Result<(), String>
+pub fn stream_file<F>(
+    url: &str,
+    authorization: Option<String>,
+    mut callback: F,
+) -> Result<(), String>
 where
     F: FnMut(Vec<u8>, u64) -> (),
 {
     assert_ssl(url)?;
 
-    let mut client = build_client()?
-        .get(url)
+    let mut client = build_client()?.get(url);
+
+    if let Some(auth) = authorization {
+        client = client.header("Authorization", format!("Bearer {}", auth));
+    }
+
+    let mut client = client
         .send()
         .map_err(|x| format!("Failed to GET resource: {:?}", x))?;
+
+    match client.status() {
+        StatusCode::OK => {}
+        StatusCode::TOO_MANY_REQUESTS => {
+            return Err(
+                "Your token has exceeded the number of daily allowable IP addresses. \
+                 Please wait 24 hours and try again."
+                    .to_string(),
+            );
+        }
+        x => {
+            return Err(format!("Bad status code: {:?}.", x));
+        }
+    }
 
     let size = match client.headers().get(CONTENT_LENGTH) {
         Some(ref v) => v
