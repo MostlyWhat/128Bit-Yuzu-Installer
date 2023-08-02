@@ -1,5 +1,5 @@
 installing_message = "Built by <b>MostlyWhat</b>, Built for <b>128BitBay</b>. Version <b>Beta</b>"
-# new_tool = "https://github.com/MostlyWhat/128Bit-Yuzu-Installer/releases/download/v0.2.1/128Bit-Yuzu-Installer.v0.2.1.exe"
+new_tool = "https://github.com/MostlyWhat/128Bit-Yuzu-Installer/releases/download/v0.2.1/128Bit-Yuzu-Installer.v0.2.1.exe"
 
 [[packages]]
 name = "yuzu Mainline"
