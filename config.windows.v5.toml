@@ -13,7 +13,7 @@ auth_url = "https://api.yuzu-emu.org/jwt/installer/"
     aud = "installer"
 
 [[packages]]
-name = "yuzu Team"
+name = "yuzu Team EA"
 description = "Early Access (Paid)\nLatest, Fast Updates"
 icon = "thicc_logo_installer__ea_shadow.png"
 requires_authorization = true
