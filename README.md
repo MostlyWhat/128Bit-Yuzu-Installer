@@ -1,4 +1,4 @@
-# This repo is not deprecated as yuzu has been discontinued!
+# This repo is now **DEPRECATED** as yuzu has been discontinued!
 
 ## 128Bit-Yuzu Installer
 
