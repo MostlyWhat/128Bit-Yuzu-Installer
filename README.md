@@ -1,3 +1,5 @@
+# This repo is not deprecated as yuzu has been discontinued!
+
 ## 128Bit-Yuzu Installer
 
 This is installer is programmed for the 128BitBay Server!
